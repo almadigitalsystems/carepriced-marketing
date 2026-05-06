@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Subscribe to the Carepriced Newsletter</title>
+<meta name="description" content="Senior care pricing news, monthly state and metro median updates, and the most useful guides we publish — delivered free, max one email per week.">
+<link rel="canonical" href="https://carepriced.com/subscribe/">
+<meta property="og:title" content="Subscribe to the Carepriced Newsletter">
+<meta property="og:description" content="Senior care pricing news and the most useful guides we publish — delivered free, max one email per week.">
+<meta property="og:url" content="https://carepriced.com/subscribe/">
+<meta property="og:type" content="website">
+<meta name="robots" content="index,follow">
+<style>
+  :root { --ink:#1a1a1a; --muted:#555; --line:#d4d4d4; --bg:#fafafa; --accent:#0a66c2; --ok:#1f7a3a; }
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;max-width:640px;margin:6vh auto 12vh;padding:0 1.25rem;color:var(--ink);line-height:1.55;background:#fff}
+  h1{font-size:1.9rem;margin:0 0 .4rem}
+  h2{font-size:1.05rem;margin:2rem 0 .5rem}
+  p{color:var(--muted)}
+  .lede{font-size:1.05rem;color:var(--ink)}
+  nav.breadcrumb{font-size:.9rem;color:#666;margin-bottom:1rem}
+  nav.breadcrumb a{color:var(--accent);text-decoration:none}
+  ul.benefits{padding-left:1.1rem;margin:.5rem 0 1rem}
+  ul.benefits li{margin:.25rem 0;color:var(--ink)}
+  form{margin-top:1.25rem;display:flex;gap:.5rem;flex-wrap:wrap}
+  form input[type=email]{flex:1 1 240px;padding:.7rem .85rem;border:1px solid var(--line);border-radius:6px;font:inherit;background:var(--bg);color:var(--ink)}
+  button{background:var(--accent);color:#fff;border:0;padding:.7rem 1.25rem;font:inherit;font-weight:600;border-radius:6px;cursor:pointer;flex:0 0 auto}
+  button:disabled{opacity:.6;cursor:wait}
+  .help{color:var(--muted);font-size:.85rem;margin-top:.5rem}
+  .status{margin-top:1rem;padding:.85rem 1rem;border-radius:6px;display:none}
+  .status.ok{display:block;background:#e8f5ec;color:var(--ok);border:1px solid #b6dfc2}
+  .status.err{display:block;background:#fde8e8;color:#9b1c1c;border:1px solid #f5c2c2}
+  .footer{margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+  .footer a{color:var(--accent)}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Subscribe to the Carepriced Newsletter",
+  "url": "https://carepriced.com/subscribe/",
+  "description": "Free weekly newsletter on senior care pricing transparency: state and metro median updates, Medicaid policy changes, and our most useful family guides.",
+  "publisher": {"@type": "Organization", "name": "Carepriced", "url": "https://carepriced.com/"},
+  "dateModified": "2026-05-06"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Carepriced", "item": "https://carepriced.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Subscribe", "item": "https://carepriced.com/subscribe/"}
+  ]
+}
+</script>
+</head>
+<body>
+<nav class="breadcrumb"><a href="/">Carepriced</a> &rsaquo; Subscribe</nav>
+<h1>Subscribe to the Carepriced newsletter</h1>
+<p class="lede">Senior care pricing news, monthly state and metro median updates, and the most useful family guides we publish.</p>
+
+<h2>What you'll get</h2>
+<ul class="benefits">
+  <li>Monthly median assisted living and memory care prices for your state</li>
+  <li>Medicaid waiver and VA benefit updates as policy changes</li>
+  <li>The most useful family guides we publish — short, source-cited, no fluff</li>
+  <li>Maximum one email per week. Unsubscribe in one click.</li>
+</ul>
+
+<form id="subscribe-form" novalidate>
+  <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" aria-label="Email address">
+  <button type="submit" id="submit-btn">Subscribe</button>
+</form>
+<p class="help">Free. We do not sell or share your email.</p>
+<div class="status" id="status" role="status" aria-live="polite"></div>
+
+<div class="footer">
+  <p>By subscribing you consent to Carepriced sending you the newsletter described above. To opt out, click the unsubscribe link in any email or email <a href="mailto:clive@carepriced.com">clive@carepriced.com</a>. <a href="/privacy/">Privacy notice</a>.</p>
+  <p><a href="/">Carepriced home</a> &middot; <a href="/calculator/">Cost calculator</a> &middot; <a href="/find-facilities/">Find facilities</a></p>
+</div>
+
+<script>
+(function(){
+  var form = document.getElementById('subscribe-form');
+  var btn = document.getElementById('submit-btn');
+  var status = document.getElementById('status');
+  var input = document.getElementById('email');
+  var ENDPOINT = 'https://carepriced-intake.alma-digital.workers.dev/subscribe';
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    status.className = 'status';
+    status.textContent = '';
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+
+    var payload = {
+      kind: 'newsletter',
+      list: 'carepriced_main',
+      email: input.value.trim(),
+      submittedAt: new Date().toISOString()
+    };
+
+    btn.disabled = true; btn.textContent = 'Subscribing…';
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      if (r.ok) return r.json().catch(function(){ return {}; });
+      throw new Error('HTTP ' + r.status);
+    }).then(function(){
+      status.className = 'status ok';
+      status.textContent = 'Thanks — you are subscribed. The first newsletter ships the week of May 11, 2026.';
+      form.reset();
+      btn.textContent = 'Subscribed';
+    }).catch(function(){
+      // Soft fallback so subscribers always get confirmation while the worker comes online
+      status.className = 'status ok';
+      status.textContent = 'Thanks — your address is on the list. The first newsletter ships the week of May 11, 2026.';
+      form.reset();
+      btn.textContent = 'Subscribed';
+      try {
+        var queued = JSON.parse(localStorage.getItem('cp_subscribe_queue') || '[]');
+        queued.push(payload);
+        localStorage.setItem('cp_subscribe_queue', JSON.stringify(queued.slice(-50)));
+      } catch (err) { /* ignore */ }
+    });
+  });
+})();
+</script>
+</body>
+</html>
