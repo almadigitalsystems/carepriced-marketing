@@ -2,9 +2,16 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://carepriced.com/schemas/operator-record.schema.json",
   "title": "Carepriced Operator Pricing Record",
-  "description": "Single operator-level senior care pricing record with multi-source citation metadata. v1 â€” supports 5 care types (IL, AL, MC, SNF, home-care) and 5-source waterfall ingestion (CMS 2540-24 â†’ state LTC licensing â†’ operator websites â†’ NIC MAP â†’ CareScout/Genworth fallback).",
+  "description": "Single operator-level senior care pricing record with multi-source citation metadata. v1 (rev 2, locked 2026-05-06 per ALM-5482) — supports 5 care types (IL, AL, MC, SNF, home-care) and 5-source waterfall ingestion (CMS 2540-24 → state LTC licensing → operator websites → NIC MAP → CareScout/Genworth fallback). levelOfCareModifier is now a flat array of {key,label,multiplier} objects so the calculator can render ordered radio options without a label lookup table.",
   "type": "object",
-  "required": ["operatorId", "operatorName", "location", "careType", "lastVerified", "sources"],
+  "required": [
+    "operatorId",
+    "operatorName",
+    "location",
+    "careType",
+    "lastVerified",
+    "sources"
+  ],
   "additionalProperties": false,
   "properties": {
     "operatorId": {
@@ -19,10 +26,17 @@
     },
     "location": {
       "type": "object",
-      "required": ["city", "state", "zip"],
+      "required": [
+        "city",
+        "state",
+        "zip"
+      ],
       "additionalProperties": false,
       "properties": {
-        "city": { "type": "string", "minLength": 1 },
+        "city": {
+          "type": "string",
+          "minLength": 1
+        },
         "state": {
           "type": "string",
           "pattern": "^[A-Z]{2}$",
@@ -33,47 +47,130 @@
           "pattern": "^[0-9]{5}$",
           "description": "5-digit US zip."
         },
-        "lat": { "type": "number", "minimum": -90, "maximum": 90 },
-        "lng": { "type": "number", "minimum": -180, "maximum": 180 }
+        "lat": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "lng": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        }
       }
     },
     "careType": {
       "type": "string",
-      "enum": ["independent-living", "assisted-living", "memory-care", "skilled-nursing", "home-care"],
+      "enum": [
+        "independent-living",
+        "assisted-living",
+        "memory-care",
+        "skilled-nursing",
+        "home-care"
+      ],
       "description": "One of the 5 v1 care types. Multi-type operators emit multiple records (one per care type)."
     },
     "monthlyRate": {
       "type": "object",
       "description": "Monthly rate band in USD. Required for IL/AL/MC/SNF. Null for home-care (use hourlyRate).",
-      "required": ["currency"],
+      "required": [
+        "currency"
+      ],
       "additionalProperties": false,
       "properties": {
-        "low": { "type": "number", "minimum": 0 },
-        "median": { "type": "number", "minimum": 0 },
-        "high": { "type": "number", "minimum": 0 },
-        "currency": { "type": "string", "const": "USD" }
+        "low": {
+          "type": "number",
+          "minimum": 0
+        },
+        "median": {
+          "type": "number",
+          "minimum": 0
+        },
+        "high": {
+          "type": "number",
+          "minimum": 0
+        },
+        "currency": {
+          "type": "string",
+          "const": "USD"
+        }
       }
     },
     "hourlyRate": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "description": "Hourly rate band in USD. Required for home-care. Null for facility-based care types.",
-      "required": ["currency"],
+      "required": [
+        "currency"
+      ],
       "additionalProperties": false,
       "properties": {
-        "low": { "type": "number", "minimum": 0 },
-        "median": { "type": "number", "minimum": 0 },
-        "high": { "type": "number", "minimum": 0 },
-        "currency": { "type": "string", "const": "USD" }
+        "low": {
+          "type": "number",
+          "minimum": 0
+        },
+        "median": {
+          "type": "number",
+          "minimum": 0
+        },
+        "high": {
+          "type": "number",
+          "minimum": 0
+        },
+        "currency": {
+          "type": "string",
+          "const": "USD"
+        }
       }
     },
     "levelOfCareModifier": {
-      "type": ["object", "null"],
-      "description": "Multiplier applied to monthlyRate.median for higher levels of care. Keys are level labels.",
-      "additionalProperties": {
-        "type": "number",
-        "minimum": 0
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Ordered list of level-of-care options that act as multipliers on monthlyRate.median (or hourlyRate.median for home-care). Renders 1:1 as ordered radio buttons in the Carepriced calculator. The implicit baseline (multiplier 1.0) is added by the calculator UI as a 'Standard care' option above this array. v1 locked shape per ALM-5482 — replaces the prior object-map shape.",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "label",
+          "multiplier"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+            "description": "Stable kebab-case dev key (e.g. 'medium', 'high', 'memory-care', 'companion'). Stable across schema revs."
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Human UX copy shown in calculator radio options (e.g. 'Higher needs (mobility / ADL help)')."
+          },
+          "multiplier": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Multiplier applied to monthlyRate.median (or hourlyRate.median) when this level is selected."
+          }
+        }
       },
-      "examples": [{ "medium": 1.15, "high": 1.4 }]
+      "examples": [
+        [
+          {
+            "key": "medium",
+            "label": "Higher needs (mobility / ADL help)",
+            "multiplier": 1.15
+          },
+          {
+            "key": "high",
+            "label": "Memory care / extensive ADL",
+            "multiplier": 1.4
+          }
+        ]
+      ]
     },
     "lastVerified": {
       "type": "string",
@@ -86,7 +183,10 @@
       "description": "Citation chain. Order = priority (most authoritative first). Every record carries at least one source.",
       "items": {
         "type": "object",
-        "required": ["type", "retrievedAt"],
+        "required": [
+          "type",
+          "retrievedAt"
+        ],
         "additionalProperties": false,
         "properties": {
           "type": {
@@ -99,13 +199,21 @@
               "carescout-genworth"
             ]
           },
-          "url": { "type": "string", "format": "uri" },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
           "filingReference": {
             "type": "string",
             "description": "Filing ID, CCN, or licensing reference number when no public URL exists."
           },
-          "retrievedAt": { "type": "string", "format": "date-time" },
-          "notes": { "type": "string" }
+          "retrievedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notes": {
+            "type": "string"
+          }
         }
       }
     },
