@@ -1,0 +1,19 @@
+{
+  "facilityName": "Test Facility (CTO verification 2)",
+  "contactName": "Emily CTO Test",
+  "role": "owner",
+  "email": "desk@almawebcreative.com",
+  "phone": "555-0100",
+  "facilityType": "assisted living",
+  "zipCodes": [
+    "12345",
+    "23456"
+  ],
+  "facilityCount": "2-5",
+  "leadGenSpend": "$1k-$3k",
+  "notes": "Second test - Gmail API path. Safe to ignore.",
+  "submittedAt": "2026-05-06T04:17:51.767Z",
+  "ip": "67.191.68.243",
+  "userAgent": "",
+  "country": "US"
+}
