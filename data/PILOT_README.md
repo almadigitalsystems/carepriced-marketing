@@ -64,7 +64,7 @@ For every record Kira can rely on:
 - `operatorId`, `operatorName`, `location.{city,state,zip}` — real, verified per record from CMS QRP (Apr 2026).
 - `metadata.ccn` — real CMS Certification Number; can be cross-referenced for compliance/quality data later.
 - `monthlyRate.{low,median,high}` — v0 estimate (state median + tier adjustment). **Display the `lastVerified` date** on every page so users see data freshness.
-- `levelOfCareModifier` — uniform default ({medium: 1.15, high: 1.40}) until per-facility level data is available.
+- `levelOfCareModifier` — flat array (v1 rev 2 shape per [ALM-5482](/ALM/issues/ALM-5482)): `[{key:'medium', label:'Higher needs (mobility / ADL help)', multiplier:1.15}, {key:'high', label:'Memory care / extensive ADL', multiplier:1.40}]`. Calculator renders these as radio options in document order. Implicit baseline (multiplier 1.0) is added by the calculator UI as 'Standard care'. Pilot records all carry the same uniform default until per-facility level data is available.
 - `sources[]` — at least one source per record, citation-ready for inline rendering.
 
 If you need any of these contracts adjusted before Priority 1 page templates lock in, drop a comment on [ALM-5482](/ALM/issues/ALM-5482).
