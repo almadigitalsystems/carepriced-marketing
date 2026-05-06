@@ -1,0 +1,16 @@
+{
+  "kind": "family_intake",
+  "state": "Wyoming",
+  "zip": "82001",
+  "careType": "assisted_living",
+  "budget": "5k_8k",
+  "timeline": "researching",
+  "contactName": "Cane QA Bot",
+  "email": "qa+cane-reqa-2@carepriced.dev",
+  "phone": "",
+  "notes": "Cane WTS final re-QA � verifying /find-facilities worker route after Emily fix. Please ignore.",
+  "submittedAt": "2026-05-06T14:08:14.700Z",
+  "ip": "67.191.68.243",
+  "userAgent": "curl/8.18.0",
+  "country": "US"
+}
