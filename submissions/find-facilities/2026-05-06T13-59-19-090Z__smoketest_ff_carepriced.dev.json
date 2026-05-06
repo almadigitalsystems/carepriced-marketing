@@ -1,0 +1,16 @@
+{
+  "kind": "family_intake",
+  "state": "Wyoming",
+  "zip": "82001",
+  "careType": "assisted_living",
+  "budget": "5k_8k",
+  "timeline": "1_3_months",
+  "contactName": "QA Smoke Test",
+  "email": "smoketest+ff@carepriced.dev",
+  "phone": "",
+  "notes": "ALM-5642 smoke test",
+  "submittedAt": "2026-05-06T13:59:19.090Z",
+  "ip": "67.191.68.243",
+  "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.8115",
+  "country": "US"
+}
