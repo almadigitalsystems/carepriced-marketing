@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carepriced.com/schemas/operator-record.schema.json",
+  "title": "Carepriced Operator Pricing Record",
+  "description": "Single operator-level senior care pricing record with multi-source citation metadata. v1 â€” supports 5 care types (IL, AL, MC, SNF, home-care) and 5-source waterfall ingestion (CMS 2540-24 â†’ state LTC licensing â†’ operator websites â†’ NIC MAP â†’ CareScout/Genworth fallback).",
+  "type": "object",
+  "required": ["operatorId", "operatorName", "location", "careType", "lastVerified", "sources"],
+  "additionalProperties": false,
+  "properties": {
+    "operatorId": {
+      "type": "string",
+      "description": "Stable kebab-case slug. Format: <operator-name-slug> within a state:zip namespace.",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "operatorName": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Operator's public-facing legal or DBA name."
+    },
+    "location": {
+      "type": "object",
+      "required": ["city", "state", "zip"],
+      "additionalProperties": false,
+      "properties": {
+        "city": { "type": "string", "minLength": 1 },
+        "state": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$",
+          "description": "Two-letter US state code (uppercase)."
+        },
+        "zip": {
+          "type": "string",
+          "pattern": "^[0-9]{5}$",
+          "description": "5-digit US zip."
+        },
+        "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+        "lng": { "type": "number", "minimum": -180, "maximum": 180 }
+      }
+    },
+    "careType": {
+      "type": "string",
+      "enum": ["independent-living", "assisted-living", "memory-care", "skilled-nursing", "home-care"],
+      "description": "One of the 5 v1 care types. Multi-type operators emit multiple records (one per care type)."
+    },
+    "monthlyRate": {
+      "type": "object",
+      "description": "Monthly rate band in USD. Required for IL/AL/MC/SNF. Null for home-care (use hourlyRate).",
+      "required": ["currency"],
+      "additionalProperties": false,
+      "properties": {
+        "low": { "type": "number", "minimum": 0 },
+        "median": { "type": "number", "minimum": 0 },
+        "high": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string", "const": "USD" }
+      }
+    },
+    "hourlyRate": {
+      "type": ["object", "null"],
+      "description": "Hourly rate band in USD. Required for home-care. Null for facility-based care types.",
+      "required": ["currency"],
+      "additionalProperties": false,
+      "properties": {
+        "low": { "type": "number", "minimum": 0 },
+        "median": { "type": "number", "minimum": 0 },
+        "high": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string", "const": "USD" }
+      }
+    },
+    "levelOfCareModifier": {
+      "type": ["object", "null"],
+      "description": "Multiplier applied to monthlyRate.median for higher levels of care. Keys are level labels.",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0
+      },
+      "examples": [{ "medium": 1.15, "high": 1.4 }]
+    },
+    "lastVerified": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO-8601 date (YYYY-MM-DD) of last source confirmation. Displayed on every KB page."
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Citation chain. Order = priority (most authoritative first). Every record carries at least one source.",
+      "items": {
+        "type": "object",
+        "required": ["type", "retrievedAt"],
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "cms-2540-24",
+              "licensing-filing",
+              "operator-website",
+              "nic-map",
+              "carescout-genworth"
+            ]
+          },
+          "url": { "type": "string", "format": "uri" },
+          "filingReference": {
+            "type": "string",
+            "description": "Filing ID, CCN, or licensing reference number when no public URL exists."
+          },
+          "retrievedAt": { "type": "string", "format": "date-time" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional non-display metadata used by the pipeline (operator-website canonical URL, CCN, NPI, etc).",
+      "additionalProperties": true
+    }
+  }
+}
