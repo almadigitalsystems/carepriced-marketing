@@ -191,7 +191,10 @@ def emit_record(facility: dict, now_iso: str, today: str) -> dict:
         "careType": "skilled-nursing",
         "monthlyRate": rate,
         "hourlyRate": None,
-        "levelOfCareModifier": {"medium": 1.15, "high": 1.40},
+        "levelOfCareModifier": [
+            {"key": "medium", "label": "Higher needs (mobility / ADL help)", "multiplier": 1.15},
+            {"key": "high",   "label": "Memory care / extensive ADL",         "multiplier": 1.40},
+        ],
         "lastVerified": today,
         "sources": [
             {
