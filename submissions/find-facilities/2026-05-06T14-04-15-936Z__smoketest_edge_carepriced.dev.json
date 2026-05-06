@@ -1,0 +1,16 @@
+{
+  "kind": "family_intake",
+  "state": "California",
+  "zip": "",
+  "careType": "not_sure",
+  "budget": "medicaid",
+  "timeline": "researching",
+  "contactName": "Edge Case Tester",
+  "email": "smoketest+edge@carepriced.dev",
+  "phone": "5551234567",
+  "notes": "Edge case validation: not_sure + medicaid + researching",
+  "submittedAt": "2026-05-06T14:04:15.936Z",
+  "ip": "67.191.68.243",
+  "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.8115",
+  "country": "US"
+}
