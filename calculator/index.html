@@ -1,144 +1,913 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Senior Living Cost Calculator (2026) — Carepriced</title>
-<meta name="description" content="Calculate the cost of senior living by state. Median monthly assisted living, memory care, and nursing home pricing for all 50 states + DC, sourced from Genworth/CareScout 2025.">
-<link rel="canonical" href="https://carepriced.com/calculator/">
-<meta property="og:title" content="Senior Living Cost Calculator (2026) — Carepriced">
-<meta property="og:description" content="Calculate the cost of senior living by state. Median monthly assisted living, memory care, and nursing home pricing for all 50 states + DC.">
-<meta property="og:url" content="https://carepriced.com/calculator/">
-<meta property="og:type" content="website">
-<meta name="robots" content="index,follow">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Senior Care Cost Calculator — Carepriced</title>
+<meta name="description" content="Carepriced — Estimate skilled nursing, assisted living, memory care, independent living, and home care costs by state and facility. Time-stamped, source-cited." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Senior Care Cost Calculator",
+  "applicationCategory": "FinancialApplication",
+  "dateModified": "2026-05-06",
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "lowPrice": "3400",
+    "highPrice": "12500",
+    "offerCount": "418"
+  }
+}
+</script>
 <style>
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;max-width:760px;margin:2rem auto;padding:0 1.5rem;line-height:1.6;color:#1a1a1a}
-  h1{font-size:2rem;line-height:1.25;margin:0 0 .5rem}
-  h2{font-size:1.25rem;margin:2rem 0 .75rem;border-bottom:1px solid #eee;padding-bottom:.25rem}
-  .lede{font-size:1.05rem;color:#3a4a5a;margin-bottom:1.25rem}
-  .updated{color:#666;font-size:.9rem;margin-bottom:1.5rem}
-  nav.breadcrumb{font-size:.9rem;color:#666;margin-bottom:1rem}
-  nav.breadcrumb a{color:#0066cc;text-decoration:none}
-  ul.state-list{list-style:none;padding:0;margin:1rem 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.4rem .75rem}
-  ul.state-list li{margin:0}
-  ul.state-list a{color:#0066cc;text-decoration:none;display:block;padding:.35rem .5rem;border-radius:4px}
-  ul.state-list a:hover{background:#f0f5fa;text-decoration:underline}
-  .care-types{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.75rem;margin:.75rem 0}
-  .care-card{border:1px solid #e1e6ec;border-radius:6px;padding:.85rem 1rem;background:#fafbfc}
-  .care-card h3{font-size:1rem;margin:0 0 .25rem;color:#1a1a1a}
-  .care-card p{margin:0;font-size:.9rem;color:#555}
-  footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid #eee;color:#888;font-size:.85rem}
-  footer a{color:#0066cc;text-decoration:none}
+:root{
+  --bg-page:#fafaf7;--bg-surface:#ffffff;--bg-elevated:#f5f3ec;
+  --ink-1:#0d1b2a;--ink-2:#3d4a5c;--ink-3:#6b7280;--ink-4:#94a3b8;
+  --border:#e7e3da;--border-strong:#cbd5e1;
+  --accent:#9a3412;--accent-hover:#7c2d12;--accent-soft:#fde7d3;
+  --positive:#15803d;--positive-soft:#dcfce7;
+  --caution:#92400e;--caution-soft:#fef3c7;
+  --radius-sm:6px;--radius-md:10px;--radius-lg:14px;
+}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg-page);color:var(--ink-1);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;font-feature-settings:"tnum"}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover);text-decoration:underline}
+.tnum{font-variant-numeric:tabular-nums}
+/* Header */
+.site-header{border-bottom:1px solid var(--border);background:var(--bg-surface)}
+.header-inner{max-width:1120px;margin:0 auto;padding:18px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Newsreader',Georgia,serif;font-weight:600;font-size:22px;letter-spacing:-.01em;color:var(--ink-1);display:flex;align-items:center;gap:10px}
+.logo-mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#9a3412 0,#0d1b2a 100%);display:inline-block}
+.nav{display:flex;gap:28px;font-size:14px;color:var(--ink-2)}
+.nav a{color:var(--ink-2);font-weight:500}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+/* Breadcrumb */
+.breadcrumb{font-size:13px;color:var(--ink-3);padding:18px 0 8px;font-weight:500}
+.breadcrumb a{color:var(--ink-3)}
+.breadcrumb .sep{margin:0 8px;color:var(--ink-4)}
+/* Hero */
+.hero{padding:24px 0 40px;border-bottom:1px solid var(--border)}
+.dateline{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-bottom:14px}
+.dateline .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin:0 8px 1px 0;vertical-align:middle}
+h1{font-family:'Newsreader',Georgia,serif;font-weight:600;font-size:48px;line-height:1.08;letter-spacing:-.02em;margin:0 0 16px;color:var(--ink-1)}
+.subhead{font-size:18px;color:var(--ink-2);max-width:680px;line-height:1.55;margin:0 0 22px}
+.dq-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 10px;border-radius:999px;background:var(--caution-soft);color:var(--caution);font-size:12px;font-weight:600;letter-spacing:.01em;border:1px solid #f5d28a;cursor:help}
+.dq-badge.v1{background:var(--positive-soft);color:var(--positive);border-color:#a7e3bd}
+.dq-dot{width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block}
+.dq-badge.on-dark{background:rgba(254,243,199,.12);color:#fde0a3;border-color:rgba(245,210,138,.3)}
+/* Calculator container */
+.calc-shell{padding:48px 0 64px;border-bottom:1px solid var(--border)}
+.calc-grid{display:grid;grid-template-columns:1.4fr 420px;gap:36px;align-items:start}
+.calc-form-block{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px 36px}
+.field{margin-bottom:24px}
+.field label.lbl{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:700;margin-bottom:10px}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:0}
+.field input[type=text],.field select{width:100%;padding:13px 16px;font:inherit;font-size:16px;color:var(--ink-1);background:#fff;border:1px solid var(--border-strong);border-radius:var(--radius-sm);outline:none;transition:border-color .15s,box-shadow .15s}
+.field input[type=text]:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(154,52,18,.12)}
+.helper{font-size:13px;color:var(--ink-3);margin-top:8px}
+/* Care-type picker pills */
+.pill-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.pill{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px 8px;border:1px solid var(--border-strong);background:#fff;border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;font-size:13px;color:var(--ink-1);text-align:center;font-weight:500}
+.pill input{display:none}
+.pill .ico{font-size:18px;line-height:1}
+.pill:hover{border-color:var(--accent);background:#fffbf6}
+.pill.active{border-color:var(--accent);background:#fffbf6;box-shadow:inset 0 0 0 1px var(--accent)}
+.pill.active .ico{color:var(--accent)}
+.pill .label{font-size:13px;font-weight:600;line-height:1.2}
+.pill .median{font-size:11px;color:var(--ink-3);font-weight:500}
+/* State + ZIP row */
+.row-2{display:grid;grid-template-columns:1.5fr 1fr;gap:14px}
+/* Radio rows */
+.radio-row{display:flex;flex-direction:column;gap:10px}
+.radio-row label.opt{display:flex;align-items:center;gap:10px;padding:13px 16px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);cursor:pointer;font-size:15px;color:var(--ink-1);font-weight:500;background:#fff}
+.radio-row label.opt:hover{border-color:var(--accent);background:#fffbf6}
+.radio-row input[type=radio]{accent-color:var(--accent)}
+.radio-row .lvl-mult{margin-left:auto;font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums;font-weight:600}
+.radio-row .lvl-desc{display:block;font-size:12px;color:var(--ink-3);font-weight:400;margin-top:2px}
+/* Estimate panel (sticky) */
+.estimate-panel{background:var(--ink-1);color:#fff;border-radius:var(--radius-lg);padding:32px 30px;position:sticky;top:24px}
+.est-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#cdd6e0;font-weight:600;margin-bottom:16px}
+.est-monthly{font-family:'Newsreader',Georgia,serif;font-weight:600;font-size:64px;line-height:1;letter-spacing:-.025em;font-variant-numeric:tabular-nums}
+.est-monthly .unit{font-size:20px;color:#cdd6e0;font-weight:500;margin-left:6px}
+.est-row{font-size:15px;color:#cdd6e0;margin-top:14px;line-height:1.4;font-variant-numeric:tabular-nums;display:flex;justify-content:space-between}
+.est-row .v{color:#fff;font-weight:600}
+.est-divider{height:1px;background:rgba(255,255,255,.1);margin:20px 0}
+.est-cite{font-size:12px;color:#9aa6b3;line-height:1.55}
+.est-cite a{color:#f5d3ba;text-decoration:underline;text-decoration-color:rgba(245,211,186,.4)}
+.est-cite .src-link{color:#f5d3ba}
+.est-actions{display:flex;flex-direction:column;gap:8px;margin-top:20px}
+.btn{display:inline-flex;align-items:center;justify-content:space-between;padding:13px 18px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;text-decoration:none;transition:all .15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-hover);text-decoration:none;color:#fff}
+.btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.18)}
+.btn-ghost:hover{background:rgba(255,255,255,.06);text-decoration:none;color:#fff}
+.btn .arrow{margin-left:8px}
+.formula-block{font-family:'JetBrains Mono','Courier New',monospace;font-size:11px;line-height:1.5;color:#9aa6b3;background:rgba(255,255,255,.04);padding:12px 14px;border-radius:6px;margin-top:14px;border:1px solid rgba(255,255,255,.06)}
+.formula-block .var{color:#fde0a3}
+.formula-block .num{color:#86efac}
+/* Sections */
+section{padding:56px 0;border-bottom:1px solid var(--border)}
+section:last-of-type{border-bottom:none}
+.section-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:12px}
+h2{font-family:'Newsreader',Georgia,serif;font-weight:600;font-size:32px;line-height:1.15;letter-spacing:-.015em;margin:0 0 8px;color:var(--ink-1)}
+.section-intro{font-size:16px;color:var(--ink-2);max-width:640px;margin:0 0 28px}
+/* "What we estimated" — explanation block */
+.explain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.explain-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:24px 22px}
+.explain-card .e-num{font-family:'Newsreader',Georgia,serif;font-weight:600;font-size:36px;color:var(--accent);line-height:1;margin-bottom:10px}
+.explain-card h3{font-family:'Newsreader',Georgia,serif;font-weight:600;font-size:18px;color:var(--ink-1);margin:0 0 6px;letter-spacing:-.005em}
+.explain-card p{font-size:14px;color:var(--ink-3);margin:0;line-height:1.55}
+/* State coverage map (placeholder list) */
+.state-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.state-link{display:flex;flex-direction:column;padding:14px 14px;border:1px solid var(--border);background:var(--bg-surface);border-radius:var(--radius-sm);text-decoration:none;transition:all .12s}
+.state-link:hover{border-color:var(--accent);background:#fffbf6;text-decoration:none;transform:translateY(-1px)}
+.state-link .st-name{font-size:14px;font-weight:600;color:var(--ink-1)}
+.state-link .st-med{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums;margin-top:2px}
+/* Footer */
+footer{background:#0d1b2a;color:#cdd6e0;padding:48px 0 36px;font-size:14px}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+.foot-grid h4{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#fff;font-weight:600;margin:0 0 14px}
+.foot-grid ul{list-style:none;padding:0;margin:0}
+.foot-grid li{margin-bottom:8px}
+.foot-grid a{color:#9aa6b3;font-weight:400}
+.foot-grid a:hover{color:#fff;text-decoration:none}
+.foot-bottom{margin-top:36px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);font-size:12px;color:#7e8a99}
+.foot-logo .logo{color:#fff;margin-bottom:14px}
+.foot-blurb{font-size:13px;color:#9aa6b3;line-height:1.55;max-width:320px}
+@media (max-width:880px){
+  h1{font-size:34px}h2{font-size:26px}
+  .calc-grid{grid-template-columns:1fr;gap:24px}
+  .estimate-panel{position:static}
+  .est-monthly{font-size:48px}
+  .pill-row{grid-template-columns:repeat(2,1fr)}
+  .row-2{grid-template-columns:1fr}
+  .calc-form-block{padding:24px 22px}
+  .explain-grid{grid-template-columns:1fr}
+  .state-grid{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .nav{display:none}
+  .header-inner{padding:14px 20px}
+  .wrap{padding:0 20px}
+}
 </style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Senior Living Cost Calculator (2026)",
-  "url": "https://carepriced.com/calculator/",
-  "description": "Median monthly senior living cost by state for assisted living, memory care, independent living, and nursing home care. 2026 data sourced from Genworth/CareScout and CMS.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Carepriced",
-    "url": "https://carepriced.com/"
-  },
-  "dateModified": "2026-05-06"
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {"@type": "ListItem", "position": 1, "name": "Carepriced", "item": "https://carepriced.com/"},
-    {"@type": "ListItem", "position": 2, "name": "Calculator", "item": "https://carepriced.com/calculator/"}
-  ]
-}
-</script>
 </head>
 <body>
-<nav class="breadcrumb"><a href="/">Carepriced</a> &rsaquo; Calculator</nav>
-<h1>Senior Living Cost Calculator (2026)</h1>
-<p class="lede">Median monthly cost of senior care by state. Assisted living, memory care, independent living, and nursing home pricing for all 50 states + DC, sourced from Genworth/CareScout 2025 and CMS reporting.</p>
-<p class="updated">Last updated: 2026-05-06</p>
 
-<h2>Care types we cover</h2>
-<div class="care-types">
-  <div class="care-card"><h3>Assisted Living</h3><p>National median ~$5,350/mo. Help with daily activities, meals, social programming.</p></div>
-  <div class="care-card"><h3>Memory Care</h3><p>20–50% above assisted living. Secure environment for dementia and Alzheimer's care.</p></div>
-  <div class="care-card"><h3>Independent Living</h3><p>National median ~$3,000/mo. 55+ communities with amenities, no daily care.</p></div>
-  <div class="care-card"><h3>Nursing Home</h3><p>National median ~$8,800/mo for semi-private. 24/7 skilled medical care.</p></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo"><span class="logo-mark"></span>Carepriced</a>
+    <nav class="nav">
+      <a href="/calculator/" style="color:var(--accent)">Cost calculators</a>
+      <a href="/care-types/">Care types</a>
+      <a href="/financial-aid/">How families pay</a>
+      <a href="/about/">Methodology</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="breadcrumb">
+    <a href="/">Home</a><span class="sep">›</span>
+    Cost calculator
+  </div>
+
+  <section class="hero" style="padding-bottom:0;border-bottom:none">
+    <div class="dateline"><span class="dot"></span>Last updated May 6, 2026 · Refreshed monthly</div>
+    <h1>Senior Care<br/>Cost Calculator</h1>
+    <p class="subhead">
+      Pick a care type, state, and level of need. We'll estimate your monthly cost using
+      Genworth/CareScout 2024 data with metro-tier adjustments. Math is shown — no marketing fluff.
+    </p>
+    <div class="dq-badge"><span class="dq-dot"></span> State-anchored estimate · last verified May 6, 2026</div>
+  </section>
+
+  <!-- ============ CALCULATOR ============ -->
+  <section class="calc-shell">
+    <div class="calc-grid">
+
+      <div class="calc-form-block">
+
+        <div class="field">
+          <label class="lbl"><span class="step-num">1</span> Type of care</label>
+          <div class="pill-row">
+            <label class="pill" data-care="independent" data-median="3400">
+              <input type="radio" name="care" value="independent" data-median="3400" />
+              <span class="ico">⌂</span>
+              <span class="label">Independent</span>
+              <span class="median">$3,400/mo</span>
+            </label>
+            <label class="pill" data-care="assisted" data-median="5200">
+              <input type="radio" name="care" value="assisted" data-median="5200" />
+              <span class="ico">◯</span>
+              <span class="label">Assisted living</span>
+              <span class="median">$5,200/mo</span>
+            </label>
+            <label class="pill" data-care="memory" data-median="6800">
+              <input type="radio" name="care" value="memory" data-median="6800" />
+              <span class="ico">◐</span>
+              <span class="label">Memory care</span>
+              <span class="median">$6,800/mo</span>
+            </label>
+            <label class="pill active" data-care="skilled" data-median="8500">
+              <input type="radio" name="care" value="skilled" data-median="8500" checked />
+              <span class="ico">●</span>
+              <span class="label">Skilled nursing</span>
+              <span class="median">$8,500/mo</span>
+            </label>
+            <label class="pill" data-care="home" data-median="2250">
+              <input type="radio" name="care" value="home" data-median="2250" />
+              <span class="ico">↺</span>
+              <span class="label">Home care</span>
+              <span class="median">$2,250/mo</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="lbl"><span class="step-num">2</span> Where</label>
+          <div class="row-2">
+            <select id="state">
+              <option value="nc" data-multiplier="1.00" data-median="8500" data-low="6800" data-high="11200" selected>North Carolina</option>
+              <option value="ca" data-multiplier="1.18" data-median="10030" data-low="8000" data-high="13200">California</option>
+              <option value="ny" data-multiplier="1.32" data-median="11220" data-low="8950" data-high="14800">New York</option>
+              <option value="fl" data-multiplier="0.96" data-median="8160" data-low="6520" data-high="10750">Florida</option>
+              <option value="tx" data-multiplier="0.94" data-median="7990" data-low="6400" data-high="10550">Texas</option>
+              <option value="hi" data-multiplier="1.41" data-median="11985" data-low="9580" data-high="15800">Hawaii</option>
+              <option value="ms" data-multiplier="0.78" data-median="6630" data-low="5290" data-high="8730">Mississippi</option>
+            </select>
+            <input type="text" id="zip" placeholder="ZIP (optional)" inputmode="numeric" maxlength="5" />
+          </div>
+          <div class="helper">ZIP refines the estimate using metro-tier multipliers (A=1.15× / B=1.05× / C=1.00× / D=0.92×).</div>
+        </div>
+
+        <div class="field">
+          <label class="lbl"><span class="step-num">3</span> Pick a facility (optional)</label>
+          <select id="operator">
+            <option value="">All facilities — show state median</option>
+            <option value="autumn-care-of-biscoe-345000" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Biscoe">Autumn Care Of Biscoe — Biscoe ($7,800)</option>
+              <option value="hillcrest-convalescent-center-345001" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Durham">Hillcrest Convalescent Center — Durham ($8,900)</option>
+              <option value="cypress-pointe-rehabilitation-center-345002" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Wilmington">Cypress Pointe Rehabilitation Center — Wilmington ($8,900)</option>
+              <option value="silas-creek-rehabilitation-center-345003" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Winston Salem">Silas Creek Rehabilitation Center — Winston Salem ($8,900)</option>
+              <option value="person-memorial-hospital-345004" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Roxboro">Person Memorial Hospital — Roxboro ($7,800)</option>
+              <option value="blumenthal-health-and-rehabilitation-center-345006" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Greensboro">Blumenthal Health And Rehabilitation Center — Greensboro ($8,900)</option>
+              <option value="bear-mountain-health-and-rehabilitation-345010" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Asheville">Bear Mountain Health And Rehabilitation — Asheville ($8,900)</option>
+              <option value="pine-acres-center-for-nursing-and-rehabilitation-345011" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lexington">Pine Acres Center For Nursing And Rehabilitation — Lexington ($7,800)</option>
+              <option value="peak-resources-charlotte-345013" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Peak Resources - Charlotte — Charlotte ($9,800)</option>
+              <option value="linden-place-center-for-nursing-and-rehabilitation-345014" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Greensboro">Linden Place Center For Nursing And Rehabilitation — Greensboro ($8,900)</option>
+              <option value="clapp-s-convalescent-nursing-home-inc-345015" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Asheboro">Clapp's Convalescent Nursing Home Inc — Asheboro ($7,800)</option>
+              <option value="clapps-nursing-center-inc-345024" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Pleasant Garden">Clapps Nursing Center Inc — Pleasant Garden ($7,800)</option>
+              <option value="royal-park-rehabilitation-health-center-345026" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Matthews">Royal Park Rehabilitation &amp; Health Center — Matthews ($9,800)</option>
+              <option value="elizabeth-city-health-and-rehabilitation-345036" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Elizabeth City">Elizabeth City Health And Rehabilitation — Elizabeth City ($7,800)</option>
+              <option value="summerstone-health-and-rehabilitation-center-345039" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Kernersville">Summerstone Health And Rehabilitation Center — Kernersville ($7,800)</option>
+              <option value="saint-joseph-of-the-pines-health-center-345044" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Pinehurst">Saint Joseph Of The Pines Health Center — Pinehurst ($7,800)</option>
+              <option value="the-foley-center-at-chestnut-ridge-345045" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Blowing Rock">The Foley Center At Chestnut Ridge — Blowing Rock ($7,800)</option>
+              <option value="mountain-ridge-health-and-rehab-345048" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Black Mountain">Mountain Ridge Health And Rehab — Black Mountain ($7,800)</option>
+              <option value="raleigh-rehabilitation-center-345049" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Raleigh">Raleigh Rehabilitation Center — Raleigh ($9,800)</option>
+              <option value="jacob-s-creek-nursing-and-rehabilitation-center-345050" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Madison">Jacob's Creek Nursing And Rehabilitation Center — Madison ($7,800)</option>
+              <option value="anson-health-and-rehabilitation-345051" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Wadesboro">Anson Health And Rehabilitation — Wadesboro ($7,800)</option>
+              <option value="pettigrew-rehabilitation-center-345053" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Durham">Pettigrew Rehabilitation Center — Durham ($8,900)</option>
+              <option value="woodhaven-nursing-center-345054" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lumberton">Woodhaven Nursing Center — Lumberton ($7,800)</option>
+              <option value="pruitthealth-durham-345061" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Durham">Pruitthealth-durham — Durham ($8,900)</option>
+              <option value="harmony-park-at-wilson-345063" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Wilson">Harmony Park At Wilson — Wilson ($7,800)</option>
+              <option value="davidson-health-rehab-center-345066" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lexington">Davidson Health &amp; Rehab Center — Lexington ($7,800)</option>
+              <option value="durham-nursing-rehabilitation-center-345070" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Durham">Durham Nursing &amp; Rehabilitation Center — Durham ($8,900)</option>
+              <option value="carolina-rivers-nursing-and-rehabilitation-center-345072" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Jacksonville">Carolina Rivers Nursing And Rehabilitation Center — Jacksonville ($8,500)</option>
+              <option value="sunnybrook-rehabilitation-center-345077" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Raleigh">Sunnybrook Rehabilitation Center — Raleigh ($9,800)</option>
+              <option value="highland-farms-345078" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Black Mountain">Highland Farms — Black Mountain ($7,800)</option>
+              <option value="the-greens-at-viewmont-345080" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Hickory">The Greens At Viewmont — Hickory ($8,500)</option>
+              <option value="accordius-health-at-rose-manor-llc-345081" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Durham">Accordius Health At Rose Manor LLC — Durham ($8,900)</option>
+              <option value="hilltop-health-and-rehabilitation-345083" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Rutherfordton">Hilltop Health And Rehabilitation — Rutherfordton ($7,800)</option>
+              <option value="trinity-glen-345088" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Winston-salem">Trinity Glen — Winston-salem ($8,900)</option>
+              <option value="walnut-cove-health-and-rehabilitation-345089" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Walnut Cove">Walnut Cove Health And Rehabilitation — Walnut Cove ($7,800)</option>
+              <option value="westchester-manor-at-providence-place-345090" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="High Point">Westchester Manor At Providence Place — High Point ($8,500)</option>
+              <option value="edgewood-place-at-the-village-at-brookwood-345091" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Burlington">Edgewood Place At The Village At Brookwood — Burlington ($8,500)</option>
+              <option value="willow-valley-center-for-nursing-and-rehabilitatio-345092" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Winston-salem">Willow Valley Center For Nursing And Rehabilitatio — Winston-salem ($8,900)</option>
+              <option value="maryfield-nursing-home-345093" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="High Point">Maryfield Nursing Home — High Point ($8,500)</option>
+              <option value="chatham-nursing-rehabilitation-345095" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Elkin">Chatham Nursing &amp; Rehabilitation — Elkin ($7,800)</option>
+              <option value="huntersville-oaks-345096" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Huntersville">Huntersville Oaks — Huntersville ($9,800)</option>
+              <option value="jesse-helms-nursing-center-345097" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Monroe">Jesse Helms Nursing Center — Monroe ($8,500)</option>
+              <option value="maggie-valley-nursing-and-rehabilitation-345102" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Maggie Valley">Maggie Valley Nursing And Rehabilitation — Maggie Valley ($7,800)</option>
+              <option value="matthews-health-rehab-center-345103" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Matthews">Matthews Health &amp; Rehab Center — Matthews ($9,800)</option>
+              <option value="zebulon-rehabilitation-center-345104" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Zebulon">Zebulon Rehabilitation Center — Zebulon ($7,800)</option>
+              <option value="trinity-ridge-345106" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Hickory">Trinity Ridge — Hickory ($8,500)</option>
+              <option value="trinity-place-345109" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Albemarle">Trinity Place — Albemarle ($7,800)</option>
+              <option value="autumn-care-of-waynesville-345110" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Waynesville">Autumn Care Of Waynesville — Waynesville ($7,800)</option>
+              <option value="penick-village-345111" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Southern Pines">Penick Village — Southern Pines ($7,800)</option>
+              <option value="willow-creek-nursing-and-rehabilitation-center-345113" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Goldsboro">Willow Creek Nursing And Rehabilitation Center — Goldsboro ($8,500)</option>
+              <option value="salisbury-rehabilitation-and-nursing-center-345115" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Salisbury">Salisbury Rehabilitation And Nursing Center — Salisbury ($8,500)</option>
+              <option value="piedmont-hills-center-for-nursing-and-rehab-345116" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Greensboro">Piedmont Hills Center For Nursing And Rehab — Greensboro ($8,900)</option>
+              <option value="northchase-nursing-and-rehabilitation-center-345119" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Wilmington">Northchase Nursing And Rehabilitation Center — Wilmington ($8,900)</option>
+              <option value="carolina-village-inc-345123" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Hendersonville">Carolina Village Inc — Hendersonville ($7,800)</option>
+              <option value="pruitthealth-elkin-345124" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Elkin">Pruitthealth-elkin — Elkin ($7,800)</option>
+              <option value="mount-olive-center-345126" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Mount Olive">Mount Olive Center — Mount Olive ($7,800)</option>
+              <option value="white-oak-manor-tryon-345127" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Tryon">White Oak Manor - Tryon — Tryon ($7,800)</option>
+              <option value="davie-nursing-and-rehabilitation-center-345129" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Mocksville">Davie Nursing And Rehabilitation Center — Mocksville ($7,800)</option>
+              <option value="accordius-health-at-concord-345130" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Concord">Accordius Health At Concord — Concord ($8,900)</option>
+              <option value="cedar-hills-center-for-nursing-and-rehabilitation-345131" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Clemmons">Cedar Hills Center For Nursing And Rehabilitation — Clemmons ($7,800)</option>
+              <option value="greenhaven-health-and-rehabilitation-center-345132" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Greensboro">Greenhaven Health And Rehabilitation Center — Greensboro ($8,900)</option>
+              <option value="ridge-valley-center-for-nursing-and-rehabilitation-345133" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Wilkesboro">Ridge Valley Center For Nursing And Rehabilitation — Wilkesboro ($7,800)</option>
+              <option value="pelican-health-randolph-llc-345134" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Pelican Health Randolph LLC — Charlotte ($9,800)</option>
+              <option value="the-lodge-at-rocky-mount-health-and-rehabilitation-345137" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Rocky Mount">The Lodge At Rocky Mount Health And Rehabilitation — Rocky Mount ($8,500)</option>
+              <option value="lenoir-health-and-rehabilitation-center-345138" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lenoir">Lenoir Health And Rehabilitation Center — Lenoir ($7,800)</option>
+              <option value="piedmont-health-rehab-center-345140" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Salisbury">Piedmont Health &amp; Rehab Center — Salisbury ($8,500)</option>
+              <option value="university-place-nursing-and-rehabilitation-center-345142" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">University Place Nursing And Rehabilitation Center — Charlotte ($9,800)</option>
+              <option value="siler-city-center-345143" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Siler City">Siler City Center — Siler City ($7,800)</option>
+              <option value="pine-ridge-health-and-rehabilitation-center-345144" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Thomasville">Pine Ridge Health And Rehabilitation Center — Thomasville ($8,500)</option>
+              <option value="the-carrolton-of-williamston-345145" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Williamston">The Carrolton Of Williamston — Williamston ($7,800)</option>
+              <option value="bethany-woods-nursing-and-rehabilitation-center-345146" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Albemarle">Bethany Woods Nursing And Rehabilitation Center — Albemarle ($7,800)</option>
+              <option value="friends-homes-at-guilford-345148" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Greensboro">Friends Homes At Guilford — Greensboro ($8,900)</option>
+              <option value="mill-creek-center-for-nursing-and-rehabilitation-345149" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Winston-salem">Mill Creek Center For Nursing And Rehabilitation — Winston-salem ($8,900)</option>
+              <option value="kenansville-rehabilitation-and-healthcare-center-345150" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Kenansville">Kenansville Rehabilitation And Healthcare Center — Kenansville ($7,800)</option>
+              <option value="white-oak-manor-kings-mountain-345151" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Kings Mountain">White Oak Manor-kings Mountain — Kings Mountain ($7,800)</option>
+              <option value="trinity-village-345152" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Hickory">Trinity Village — Hickory ($8,500)</option>
+              <option value="trinity-oaks-345153" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Salisbury">Trinity Oaks — Salisbury ($8,500)</option>
+              <option value="alpine-health-and-rehabilitation-of-asheboro-345155" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Asheboro">Alpine Health And Rehabilitation Of Asheboro — Asheboro ($7,800)</option>
+              <option value="harmony-hall-nursing-and-rehabilitation-center-345156" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Kinston">Harmony Hall Nursing And Rehabilitation Center — Kinston ($7,800)</option>
+              <option value="lincolnton-rehabilitation-center-345159" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lincolnton">Lincolnton Rehabilitation Center — Lincolnton ($7,800)</option>
+              <option value="davis-health-care-center-345160" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Wilmington">Davis Health Care Center — Wilmington ($8,900)</option>
+              <option value="abernathy-laurels-345161" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Newton">Abernathy Laurels — Newton ($7,800)</option>
+              <option value="accordius-health-at-gastonia-345162" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Gastonia">Accordius Health At Gastonia — Gastonia ($8,500)</option>
+              <option value="glenbridge-health-and-rehabilitation-345163" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Boone">Glenbridge Health And Rehabilitation — Boone ($7,800)</option>
+              <option value="chowan-river-nursing-and-rehabilitation-center-345164" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Edenton">Chowan River Nursing And Rehabilitation Center — Edenton ($7,800)</option>
+              <option value="autumn-care-of-marion-345165" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Marion">Autumn Care Of Marion — Marion ($7,800)</option>
+              <option value="stokes-county-nursing-home-345166" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Danbury">Stokes County Nursing Home — Danbury ($7,800)</option>
+              <option value="yadkin-nursing-and-care-center-345167" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Yadkinville">Yadkin Nursing And Care Center — Yadkinville ($7,800)</option>
+              <option value="macgregor-downs-health-center-by-harborview-345168" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Greenville">Macgregor Downs Health Center By Harborview — Greenville ($8,500)</option>
+              <option value="the-greens-at-gastonia-345169" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Gastonia">The Greens At Gastonia — Gastonia ($8,500)</option>
+              <option value="crystal-bluffs-rehabilitation-and-health-care-cent-345170" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Morehead City">Crystal Bluffs Rehabilitation And Health Care Cent — Morehead City ($7,800)</option>
+              <option value="white-oak-manor-shelby-345171" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Shelby">White Oak Manor-shelby — Shelby ($7,800)</option>
+              <option value="meridian-center-345172" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="High Point">Meridian Center — High Point ($8,500)</option>
+              <option value="emerald-health-rehab-center-345173" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lillington">Emerald Health &amp; Rehab Center — Lillington ($7,800)</option>
+              <option value="elevate-health-and-rehabilitation-345174" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Asheville">Elevate Health And Rehabilitation — Asheville ($8,900)</option>
+              <option value="smithfield-manor-rehabilitation-and-healthcare-cen-345175" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Smithfield">Smithfield Manor Rehabilitation And Healthcare Cen — Smithfield ($7,800)</option>
+              <option value="the-greens-at-pinehurst-rehabilitation-living-ce-345177" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Pinehurst">The Greens At Pinehurst Rehabilitation &amp; Living Ce — Pinehurst ($7,800)</option>
+              <option value="accordius-health-at-mooresville-345179" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Mooresville">Accordius Health At Mooresville — Mooresville ($7,800)</option>
+              <option value="wesley-pines-retirement-community-345180" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lumberton">Wesley Pines Retirement Community — Lumberton ($7,800)</option>
+              <option value="greenville-health-and-rehabilitation-center-345181" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Greenville">Greenville Health And Rehabilitation Center — Greenville ($8,500)</option>
+              <option value="pruitthealth-crystal-coast-345182" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Beaufort">Pruitthealth-crystal Coast — Beaufort ($7,800)</option>
+              <option value="cabarrus-health-and-rehabilitation-center-345183" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Concord">Cabarrus Health And Rehabilitation Center — Concord ($8,900)</option>
+              <option value="laurel-park-rehabilitation-and-healthcare-center-345184" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Elizabeth City">Laurel Park Rehabilitation And Healthcare Center — Elizabeth City ($7,800)</option>
+              <option value="premier-living-and-rehab-center-345185" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lake Waccamaw">Premier Living And Rehab Center — Lake Waccamaw ($7,800)</option>
+              <option value="five-oaks-rehabilitation-and-care-center-345186" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Concord">Five Oaks Rehabilitation And Care Center — Concord ($8,900)</option>
+              <option value="grace-heights-health-rehabilitation-345187" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Morganton">Grace Heights Health &amp; Rehabilitation — Morganton ($7,800)</option>
+              <option value="murphy-rehabilitation-nursing-345190" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Murphy">Murphy Rehabilitation &amp; Nursing — Murphy ($7,800)</option>
+              <option value="surry-community-health-center-by-harborview-345191" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Mount Airy">Surry Community Health Center By Harborview — Mount Airy ($7,800)</option>
+              <option value="longleaf-neuro-medical-treatment-center-345192" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Wilson">Longleaf Neuro-medical Treatment Center — Wilson ($7,800)</option>
+              <option value="mountain-view-manor-nursing-center-345193" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Bryson City">Mountain View Manor Nursing Center — Bryson City ($7,800)</option>
+              <option value="glenflora-345194" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lumberton">Glenflora — Lumberton ($7,800)</option>
+              <option value="edgecombe-health-center-by-harborview-345195" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Tarboro">Edgecombe Health Center By Harborview — Tarboro ($7,800)</option>
+              <option value="mountain-vista-health-park-345196" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Denton">Mountain Vista Health Park — Denton ($7,800)</option>
+              <option value="willow-ridge-of-nc-345197" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Rutherfordton">Willow Ridge Of NC — Rutherfordton ($7,800)</option>
+              <option value="aston-park-health-care-center-345198" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Asheville">Aston Park Health Care Center — Asheville ($8,900)</option>
+              <option value="carol-woods-345199" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Chapel Hill">Carol Woods — Chapel Hill ($8,900)</option>
+              <option value="pelican-health-at-charlotte-345201" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Pelican Health At Charlotte — Charlotte ($9,800)</option>
+              <option value="capital-nursing-and-rehabilitation-center-345202" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Raleigh">Capital Nursing And Rehabilitation Center — Raleigh ($9,800)</option>
+              <option value="life-care-center-of-banner-elk-345203" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Banner Elk">Life Care Center Of Banner Elk — Banner Elk ($7,800)</option>
+              <option value="stonecreek-health-and-rehabilitation-345204" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Asheville">Stonecreek Health And Rehabilitation — Asheville ($8,900)</option>
+              <option value="westwood-hills-nursing-and-rehabilitation-center-345205" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Wilkesboro">Westwood Hills Nursing And Rehabilitation Center — Wilkesboro ($7,800)</option>
+              <option value="madison-health-and-rehabilitation-345206" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Mars Hill">Madison Health And Rehabilitation — Mars Hill ($7,800)</option>
+              <option value="liberty-commons-nursing-and-rehabilitation-center-345207" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Whiteville">Liberty Commons Nursing And Rehabilitation Center — Whiteville ($7,800)</option>
+              <option value="sapphire-ridge-health-and-rehabilitation-345208" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Brevard">Sapphire Ridge Health And Rehabilitation — Brevard ($7,800)</option>
+              <option value="brookridge-retirement-community-345209" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Winston-salem">Brookridge Retirement Community — Winston-salem ($8,900)</option>
+              <option value="elizabethtown-healthcare-rehab-center-345210" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Elizabethtown">Elizabethtown Healthcare &amp; Rehab Center — Elizabethtown ($7,800)</option>
+              <option value="riverpoint-crest-nursing-and-rehabilitation-center-345211" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="New Bern">Riverpoint Crest Nursing And Rehabilitation Center — New Bern ($8,500)</option>
+              <option value="bethesda-health-care-facility-345212" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Eastover">Bethesda Health Care Facility — Eastover ($7,800)</option>
+              <option value="lillington-health-and-rehabilitation-center-345213" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lillington">Lillington Health And Rehabilitation Center — Lillington ($7,800)</option>
+              <option value="river-trace-nursing-and-rehabilitation-center-345215" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Washington">River Trace Nursing And Rehabilitation Center — Washington ($7,800)</option>
+              <option value="westfield-rehabilitation-and-health-center-345216" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Sanford">Westfield Rehabilitation And Health Center — Sanford ($7,800)</option>
+              <option value="premier-nursing-and-rehabilitation-center-345217" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Jacksonville">Premier Nursing And Rehabilitation Center — Jacksonville ($8,500)</option>
+              <option value="mary-gran-nursing-center-345218" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Clinton">Mary Gran Nursing Center — Clinton ($7,800)</option>
+              <option value="magnolia-lane-nursing-and-rehabilitation-center-345219" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Morganton">Magnolia Lane Nursing And Rehabilitation Center — Morganton ($7,800)</option>
+              <option value="the-greens-at-weaverville-345221" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Weaverville">The Greens At Weaverville — Weaverville ($7,800)</option>
+              <option value="autumn-care-of-drexel-345222" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Morganton">Autumn Care Of Drexel — Morganton ($7,800)</option>
+              <option value="valley-hill-health-rehab-center-345223" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Hendersonville">Valley Hill Health &amp; Rehab Center — Hendersonville ($7,800)</option>
+              <option value="signature-healthcare-of-chapel-hill-345225" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Chapel Hill">Signature Healthcare Of Chapel Hill — Chapel Hill ($8,900)</option>
+              <option value="peak-resources-outer-banks-345226" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Nags Head">Peak Resources-outer Banks — Nags Head ($7,800)</option>
+              <option value="cypress-valley-center-for-nursing-and-rehabilitati-345227" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Reidsville">Cypress Valley Center For Nursing And Rehabilitati — Reidsville ($7,800)</option>
+              <option value="ridgewood-living-rehabilitation-center-345228" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Washington">Ridgewood Living &amp; Rehabilitation Center — Washington ($7,800)</option>
+              <option value="peak-resources-shelby-345229" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Grover">Peak Resources- Shelby — Grover ($7,800)</option>
+              <option value="the-greens-at-hickory-345232" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Hickory">The Greens At Hickory — Hickory ($8,500)</option>
+              <option value="deer-park-health-and-rehabilitation-345233" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Nebo">Deer Park Health And Rehabilitation — Nebo ($7,800)</option>
+              <option value="harborview-lumberton-345234" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lumberton">Harborview Lumberton — Lumberton ($7,800)</option>
+              <option value="twin-lakes-community-345235" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Burlington">Twin Lakes Community — Burlington ($8,500)</option>
+              <option value="august-healthcare-at-wilmington-345236" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Wilmington">August Healthcare At Wilmington — Wilmington ($8,900)</option>
+              <option value="barbour-court-nursing-and-rehabilitation-center-345237" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Smithfield">Barbour Court Nursing And Rehabilitation Center — Smithfield ($7,800)</option>
+              <option value="white-oak-manor-charlotte-345238" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">White Oak Manor - Charlotte — Charlotte ($9,800)</option>
+              <option value="warren-hills-nursing-center-345240" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Warrenton">Warren Hills Nursing Center — Warrenton ($7,800)</option>
+              <option value="eden-rehabilitation-and-healthcare-center-345241" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Eden">Eden Rehabilitation And Healthcare Center — Eden ($7,800)</option>
+              <option value="accordius-health-at-charlotte-345243" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Accordius Health At Charlotte — Charlotte ($9,800)</option>
+              <option value="hickory-falls-health-and-rehabilitation-345246" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Granite Falls">Hickory Falls Health And Rehabilitation — Granite Falls ($7,800)</option>
+              <option value="valley-nursing-and-rehabilitation-center-345247" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Taylorsville">Valley Nursing And Rehabilitation Center — Taylorsville ($7,800)</option>
+              <option value="unc-rockingham-rehab-nursing-care-center-345249" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Eden">UNC Rockingham Rehab &amp; Nursing Care Center — Eden ($7,800)</option>
+              <option value="the-greens-at-lincolnton-345250" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lincolnton">The Greens At Lincolnton — Lincolnton ($7,800)</option>
+              <option value="warsaw-rehabilitation-and-healthcare-center-345252" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Warsaw">Warsaw Rehabilitation And Healthcare Center — Warsaw ($7,800)</option>
+              <option value="the-lodge-at-mills-river-345253" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Mills River">The Lodge At Mills River — Mills River ($7,800)</option>
+              <option value="monroe-rehabilitation-center-345254" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Monroe">Monroe Rehabilitation Center — Monroe ($8,500)</option>
+              <option value="carolina-care-health-and-rehabilitation-345255" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Cherryville">Carolina Care Health And Rehabilitation — Cherryville ($7,800)</option>
+              <option value="kannapolis-health-and-rehabilitation-345258" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Kannapolis">Kannapolis Health And Rehabilitation — Kannapolis ($8,500)</option>
+              <option value="rocky-mount-rehabilitation-center-345260" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Rocky Mount">Rocky Mount Rehabilitation Center — Rocky Mount ($8,500)</option>
+              <option value="lotus-village-center-for-nursing-and-rehabilitatio-345261" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Sparta">Lotus Village Center For Nursing And Rehabilitatio — Sparta ($7,800)</option>
+              <option value="hertford-rehabilitation-and-healthcare-center-345262" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Hertford">Hertford Rehabilitation And Healthcare Center — Hertford ($7,800)</option>
+              <option value="macon-valley-nursing-and-rehabilitation-center-345263" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Franklin">Macon Valley Nursing And Rehabilitation Center — Franklin ($7,800)</option>
+              <option value="stanley-total-living-center-345264" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Stanley">Stanley Total Living Center — Stanley ($7,800)</option>
+              <option value="yanceyville-rehabilitation-and-healthcare-center-345265" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Yanceyville">Yanceyville Rehabilitation And Healthcare Center — Yanceyville ($7,800)</option>
+              <option value="the-carrolton-of-plymouth-345266" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Plymouth">The Carrolton Of Plymouth — Plymouth ($7,800)</option>
+              <option value="bladen-east-health-and-rehab-345267" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Elizabethtown">Bladen East Health And Rehab — Elizabethtown ($7,800)</option>
+              <option value="autumn-care-of-marshville-345268" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Marshville">Autumn Care Of Marshville — Marshville ($7,800)</option>
+              <option value="autumn-care-of-salisbury-345269" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Salisbury">Autumn Care Of Salisbury — Salisbury ($8,500)</option>
+              <option value="the-greens-at-spruce-pines-345270" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Spruce Pine">The Greens At Spruce Pines — Spruce Pine ($7,800)</option>
+              <option value="kindred-hospital-east-greensboro-345273" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Greensboro">Kindred Hospital East Greensboro — Greensboro ($8,900)</option>
+              <option value="asheboro-rehabilitation-and-healthcare-center-345277" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Asheboro">Asheboro Rehabilitation And Healthcare Center — Asheboro ($7,800)</option>
+              <option value="northern-regional-hospital-345278" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Mount AIRY">Northern Regional Hospital — Mount AIRY ($7,800)</option>
+              <option value="the-carrolton-of-nash-345279" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Rocky Mount">The Carrolton Of Nash — Rocky Mount ($8,500)</option>
+              <option value="autumn-care-of-raeford-345280" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Raeford">Autumn Care Of Raeford — Raeford ($7,800)</option>
+              <option value="stanly-manor-345281" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Albemarle">Stanly Manor — Albemarle ($7,800)</option>
+              <option value="cleveland-pines-345282" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Shelby">Cleveland Pines — Shelby ($7,800)</option>
+              <option value="the-citadel-mooresville-345283" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Mooresville">The Citadel Mooresville — Mooresville ($7,800)</option>
+              <option value="the-oaks-345284" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Winston-salem">The Oaks — Winston-salem ($8,900)</option>
+              <option value="orchard-valley-health-and-rehabilitation-345285" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Hendersonville">Orchard Valley Health And Rehabilitation — Hendersonville ($7,800)</option>
+              <option value="compass-healthcare-and-rehab-rowan-llc-345288" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Spencer">Compass Healthcare And Rehab Rowan, LLC — Spencer ($7,800)</option>
+              <option value="currituck-health-rehab-center-345289" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Barco">Currituck Health &amp; Rehab Center — Barco ($7,800)</option>
+              <option value="oxford-health-and-rehabilitation-center-345291" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Oxford">Oxford Health And Rehabilitation Center — Oxford ($7,800)</option>
+              <option value="grantsbrook-nursing-and-rehabilitation-center-345292" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Grantsboro">Grantsbrook Nursing And Rehabilitation Center — Grantsboro ($7,800)</option>
+              <option value="richmond-pines-healthcare-and-rehabilitation-cente-345293" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Hamlet">Richmond Pines Healthcare And Rehabilitation Cente — Hamlet ($7,800)</option>
+              <option value="autumn-care-of-shallotte-345294" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Shallotte">Autumn Care Of Shallotte — Shallotte ($7,800)</option>
+              <option value="margate-health-and-rehab-center-345296" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Jefferson">Margate Health And Rehab Center — Jefferson ($7,800)</option>
+              <option value="scotia-village-snf-345297" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Laurinburg">Scotia Village - SNF — Laurinburg ($7,800)</option>
+              <option value="the-laurels-of-pender-345298" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Burgaw">The Laurels Of Pender — Burgaw ($7,800)</option>
+              <option value="white-oak-manor-burlington-345301" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Burlington">White Oak Manor - Burlington — Burlington ($8,500)</option>
+              <option value="vero-health-rehab-of-sylva-345302" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Sylva">Vero Health &amp; Rehab Of Sylva — Sylva ($7,800)</option>
+              <option value="the-laurels-of-greentree-ridge-345303" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Asheville">The Laurels Of Greentree Ridge — Asheville ($8,900)</option>
+              <option value="accordius-health-at-midwood-llc-345304" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Accordius Health At Midwood, LLC — Charlotte ($9,800)</option>
+              <option value="smoky-ridge-health-and-rehabilitation-345305" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Burnsville">Smoky Ridge Health And Rehabilitation — Burnsville ($7,800)</option>
+              <option value="iredell-memorial-hospital-inc-345306" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Statesville">Iredell Memorial Hospital INC — Statesville ($7,800)</option>
+              <option value="juniper-gardens-center-for-nursing-and-rehabilitat-345307" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Gastonia">Juniper Gardens Center For Nursing And Rehabilitat — Gastonia ($8,500)</option>
+              <option value="liberty-commons-nursing-and-rehabilitation-center-345309" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Weldon">Liberty Commons Nursing And Rehabilitation Center — Weldon ($7,800)</option>
+              <option value="piedmont-crossing-345310" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Thomasville">Piedmont Crossing — Thomasville ($8,500)</option>
+              <option value="roxboro-healthcare-rehab-center-345311" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Roxboro">Roxboro Healthcare &amp; Rehab Center — Roxboro ($7,800)</option>
+              <option value="the-greens-at-hendersonville-345312" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Hendersonville">The Greens At Hendersonville — Hendersonville ($7,800)</option>
+              <option value="northampton-nursing-and-rehabilitation-center-345313" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Jackson">Northampton Nursing And Rehabilitation Center — Jackson ($7,800)</option>
+              <option value="fair-haven-of-forest-city-llc-345314" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Forest City">Fair Haven Of Forest City, LLC — Forest City ($7,800)</option>
+              <option value="the-carrolton-of-lumberton-345315" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lumberton">The Carrolton Of Lumberton — Lumberton ($7,800)</option>
+              <option value="senior-citizens-home-345316" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Henderson">Senior Citizens Home — Henderson ($7,800)</option>
+              <option value="clayton-rehabilitation-and-healthcare-center-345317" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Clayton">Clayton Rehabilitation And Healthcare Center — Clayton ($7,800)</option>
+              <option value="brunswick-cove-nursing-center-345318" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Winnabow">Brunswick Cove Nursing Center — Winnabow ($7,800)</option>
+              <option value="elderberry-health-care-345319" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Marshall">Elderberry Health Care — Marshall ($7,800)</option>
+              <option value="kerr-lake-nursing-and-rehabilitation-center-345321" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Henderson">Kerr Lake Nursing And Rehabilitation Center — Henderson ($7,800)</option>
+              <option value="the-laurels-of-hendersonville-345322" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Hendersonville">The Laurels Of Hendersonville — Hendersonville ($7,800)</option>
+              <option value="wallace-rehabilitation-and-healthcare-center-345323" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Wallace">Wallace Rehabilitation And Healthcare Center — Wallace ($7,800)</option>
+              <option value="the-carrolton-of-dunn-345325" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Dunn">The Carrolton Of Dunn — Dunn ($7,800)</option>
+              <option value="willowbrooke-court-sc-ctr-at-matthews-glen-345326" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Matthews">Willowbrooke Court SC Ctr At Matthews Glen — Matthews ($9,800)</option>
+              <option value="givens-health-center-345328" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Asheville">Givens Health Center — Asheville ($8,900)</option>
+              <option value="hibriten-mountain-nursing-and-rehabilitation-345329" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lenoir">Hibriten Mountain Nursing And Rehabilitation — Lenoir ($7,800)</option>
+              <option value="the-graybrier-nursing-and-retirement-center-345330" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Trinity">The Graybrier Nursing And Retirement Center — Trinity ($7,800)</option>
+              <option value="sardis-oaks-345331" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Sardis Oaks — Charlotte ($9,800)</option>
+              <option value="wilson-healthcare-and-rehabilitation-center-345332" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Wilson">Wilson Healthcare And Rehabilitation Center — Wilson ($7,800)</option>
+              <option value="abbotts-creek-center-345333" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lexington">Abbotts Creek Center — Lexington ($7,800)</option>
+              <option value="franklin-oaks-nursing-and-rehabilitation-center-345335" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Louisburg">Franklin Oaks Nursing And Rehabilitation Center — Louisburg ($7,800)</option>
+              <option value="signature-healthcare-of-roanoke-rapids-345336" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Roanoke Rapids">Signature Healthcare Of Roanoke Rapids — Roanoke Rapids ($7,800)</option>
+              <option value="peak-resources-alamance-inc-345337" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Graham">Peak Resources - Alamance, Inc — Graham ($7,800)</option>
+              <option value="windsor-rehabilitation-and-healthcare-center-345339" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Windsor">Windsor Rehabilitation And Healthcare Center — Windsor ($7,800)</option>
+              <option value="the-greens-at-maple-leaf-345340" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Statesville">The Greens At Maple Leaf — Statesville ($7,800)</option>
+              <option value="silver-bluff-345341" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Canton">Silver Bluff — Canton ($7,800)</option>
+              <option value="big-elm-retirement-and-nursing-centers-345342" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Kannapolis">Big Elm Retirement And Nursing Centers — Kannapolis ($8,500)</option>
+              <option value="goldsboro-rehabilitation-and-healthcare-center-345343" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Goldsboro">Goldsboro Rehabilitation And Healthcare Center — Goldsboro ($8,500)</option>
+              <option value="camellia-gardens-center-for-nursing-and-rehab-345344" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Henderson">Camellia Gardens Center For Nursing And Rehab — Henderson ($7,800)</option>
+              <option value="accordius-health-at-monroe-345345" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Monroe">Accordius Health At Monroe — Monroe ($8,500)</option>
+              <option value="whispering-pines-nursing-rehab-center-345348" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Fayetteville">Whispering Pines Nursing &amp; Rehab Center — Fayetteville ($8,500)</option>
+              <option value="woodbury-wellness-center-inc-345349" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Hampstead">Woodbury Wellness Center Inc — Hampstead ($7,800)</option>
+              <option value="courtland-terrace-345350" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Gastonia">Courtland Terrace — Gastonia ($8,500)</option>
+              <option value="autumn-care-of-saluda-345351" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Saluda">Autumn Care Of Saluda — Saluda ($7,800)</option>
+              <option value="highland-house-rehabilitation-and-healthcare-345353" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Fayetteville">Highland House Rehabilitation And Healthcare — Fayetteville ($8,500)</option>
+              <option value="piney-grove-nursing-and-rehabilitation-center-345354" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Kernersville">Piney Grove Nursing And Rehabilitation Center — Kernersville ($7,800)</option>
+              <option value="graham-healthcare-and-rehabilitation-center-345355" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Robbinsville">Graham Healthcare And Rehabilitation Center — Robbinsville ($7,800)</option>
+              <option value="rich-square-nursing-rehabilitation-center-345356" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Rich Square">Rich Square Nursing &amp; Rehabilitation Center — Rich Square ($7,800)</option>
+              <option value="pruitthealth-neuse-345357" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="New Bern">Pruitthealth-neuse — New Bern ($8,500)</option>
+              <option value="louisburg-healthcare-rehabilitation-center-345358" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Louisburg">Louisburg Healthcare &amp; Rehabilitation Center — Louisburg ($7,800)</option>
+              <option value="ahoskie-health-and-rehabilitation-center-345359" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Ahoskie">Ahoskie Health And Rehabilitation Center — Ahoskie ($7,800)</option>
+              <option value="the-greens-at-cabarrus-345362" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Concord">The Greens At Cabarrus — Concord ($8,900)</option>
+              <option value="compass-healthcare-and-rehab-hawfields-inc-345363" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Mebane">Compass Healthcare And Rehab Hawfields, Inc. — Mebane ($7,800)</option>
+              <option value="signature-healthcare-of-kinston-345365" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Kinston">Signature Healthcare Of Kinston — Kinston ($7,800)</option>
+              <option value="greendale-forest-nursing-and-rehabilitation-center-345366" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Snow Hill">Greendale Forest Nursing And Rehabilitation Center — Snow Hill ($7,800)</option>
+              <option value="liberty-healthcare-services-of-golden-years-nursin-345367" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Falcon">Liberty Healthcare Services Of Golden Years Nursin — Falcon ($7,800)</option>
+              <option value="rex-rehab-nursing-care-center-345369" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Raleigh">Rex Rehab &amp; Nursing Care Center — Raleigh ($9,800)</option>
+              <option value="pinehurst-healthcare-rehabilitation-center-345370" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Pinehurst">Pinehurst Healthcare &amp; Rehabilitation Center — Pinehurst ($7,800)</option>
+              <option value="pruitthealth-trent-345371" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="New Bern">Pruitthealth-trent — New Bern ($8,500)</option>
+              <option value="wilson-pines-nursing-and-rehabilitation-center-345372" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Wilson">Wilson Pines Nursing And Rehabilitation Center — Wilson ($7,800)</option>
+              <option value="liberty-commons-nursing-rehab-center-of-southpor-345373" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Southport">Liberty Commons Nursing &amp; Rehab Center Of Southpor — Southport ($7,800)</option>
+              <option value="scotland-manor-health-and-rehabilitation-center-345375" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Scotland Neck">Scotland Manor Health And Rehabilitation Center — Scotland Neck ($7,800)</option>
+              <option value="the-carrolton-of-fayetteville-345376" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Fayetteville">The Carrolton Of Fayetteville — Fayetteville ($8,500)</option>
+              <option value="east-carolina-health-and-rehabilitation-center-345377" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Greenville">East Carolina Health And Rehabilitation Center — Greenville ($8,500)</option>
+              <option value="pruitthealth-rockingham-345378" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Rockingham">Pruitthealth-rockingham — Rockingham ($7,800)</option>
+              <option value="village-green-health-and-rehabilitation-345380" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Fayetteville">Village Green Health And Rehabilitation — Fayetteville ($8,500)</option>
+              <option value="village-care-of-king-345381" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="King">Village Care Of King — King ($7,800)</option>
+              <option value="scottish-pines-rehabilitation-and-nursing-center-345383" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Laurinburg">Scottish Pines Rehabilitation And Nursing Center — Laurinburg ($7,800)</option>
+              <option value="pruitthealth-farmville-345384" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Farmville">Pruitthealth-farmville — Farmville ($7,800)</option>
+              <option value="cardinal-healthcare-and-rehabilitation-345385" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lincolnton">Cardinal Healthcare And Rehabilitation — Lincolnton ($7,800)</option>
+              <option value="wilkes-regional-medical-ctr-sn-345386" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="North Wilkesboro">Wilkes Regional Medical CTR SN — North Wilkesboro ($7,800)</option>
+              <option value="crown-haven-health-and-rehabilitation-345388" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Crown Haven Health And Rehabilitation — Charlotte ($9,800)</option>
+              <option value="the-laurels-of-forest-glenn-345389" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Garner">The Laurels Of Forest Glenn — Garner ($7,800)</option>
+              <option value="countryside-345390" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Stokesdale">Countryside — Stokesdale ($7,800)</option>
+              <option value="heartland-living-rehab-at-the-moses-h-cone-memor-345391" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Greensboro">Heartland Living &amp; Rehab At The Moses H Cone Memor — Greensboro ($8,900)</option>
+              <option value="wadesboro-health-rehab-center-345392" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Wadesboro">Wadesboro Health &amp; Rehab Center — Wadesboro ($7,800)</option>
+              <option value="pisgah-manor-health-care-center-345393" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Candler">Pisgah Manor Health Care Center — Candler ($7,800)</option>
+              <option value="brook-stone-living-center-345394" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Pollocksville">Brook Stone Living Center — Pollocksville ($7,800)</option>
+              <option value="peak-resources-cherryville-345395" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Cherryville">Peak Resources-cherryville — Cherryville ($7,800)</option>
+              <option value="smoky-mountain-health-and-rehabilitation-center-345396" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Waynesville">Smoky Mountain Health And Rehabilitation Center — Waynesville ($7,800)</option>
+              <option value="shoreland-health-care-and-retirement-center-inc-345397" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Whiteville">Shoreland Health Care And Retirement Center Inc — Whiteville ($7,800)</option>
+              <option value="skyland-care-center-345400" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Sylva">Skyland Care Center — Sylva ($7,800)</option>
+              <option value="wilkesboro-health-and-rehabilitation-345401" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="North Wilkesboro">Wilkesboro Health And Rehabilitation — North Wilkesboro ($7,800)</option>
+              <option value="highfield-nursing-and-rehabilitation-345403" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Cary">Highfield Nursing And Rehabilitation — Cary ($9,800)</option>
+              <option value="three-rivers-health-and-rehabilitation-center-345404" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Windsor">Three Rivers Health And Rehabilitation Center — Windsor ($7,800)</option>
+              <option value="charlotte-health-rehabilitation-center-345405" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Charlotte Health &amp; Rehabilitation Center — Charlotte ($9,800)</option>
+              <option value="gates-health-and-rehabilitation-center-345406" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Gatesville">Gates Health And Rehabilitation Center — Gatesville ($7,800)</option>
+              <option value="southpoint-rehabilitation-and-healthcare-center-345408" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Durham">Southpoint Rehabilitation And Healthcare Center — Durham ($8,900)</option>
+              <option value="pembroke-center-345409" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Pembroke">Pembroke Center — Pembroke ($7,800)</option>
+              <option value="central-continuing-care-345410" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Mount Airy">Central Continuing Care — Mount Airy ($7,800)</option>
+              <option value="skyland-terrace-and-rehabilitation-345411" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Waynesville">Skyland Terrace And Rehabilitation — Waynesville ($7,800)</option>
+              <option value="brantwood-nh-retirement-center-345412" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Oxford">Brantwood Nh &amp; Retirement Center — Oxford ($7,800)</option>
+              <option value="fleshers-fairview-health-care-345413" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Fairview">Fleshers Fairview Health Care — Fairview ($7,800)</option>
+              <option value="haymount-rehabilitation-nursing-center-inc-345414" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Fayetteville">Haymount Rehabilitation &amp; Nursing Center, Inc. — Fayetteville ($8,500)</option>
+              <option value="pineville-rehabilitation-and-living-center-345415" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Pineville">Pineville Rehabilitation And Living Center — Pineville ($7,800)</option>
+              <option value="bermuda-village-retirement-center-345416" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Bermuda Run">Bermuda Village Retirement Center — Bermuda Run ($7,800)</option>
+              <option value="hillside-nursing-center-of-wake-forest-345417" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Wake Forest">Hillside Nursing Center Of Wake Forest — Wake Forest ($7,800)</option>
+              <option value="swannanoa-valley-health-and-rehabilitation-345418" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Swannanoa">Swannanoa Valley Health And Rehabilitation — Swannanoa ($7,800)</option>
+              <option value="lexington-health-care-center-345419" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lexington">Lexington Health Care Center — Lexington ($7,800)</option>
+              <option value="alamance-health-care-center-345420" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Burlington">Alamance Health Care Center — Burlington ($8,500)</option>
+              <option value="the-laurels-of-chatham-345421" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Pittsboro">The Laurels Of Chatham — Pittsboro ($7,800)</option>
+              <option value="wilson-rehabilitation-and-nursing-center-345423" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Wilson">Wilson Rehabilitation And Nursing Center — Wilson ($7,800)</option>
+              <option value="fair-haven-home-inc-345425" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Bostic">Fair Haven Home Inc — Bostic ($7,800)</option>
+              <option value="valley-view-care-and-rehabilitation-345426" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Andrews">Valley View Care And Rehabilitation — Andrews ($7,800)</option>
+              <option value="the-laurels-of-salisbury-345428" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Salisbury">The Laurels Of Salisbury — Salisbury ($8,500)</option>
+              <option value="peak-resources-pinelake-345429" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Carthage">Peak Resources - Pinelake — Carthage ($7,800)</option>
+              <option value="bryan-health-and-rehab-345431" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Scotland Neck">Bryan Health And Rehab — Scotland Neck ($7,800)</option>
+              <option value="river-bend-health-and-rehabilitation-345432" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Asheville">River Bend Health And Rehabilitation — Asheville ($8,900)</option>
+              <option value="clay-county-health-and-rehabilitation-345433" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Hayesville">Clay County Health And Rehabilitation — Hayesville ($7,800)</option>
+              <option value="carver-living-center-345434" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Durham">Carver Living Center — Durham ($8,900)</option>
+              <option value="wellington-rehabilitation-and-healthcare-345436" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Knightdale">Wellington Rehabilitation And Healthcare — Knightdale ($7,800)</option>
+              <option value="eckerd-living-center-345437" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Highlands">Eckerd Living Center — Highlands ($7,800)</option>
+              <option value="the-laurels-of-summit-ridge-345438" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Asheville">The Laurels Of Summit Ridge — Asheville ($8,900)</option>
+              <option value="peak-resources-brookshire-inc-345439" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Hillsborough">Peak Resources - Brookshire, Inc — Hillsborough ($7,800)</option>
+              <option value="gastonia-health-rehab-center-345441" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Gastonia">Gastonia Health &amp; Rehab Center — Gastonia ($8,500)</option>
+              <option value="forrest-oakes-healthcare-345442" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Albemarle">Forrest Oakes Healthcare — Albemarle ($7,800)</option>
+              <option value="oak-forest-health-and-rehabilitation-345443" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Winston Salem">Oak Forest Health And Rehabilitation — Winston Salem ($8,900)</option>
+              <option value="glenaire-345445" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Cary">Glenaire — Cary ($9,800)</option>
+              <option value="college-pines-health-and-rehabilitation-345446" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Connelly Springs">College Pines Health And Rehabilitation — Connelly Springs ($7,800)</option>
+              <option value="emerald-ridge-health-and-rehabilitation-345447" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Asheville">Emerald Ridge Health And Rehabilitation — Asheville ($8,900)</option>
+              <option value="maple-grove-health-and-rehabilitation-center-345448" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Greensboro">Maple Grove Health And Rehabilitation Center — Greensboro ($8,900)</option>
+              <option value="king-health-and-rehabilitation-center-345449" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="King">King Health And Rehabilitation Center — King ($7,800)</option>
+              <option value="westwood-health-and-rehabilitation-345450" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Archdale">Westwood Health And Rehabilitation — Archdale ($7,800)</option>
+              <option value="belaire-health-care-center-345457" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Gastonia">Belaire Health Care Center — Gastonia ($8,500)</option>
+              <option value="treyburn-rehabilitation-center-345458" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Durham">Treyburn Rehabilitation Center — Durham ($8,900)</option>
+              <option value="willowbrooke-court-sc-ctr-at-tryon-estates-345459" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Columbus">Willowbrooke Court SC Ctr At Tryon Estates — Columbus ($7,800)</option>
+              <option value="guilford-health-care-center-345460" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Greensboro">Guilford Health Care Center — Greensboro ($8,900)</option>
+              <option value="the-oaks-brevard-345462" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Brevard">The Oaks-brevard — Brevard ($7,800)</option>
+              <option value="life-care-center-of-hendersonville-345463" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Hendersonville">Life Care Center Of Hendersonville — Hendersonville ($7,800)</option>
+              <option value="oak-grove-healthcare-345464" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Rutherfordton">Oak Grove Healthcare — Rutherfordton ($7,800)</option>
+              <option value="bayview-nursing-rehabilitation-center-345465" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="New Bern">Bayview Nursing &amp; Rehabilitation Center — New Bern ($8,500)</option>
+              <option value="willowbrook-rehabilitation-and-care-345466" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Yadkinville">Willowbrook Rehabilitation And Care — Yadkinville ($7,800)</option>
+              <option value="novant-health-presbyterian-medical-center-snu-345467" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Novant Health Presbyterian Medical Center-snu — Charlotte ($9,800)</option>
+              <option value="liberty-commons-rehabilitation-center-345468" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Wilmington">Liberty Commons Rehabilitation Center — Wilmington ($8,900)</option>
+              <option value="mecklenburg-heath-and-rehabilitation-345471" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Mecklenburg Heath And Rehabilitation — Charlotte ($9,800)</option>
+              <option value="southwood-nursing-and-retirement-345472" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Clinton">Southwood Nursing And Retirement — Clinton ($7,800)</option>
+              <option value="wilora-lake-healthcare-345473" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Wilora Lake Healthcare — Charlotte ($9,800)</option>
+              <option value="tsali-care-center-345475" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Cherokee">Tsali Care Center — Cherokee ($7,800)</option>
+              <option value="biltmore-haven-nursing-and-rehabilitation-345477" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Arden">Biltmore Haven Nursing And Rehabilitation — Arden ($7,800)</option>
+              <option value="harnett-woods-nursing-and-rehabilitation-center-345478" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Dunn">Harnett Woods Nursing And Rehabilitation Center — Dunn ($7,800)</option>
+              <option value="salemtowne-345479" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Winston-salem">Salemtowne — Winston-salem ($8,900)</option>
+              <option value="woodlands-nursing-rehabilitation-center-345481" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Fayetteville">Woodlands Nursing &amp; Rehabilitation Center — Fayetteville ($8,500)</option>
+              <option value="brookdale-carriage-club-providence-345482" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Brookdale Carriage Club Providence — Charlotte ($9,800)</option>
+              <option value="shaire-nursing-center-345483" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Lenoir">Shaire Nursing Center — Lenoir ($7,800)</option>
+              <option value="transylvania-regional-hospital-345484" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Brevard">Transylvania Regional Hospital — Brevard ($7,800)</option>
+              <option value="cherry-point-bay-nursing-and-rehabilitation-center-345487" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Havelock">Cherry Point Bay Nursing And Rehabilitation Center — Havelock ($7,800)</option>
+              <option value="rockwell-park-rehabilitation-and-healthcare-center-345489" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Rockwell Park Rehabilitation And Healthcare Center — Charlotte ($9,800)</option>
+              <option value="ayden-court-nursing-and-rehabilitation-center-345490" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Ayden">Ayden Court Nursing And Rehabilitation Center — Ayden ($7,800)</option>
+              <option value="croatan-ridge-nursing-and-rehabilitation-center-345491" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Newport">Croatan Ridge Nursing And Rehabilitation Center — Newport ($7,800)</option>
+              <option value="hendersonville-health-and-rehabilitation-345493" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Flat Rock">Hendersonville Health And Rehabilitation — Flat Rock ($7,800)</option>
+              <option value="peak-resources-gastonia-345494" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Gastonia">Peak Resources - Gastonia — Gastonia ($8,500)</option>
+              <option value="the-stewart-health-center-345495" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">The Stewart Health Center — Charlotte ($9,800)</option>
+              <option value="liberty-commons-nursing-rehabilitation-center-of-345496" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Burlington">Liberty Commons Nursing &amp; Rehabilitation Center Of — Burlington ($8,500)</option>
+              <option value="litchford-falls-health-and-rehabilitation-center-345499" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Raleigh">Litchford Falls Health And Rehabilitation Center — Raleigh ($9,800)</option>
+              <option value="windsor-point-continuing-care-345500" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Fuquay-varina">Windsor Point Continuing Care — Fuquay-varina ($7,800)</option>
+              <option value="croasdaile-village-345501" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Durham">Croasdaile Village — Durham ($8,900)</option>
+              <option value="lake-park-nursing-and-rehabilitation-center-345502" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Indian Trail">Lake Park Nursing And Rehabilitation Center — Indian Trail ($7,800)</option>
+              <option value="liberty-commons-nsg-and-rehab-ctr-of-rowan-county-345503" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Salisbury">Liberty Commons Nsg And Rehab Ctr Of Rowan County — Salisbury ($8,500)</option>
+              <option value="carolina-rehab-center-of-cumberland-345505" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Fayetteville">Carolina Rehab Center Of Cumberland — Fayetteville ($8,500)</option>
+              <option value="whitestone-a-masonic-and-eastern-star-community-345506" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Greensboro">Whitestone A Masonic And Eastern Star Community — Greensboro ($8,900)</option>
+              <option value="autumn-care-of-myrtle-grove-345507" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Wilmington">Autumn Care Of Myrtle Grove — Wilmington ($8,900)</option>
+              <option value="unc-rex-rehab-nursing-care-center-of-apex-345508" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Apex">UNC Rex Rehab &amp; Nursing Care Center Of Apex — Apex ($9,800)</option>
+              <option value="dahlia-gardens-center-for-nursing-and-rehabilitati-345509" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Aberdeen">Dahlia Gardens Center For Nursing And Rehabilitati — Aberdeen ($7,800)</option>
+              <option value="tarboro-health-and-rehabilitation-llc-345510" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Tarboro">Tarboro Health And Rehabilitation LLC — Tarboro ($7,800)</option>
+              <option value="autumn-care-of-statesville-345511" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Statesville">Autumn Care Of Statesville — Statesville ($7,800)</option>
+              <option value="cypress-glen-retirement-community-345512" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Greenville">Cypress Glen Retirement Community — Greenville ($8,500)</option>
+              <option value="tower-nursing-and-rehabilitation-center-345513" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Raleigh">Tower Nursing And Rehabilitation Center — Raleigh ($9,800)</option>
+              <option value="autumn-care-of-nash-345514" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Nashville">Autumn Care Of Nash — Nashville ($7,800)</option>
+              <option value="pruitthealth-town-center-345515" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Harrisburg">Pruitthealth-town Center — Harrisburg ($7,800)</option>
+              <option value="conover-nursing-and-rehabilitation-center-345516" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Conover">Conover Nursing And Rehabilitation Center — Conover ($7,800)</option>
+              <option value="inn-at-quail-haven-village-345518" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Pinehurst">Inn At Quail Haven Village — Pinehurst ($7,800)</option>
+              <option value="liberty-commons-nursing-rehabilitation-center-of-345519" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Benson">Liberty Commons Nursing &amp; Rehabilitation Center Of — Benson ($7,800)</option>
+              <option value="magnolia-gardens-center-for-nursing-and-rehabilita-345520" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Thomasville">Magnolia Gardens Center For Nursing And Rehabilita — Thomasville ($8,500)</option>
+              <option value="fletcher-rehabilitation-and-healthcare-center-345522" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Fletcher">Fletcher Rehabilitation And Healthcare Center — Fletcher ($7,800)</option>
+              <option value="ramseur-rehabilitation-and-healthcare-center-345523" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Ramseur">Ramseur Rehabilitation And Healthcare Center — Ramseur ($7,800)</option>
+              <option value="the-gardens-of-taylor-glen-retirement-community-345525" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Concord">The Gardens Of Taylor Glen Retirement Community — Concord ($8,900)</option>
+              <option value="carolina-rehab-center-of-burke-345526" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Connelly Spring">Carolina Rehab Center Of Burke — Connelly Spring ($7,800)</option>
+              <option value="river-landing-at-sandy-ridge-345528" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Colfax">River Landing At Sandy Ridge — Colfax ($7,800)</option>
+              <option value="perry-creek-health-and-rehabilitation-center-345529" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Raleigh">Perry Creek Health And Rehabilitation Center — Raleigh ($9,800)</option>
+              <option value="penn-nursing-center-345530" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Reidsville">Penn Nursing Center — Reidsville ($7,800)</option>
+              <option value="nc-state-veterans-home-salisbury-345531" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Salisbury">NC State Veterans Home - Salisbury — Salisbury ($8,500)</option>
+              <option value="liberty-commons-nursing-and-rehabilitation-center-345532" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Sanford">Liberty Commons Nursing And Rehabilitation Center — Sanford ($7,800)</option>
+              <option value="the-cedars-of-chapel-hill-345533" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Chapel Hill">The Cedars Of Chapel Hill — Chapel Hill ($8,900)</option>
+              <option value="sanford-health-rehabilitation-co-345534" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Sanford">Sanford Health &amp; Rehabilitation Co — Sanford ($7,800)</option>
+              <option value="adams-farm-living-rehabilitation-345535" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Jamestown">Adams Farm Living &amp; Rehabilitation — Jamestown ($7,800)</option>
+              <option value="peak-resources-wilmington-inc-345537" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Wilmington">Peak Resources-wilmington, Inc — Wilmington ($8,900)</option>
+              <option value="pruitthealth-raleigh-345538" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Raleigh">Pruitthealth-raleigh — Raleigh ($9,800)</option>
+              <option value="the-arbor-345539" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Pittsboro">The Arbor — Pittsboro ($7,800)</option>
+              <option value="lakeside-health-rehab-center-345541" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Huntersville">Lakeside Health &amp; Rehab Center — Huntersville ($9,800)</option>
+              <option value="the-forest-at-duke-inc-345542" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Durham">The Forest At Duke Inc — Durham ($8,900)</option>
+              <option value="bermuda-commons-nursing-and-rehabilitation-center-345543" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Advance">Bermuda Commons Nursing And Rehabilitation Center — Advance ($7,800)</option>
+              <option value="asbury-health-and-rehabilitation-center-345544" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Asbury Health And Rehabilitation Center — Charlotte ($9,800)</option>
+              <option value="the-rosewood-health-center-345546" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Raleigh">The Rosewood Health Center — Raleigh ($9,800)</option>
+              <option value="camden-health-and-rehabilitation-345547" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Greensboro">Camden Health And Rehabilitation — Greensboro ($8,900)</option>
+              <option value="ashton-health-and-rehabilitation-345548" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Mcleansville">Ashton Health And Rehabilitation — Mcleansville ($7,800)</option>
+              <option value="brunswick-rehabilitation-and-healthcare-center-345549" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Bolivia">Brunswick Rehabilitation And Healthcare Center — Bolivia ($7,800)</option>
+              <option value="white-oak-of-waxhaw-345550" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Waxhaw">White Oak Of Waxhaw — Waxhaw ($7,800)</option>
+              <option value="pruitthealth-carolina-point-345551" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Durham">Pruitthealth-carolina Point — Durham ($8,900)</option>
+              <option value="the-shannon-gray-rehabilitation-recovery-center-345552" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Jamestown">The Shannon Gray Rehabilitation &amp; Recovery Center — Jamestown ($7,800)</option>
+              <option value="autumn-care-of-fayetteville-345553" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Fayetteville">Autumn Care Of Fayetteville — Fayetteville ($8,500)</option>
+              <option value="trinity-grove-345554" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Wilmington">Trinity Grove — Wilmington ($8,900)</option>
+              <option value="hillcrest-raleigh-at-crabtree-valley-345555" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Raleigh">Hillcrest Raleigh At Crabtree Valley — Raleigh ($9,800)</option>
+              <option value="deerfield-episcopal-retirement-345556" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Asheville">Deerfield Episcopal Retirement — Asheville ($8,900)</option>
+              <option value="azalea-health-rehab-center-345557" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Wilmington">Azalea Health &amp; Rehab Center — Wilmington ($8,900)</option>
+              <option value="nc-state-veterans-home-black-mountain-345558" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Black Mountain">NC State Veterans Home - Black Mountain — Black Mountain ($7,800)</option>
+              <option value="homestead-hills-345559" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Winston-salem">Homestead Hills — Winston-salem ($8,900)</option>
+              <option value="nc-state-veterans-home-kinston-345560" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Kinston">NC State Veterans Home-kinston — Kinston ($7,800)</option>
+              <option value="fuquay-varina-health-and-rehabilitation-center-345561" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Fuquay Varina">Fuquay-varina Health And Rehabilitation Center — Fuquay Varina ($7,800)</option>
+              <option value="clear-creek-nursing-rehabilitation-center-345562" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Mint Hill">Clear Creek Nursing &amp; Rehabilitation Center — Mint Hill ($7,800)</option>
+              <option value="pavilion-health-center-at-brightmore-345563" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Pavilion Health Center At Brightmore — Charlotte ($9,800)</option>
+              <option value="sharon-towers-345564" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Sharon Towers — Charlotte ($9,800)</option>
+              <option value="trinity-elms-345565" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Clemmons">Trinity Elms — Clemmons ($7,800)</option>
+              <option value="pruitthealth-union-pointe-345566" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Monroe">Pruitthealth-union Pointe — Monroe ($8,500)</option>
+              <option value="autumn-care-of-cornelius-345567" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Cornelius">Autumn Care Of Cornelius — Cornelius ($7,800)</option>
+              <option value="davis-health-and-wellness-center-at-cambridge-vill-345568" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Wilmington">Davis Health And Wellness Center At Cambridge Vill — Wilmington ($8,900)</option>
+              <option value="springbrook-nursing-and-rehabilitation-center-345569" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Clayton">Springbrook Nursing And Rehabilitation Center — Clayton ($7,800)</option>
+              <option value="huntersville-health-rehabilitation-center-345570" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Huntersville">Huntersville Health &amp; Rehabilitation Center — Huntersville ($9,800)</option>
+              <option value="bradley-creek-health-center-345571" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Wilmington">Bradley Creek Health Center — Wilmington ($8,900)</option>
+              <option value="the-cardinal-at-north-hills-345572" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Raleigh">The Cardinal At North Hills — Raleigh ($9,800)</option>
+              <option value="arbor-acres-united-methodist-retirement-community-345573" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Winston Salem">Arbor Acres United Methodist Retirement Community — Winston Salem ($8,900)</option>
+              <option value="bellarose-nursing-and-rehab-345574" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Garner">Bellarose Nursing And Rehab — Garner ($7,800)</option>
+              <option value="brunswick-health-rehab-center-345575" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Ash">Brunswick Health &amp; Rehab Center — Ash ($7,800)</option>
+              <option value="parkview-health-and-rehabilitation-center-345576" data-median="8900" data-low="7150" data-high="11750" data-tier="B-mid" data-city="Chapel Hill">Parkview Health And Rehabilitation Center — Chapel Hill ($8,900)</option>
+              <option value="swift-creek-health-center-345577" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="CARY">Swift Creek Health Center — CARY ($9,800)</option>
+              <option value="briar-creek-health-center-345578" data-median="9800" data-low="7800" data-high="12900" data-tier="A-metro" data-city="Charlotte">Briar Creek Health Center — Charlotte ($9,800)</option>
+              <option value="north-carolina-state-veterans-home-kernersville-345579" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Kernersville">North Carolina State Veterans Home Kernersville — Kernersville ($7,800)</option>
+              <option value="black-mountain-neuro-medical-treatment-center-34a001" data-median="7800" data-low="6250" data-high="10300" data-tier="D-rural" data-city="Black Mountain">Black Mountain Neuro-medical Treatment Center — Black Mountain ($7,800)</option>
+              <option value="o-berry-neuro-medical-treatment-center-34a002" data-median="8500" data-low="6800" data-high="11200" data-tier="C-small" data-city="Goldsboro">O'berry Neuro-medical Treatment Center — Goldsboro ($8,500)</option>
+          </select>
+          <div class="helper">All 418 NC SNFs available. List populates from the index for your selected state.</div>
+        </div>
+
+        <div class="field">
+          <label class="lbl"><span class="step-num">4</span> Level of care needed</label>
+          <div class="radio-row">
+            <label class="opt">
+              <input type="radio" name="level" value="1.00" checked />
+              <span><strong>Standard care</strong><span class="lvl-desc">Routine SNF — most residents</span></span>
+              <span class="lvl-mult">× 1.00</span>
+            </label>
+            <label class="opt">
+              <input type="radio" name="level" value="1.15" />
+              <span><strong>Higher needs</strong><span class="lvl-desc">Mobility / ADL assistance, advanced care</span></span>
+              <span class="lvl-mult">× 1.15</span>
+            </label>
+            <label class="opt">
+              <input type="radio" name="level" value="1.40" />
+              <span><strong>Memory care / extensive ADL</strong><span class="lvl-desc">Cognitive support, behavioral, full ADL</span></span>
+              <span class="lvl-mult">× 1.40</span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="estimate-panel">
+        <div class="est-label">Your estimate</div>
+        <div class="est-monthly tnum"><span id="estMonthly">$8,500</span><span class="unit">/mo</span></div>
+        <div class="est-row"><span>Range</span><span class="v" id="estRange">$6,800 – $11,200</span></div>
+        <div class="est-row"><span>Annual</span><span class="v tnum" id="estAnnual">$102,000</span></div>
+        <div class="est-row"><span>Over 3 years</span><span class="v tnum" id="est3y">$306,000</span></div>
+        <div class="est-divider"></div>
+        <div class="dq-badge on-dark" id="dqBadge">
+          <span class="dq-dot"></span> State-anchored estimate
+        </div>
+        <div class="est-cite" id="estCite" style="margin-top:12px">
+          Source: Genworth/CareScout 2024 NC state median<sup style="background:rgba(255,255,255,.08);color:#fde0a3;padding:1px 5px;border-radius:3px;font-size:9px">1</sup>.
+          <span id="tierLine" style="display:block;margin-top:6px">No facility selected — using state median path.</span>
+        </div>
+        <div class="formula-block" id="formulaBlock">
+monthly = <span class="var">base</span> × <span class="var">level</span>
+       = <span class="num">$8,500</span> × <span class="num">1.00</span>
+       = <span class="num">$8,500</span>
+        </div>
+        <div class="est-actions">
+          <a href="/calculator/skilled-nursing/north-carolina/" class="btn btn-primary" id="viewState">View North Carolina facilities <span class="arrow">→</span></a>
+          <a href="#" class="btn btn-ghost" id="viewFacility" style="display:none">View facility details <span class="arrow">→</span></a>
+          <a href="/financial-aid/" class="btn btn-ghost">How families pay <span class="arrow">→</span></a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- "What we estimated, in plain English" -->
+  <section>
+    <div class="section-eyebrow">What this means</div>
+    <h2>What we estimated, in plain English</h2>
+    <p class="section-intro">Three things you should know about this number before you trust it.</p>
+
+    <div class="explain-grid">
+      <div class="explain-card">
+        <div class="e-num">1</div>
+        <h3>It's a state-anchored estimate</h3>
+        <p>v0 numbers come from Genworth/CareScout 2024 state median + a metro-tier multiplier (A 1.15× / B 1.05× / C 1.00× / D 0.92×). Per-facility cost-report data lands later this year.</p>
+      </div>
+      <div class="explain-card">
+        <div class="e-num">2</div>
+        <h3>The range matters more than the median</h3>
+        <p>SNF costs vary ±20–30% within a state based on tier, ownership, and bed type (private vs semi-private). The range we show reflects that real spread.</p>
+      </div>
+      <div class="explain-card">
+        <div class="e-num">3</div>
+        <h3>Most families combine programs</h3>
+        <p>Out-of-pocket alone is rare. VA Aid &amp; Attendance, NC Medicaid waivers, and existing LTC policies typically offset 30–60% of the monthly figure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- State coverage -->
+  <section>
+    <div class="section-eyebrow">All 50 states</div>
+    <h2>Skilled nursing by state</h2>
+    <p class="section-intro">State-level pages show per-facility data, level-of-care projections, and full source citations.</p>
+
+    <div class="state-grid">
+      <a class="state-link" href="/calculator/skilled-nursing/north-carolina/"><span class="st-name">North Carolina</span><span class="st-med">$8,500/mo · 418 facilities</span></a>
+      <a class="state-link" href="/calculator/skilled-nursing/california/"><span class="st-name">California</span><span class="st-med">$10,030/mo</span></a>
+      <a class="state-link" href="/calculator/skilled-nursing/new-york/"><span class="st-name">New York</span><span class="st-med">$11,220/mo</span></a>
+      <a class="state-link" href="/calculator/skilled-nursing/florida/"><span class="st-name">Florida</span><span class="st-med">$8,160/mo</span></a>
+      <a class="state-link" href="/calculator/skilled-nursing/texas/"><span class="st-name">Texas</span><span class="st-med">$7,990/mo</span></a>
+      <a class="state-link" href="/calculator/skilled-nursing/hawaii/"><span class="st-name">Hawaii</span><span class="st-med">$11,985/mo</span></a>
+      <a class="state-link" href="/calculator/skilled-nursing/mississippi/"><span class="st-name">Mississippi</span><span class="st-med">$6,630/mo</span></a>
+      <a class="state-link" href="/calculator/skilled-nursing/virginia/"><span class="st-name">Virginia</span><span class="st-med">$9,400/mo</span></a>
+      <a class="state-link" href="/calculator/skilled-nursing/south-carolina/"><span class="st-name">South Carolina</span><span class="st-med">$8,100/mo</span></a>
+      <a class="state-link" href="/calculator/skilled-nursing/georgia/"><span class="st-name">Georgia</span><span class="st-med">$8,200/mo</span></a>
+    </div>
+    <p style="font-size:13px;color:var(--ink-3);margin-top:14px">Plus 40 more states. <a href="/calculator/skilled-nursing/">View all skilled nursing pages →</a></p>
+  </section>
+
 </div>
 
-<h2>Browse cost by state</h2>
-<p>Each state page shows median monthly assisted living cost, sub-area pricing for major metros, Medicaid coverage rules, and a cost worksheet to estimate your family's actual outlay.</p>
-<ul class="state-list">
-  <li><a href="/calculator/alabama/">Alabama</a></li>
-  <li><a href="/calculator/alaska/">Alaska</a></li>
-  <li><a href="/calculator/arizona/">Arizona</a></li>
-  <li><a href="/calculator/arkansas/">Arkansas</a></li>
-  <li><a href="/calculator/california/">California</a></li>
-  <li><a href="/calculator/colorado/">Colorado</a></li>
-  <li><a href="/calculator/connecticut/">Connecticut</a></li>
-  <li><a href="/calculator/delaware/">Delaware</a></li>
-  <li><a href="/calculator/district-of-columbia/">District of Columbia</a></li>
-  <li><a href="/calculator/florida/">Florida</a></li>
-  <li><a href="/calculator/georgia/">Georgia</a></li>
-  <li><a href="/calculator/hawaii/">Hawaii</a></li>
-  <li><a href="/calculator/idaho/">Idaho</a></li>
-  <li><a href="/calculator/illinois/">Illinois</a></li>
-  <li><a href="/calculator/indiana/">Indiana</a></li>
-  <li><a href="/calculator/iowa/">Iowa</a></li>
-  <li><a href="/calculator/kansas/">Kansas</a></li>
-  <li><a href="/calculator/kentucky/">Kentucky</a></li>
-  <li><a href="/calculator/louisiana/">Louisiana</a></li>
-  <li><a href="/calculator/maine/">Maine</a></li>
-  <li><a href="/calculator/maryland/">Maryland</a></li>
-  <li><a href="/calculator/massachusetts/">Massachusetts</a></li>
-  <li><a href="/calculator/michigan/">Michigan</a></li>
-  <li><a href="/calculator/minnesota/">Minnesota</a></li>
-  <li><a href="/calculator/mississippi/">Mississippi</a></li>
-  <li><a href="/calculator/missouri/">Missouri</a></li>
-  <li><a href="/calculator/montana/">Montana</a></li>
-  <li><a href="/calculator/nebraska/">Nebraska</a></li>
-  <li><a href="/calculator/nevada/">Nevada</a></li>
-  <li><a href="/calculator/new-hampshire/">New Hampshire</a></li>
-  <li><a href="/calculator/new-jersey/">New Jersey</a></li>
-  <li><a href="/calculator/new-mexico/">New Mexico</a></li>
-  <li><a href="/calculator/new-york/">New York</a></li>
-  <li><a href="/calculator/north-carolina/">North Carolina</a></li>
-  <li><a href="/calculator/north-dakota/">North Dakota</a></li>
-  <li><a href="/calculator/ohio/">Ohio</a></li>
-  <li><a href="/calculator/oklahoma/">Oklahoma</a></li>
-  <li><a href="/calculator/oregon/">Oregon</a></li>
-  <li><a href="/calculator/pennsylvania/">Pennsylvania</a></li>
-  <li><a href="/calculator/rhode-island/">Rhode Island</a></li>
-  <li><a href="/calculator/south-carolina/">South Carolina</a></li>
-  <li><a href="/calculator/south-dakota/">South Dakota</a></li>
-  <li><a href="/calculator/tennessee/">Tennessee</a></li>
-  <li><a href="/calculator/texas/">Texas</a></li>
-  <li><a href="/calculator/utah/">Utah</a></li>
-  <li><a href="/calculator/vermont/">Vermont</a></li>
-  <li><a href="/calculator/virginia/">Virginia</a></li>
-  <li><a href="/calculator/washington/">Washington</a></li>
-  <li><a href="/calculator/west-virginia/">West Virginia</a></li>
-  <li><a href="/calculator/wisconsin/">Wisconsin</a></li>
-  <li><a href="/calculator/wyoming/">Wyoming</a></li>
-</ul>
-
-<h2>How we source pricing</h2>
-<ul>
-  <li>Genworth/CareScout Cost of Care Survey 2025 (state and metro medians)</li>
-  <li>NIC MAP Senior Housing data (context only)</li>
-  <li>CMS Form 2540-24 (skilled nursing comparator)</li>
-  <li>Operator-direct rate cards from Carepriced founding-partner facilities (where available)</li>
-</ul>
-
-<h2>About these estimates</h2>
-<p>Medians are starting points, not quotes. Actual cost depends on care level, room type (private, shared, studio), and add-ons such as medication management, physical therapy, and 24/7 nursing. Memory care typically runs 20–50% above assisted living for the same facility. State pages break down sub-area pricing for major metros where data is available.</p>
-
 <footer>
-  <p>Carepriced &middot; Senior care pricing transparency &middot; <a href="/">Home</a> &middot; <a href="/find-facilities/">Find facilities</a> &middot; <a href="/subscribe/">Subscribe</a></p>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-logo">
+        <div class="logo"><span class="logo-mark"></span>Carepriced</div>
+        <p class="foot-blurb">Senior care cost data, time-stamped and sourced. We don't take operator advertising and we're not a referral marketplace.</p>
+      </div>
+      <div>
+        <h4>Calculators</h4>
+        <ul>
+          <li><a href="/calculator/skilled-nursing/">Skilled nursing</a></li>
+          <li><a href="/calculator/memory-care/">Memory care</a></li>
+          <li><a href="/calculator/assisted-living/">Assisted living</a></li>
+          <li><a href="/calculator/home-care/">Home care</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Pay for care</h4>
+        <ul>
+          <li><a href="/financial-aid/va-aid-attendance/">VA Aid &amp; Attendance</a></li>
+          <li><a href="/financial-aid/medicaid-waivers/">Medicaid waivers</a></li>
+          <li><a href="/financial-aid/long-term-care-insurance/">LTC insurance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>About</h4>
+        <ul>
+          <li><a href="/methodology/">Methodology</a></li>
+          <li><a href="/sources/">Data sources</a></li>
+          <li><a href="/about/">About Carepriced</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      © 2026 Carepriced · Last data refresh: May 6, 2026 · Next refresh: June 1, 2026
+    </div>
+  </div>
 </footer>
+
+<script>
+// ---- State for ZIP-tier inference (mock for v0) ----
+// TODO: replace with state-index lookup once Phase 1-state-anchored ships for HI/AK/NY (next 3 after NC).
+const careMedians = { independent:3400, assisted:5200, memory:6800, skilled:8500, home:2250 };
+
+const opSel = document.getElementById('operator');
+const stateSel = document.getElementById('state');
+const lvls = document.getElementsByName('level');
+const careInputs = document.getElementsByName('care');
+const pills = document.querySelectorAll('.pill');
+
+const estMonthly = document.getElementById('estMonthly');
+const estRange = document.getElementById('estRange');
+const estAnnual = document.getElementById('estAnnual');
+const est3y = document.getElementById('est3y');
+const dqBadge = document.getElementById('dqBadge');
+const tierLine = document.getElementById('tierLine');
+const viewFacility = document.getElementById('viewFacility');
+const viewState = document.getElementById('viewState');
+const formulaBlock = document.getElementById('formulaBlock');
+const fmt = v => '$' + (v||0).toLocaleString('en-US');
+
+// pill click syncs radio
+pills.forEach(p => p.addEventListener('click', () => {
+  pills.forEach(x => x.classList.remove('active'));
+  p.classList.add('active');
+  p.querySelector('input').checked = true;
+  recompute();
+}));
+
+function recompute(){
+  const opt = opSel.options[opSel.selectedIndex];
+  const stateOpt = stateSel.options[stateSel.selectedIndex];
+  let care = 'skilled';
+  for (const c of careInputs) if (c.checked) care = c.value;
+
+  const hasOp = !!opt.value;
+  let lvl = 1.0;
+  for (const r of lvls) if (r.checked) lvl = parseFloat(r.value);
+
+  let base, low, high;
+  if (hasOp) {
+    base = parseInt(opt.dataset.median,10);
+    low = parseInt(opt.dataset.low,10);
+    high = parseInt(opt.dataset.high,10);
+  } else {
+    // care-type * state multiplier, with NC as baseline
+    base = Math.round(careMedians[care] * (parseFloat(stateOpt.dataset.multiplier) || 1));
+    low = Math.round(base * 0.80);
+    high = Math.round(base * 1.32);
+  }
+  const monthly = Math.round(base * lvl);
+  const lowV = Math.round(low * lvl);
+  const highV = Math.round(high * lvl);
+  const annual = monthly * 12;
+  const threeYear = annual * 3;
+
+  estMonthly.textContent = fmt(monthly);
+  estRange.textContent = fmt(lowV) + ' – ' + fmt(highV);
+  estAnnual.textContent = fmt(annual);
+  est3y.textContent = fmt(threeYear);
+
+  // Formula block
+  formulaBlock.innerHTML =
+    'monthly = <span class="var">base</span> × <span class="var">level</span>\n' +
+    '       = <span class="num">' + fmt(base) + '</span> × <span class="num">' + lvl.toFixed(2) + '</span>\n' +
+    '       = <span class="num">' + fmt(monthly) + '</span>';
+
+  if (hasOp) {
+    dqBadge.innerHTML = '<span class="dq-dot"></span> State-anchored estimate · ' + opt.text.split(' — ')[0];
+    tierLine.innerHTML = 'Tier <strong>' + opt.dataset.tier + '</strong> applied to ' + opt.dataset.city + '.';
+    viewFacility.style.display = 'inline-flex';
+    viewFacility.href = '/calculator/skilled-nursing/north-carolina/' + opt.value + '/?level=' + (lvl===1?'standard':lvl===1.15?'higher':'memory');
+  } else {
+    dqBadge.innerHTML = '<span class="dq-dot"></span> State-anchored estimate';
+    tierLine.textContent = 'No facility selected — using ' + stateOpt.text + ' state median.';
+    viewFacility.style.display = 'none';
+  }
+
+  // Update state-facing CTA
+  const stateName = stateOpt.text;
+  const stateSlug = stateName.toLowerCase().replace(/\s+/g,'-');
+  const careSlug = care === 'skilled' ? 'skilled-nursing' :
+                   care === 'assisted' ? 'assisted-living' :
+                   care === 'memory' ? 'memory-care' :
+                   care === 'independent' ? 'independent-living' : 'home-care';
+  viewState.textContent = 'View ' + stateName + ' facilities';
+  const arrow = document.createElement('span');
+  arrow.className = 'arrow';
+  arrow.textContent = '→';
+  viewState.appendChild(arrow);
+  viewState.href = '/calculator/' + careSlug + '/' + stateSlug + '/';
+}
+
+opSel.addEventListener('change', recompute);
+stateSel.addEventListener('change', recompute);
+for (const r of lvls) r.addEventListener('change', recompute);
+for (const c of careInputs) c.addEventListener('change', recompute);
+recompute();
+</script>
 </body>
 </html>
