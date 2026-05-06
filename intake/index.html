@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Founding Partner Program — Carepriced</title>
+<meta name="description" content="Senior care facilities: become a Carepriced founding partner. Exclusive zip-code lead access at preferred rates." />
+<style>
+  :root { --ink:#1a1a1a; --muted:#555; --line:#d4d4d4; --bg:#fafafa; --accent:#0a66c2; --ok:#1f7a3a; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; max-width: 720px; margin: 6vh auto 12vh; padding: 0 1.25rem; color: var(--ink); line-height: 1.55; background:#fff; }
+  h1 { font-size: 1.9rem; margin-bottom: 0.4rem; }
+  h2 { font-size: 1.05rem; margin-top: 2rem; margin-bottom: 0.5rem; }
+  p { color: var(--muted); }
+  .lede { font-size: 1.05rem; }
+  form { margin-top: 1.5rem; }
+  fieldset { border: 0; padding: 0; margin: 0 0 1.25rem; }
+  legend { font-weight: 600; margin-bottom: 0.4rem; }
+  label { display:block; margin: 0.4rem 0 0.25rem; font-weight: 500; font-size: 0.95rem; }
+  .req::after { content: " *"; color: #b00; }
+  input[type=text], input[type=email], input[type=tel], textarea, select {
+    width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--line); border-radius: 6px; font: inherit; background: var(--bg); color: var(--ink);
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  .radio-group { display: grid; grid-template-columns: 1fr; gap: 0.35rem; margin-top: 0.25rem; }
+  @media (min-width: 520px) { .radio-group.cols2 { grid-template-columns: 1fr 1fr; } }
+  .radio-group label { font-weight: 400; padding: 0.5rem 0.65rem; border:1px solid var(--line); border-radius: 6px; background: var(--bg); cursor: pointer; margin: 0; }
+  .radio-group input { margin-right: 0.5rem; }
+  .help { color: var(--muted); font-size: 0.85rem; margin-top: 0.25rem; }
+  button { background: var(--accent); color:#fff; border: 0; padding: 0.85rem 1.25rem; font: inherit; font-weight: 600; border-radius: 6px; cursor: pointer; }
+  button:disabled { opacity: 0.6; cursor: wait; }
+  .footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--muted); }
+  .footer a { color: var(--accent); }
+  .status { margin-top: 1rem; padding: 0.85rem 1rem; border-radius: 6px; display: none; }
+  .status.ok { display:block; background: #e8f5ec; color: var(--ok); border: 1px solid #b6dfc2; }
+  .status.err { display:block; background: #fde8e8; color: #9b1c1c; border: 1px solid #f5c2c2; }
+</style>
+</head>
+<body>
+<h1>Carepriced — Founding Partner Program</h1>
+<p class="lede">We are launching a senior care pricing transparency platform. We are securing a small number of founding partners at preferred rates in select ZIP codes. If that fits your facility, tell us a bit about your operation and we will be in touch within one business day.</p>
+
+<form id="intake-form" action="https://api.carepriced.com/intake" method="post" novalidate>
+  <fieldset>
+    <legend>About your facility</legend>
+
+    <label for="facility_name" class="req">Facility name</label>
+    <input id="facility_name" name="facility_name" type="text" required autocomplete="organization" />
+
+    <label for="contact_name" class="req">Operator / contact name</label>
+    <input id="contact_name" name="contact_name" type="text" required autocomplete="name" />
+
+    <label class="req">Role</label>
+    <div class="radio-group cols2" role="radiogroup" aria-label="Role">
+      <label><input type="radio" name="role" value="owner" required /> Owner</label>
+      <label><input type="radio" name="role" value="administrator" /> Administrator</label>
+      <label><input type="radio" name="role" value="marketing_director" /> Marketing director</label>
+      <label><input type="radio" name="role" value="other" /> Other</label>
+    </div>
+
+    <label for="email" class="req">Email</label>
+    <input id="email" name="email" type="email" required autocomplete="email" />
+
+    <label for="phone">Phone (optional)</label>
+    <input id="phone" name="phone" type="tel" autocomplete="tel" />
+  </fieldset>
+
+  <fieldset>
+    <legend>Facility profile</legend>
+
+    <label class="req">Facility type</label>
+    <div class="radio-group" role="radiogroup" aria-label="Facility type">
+      <label><input type="radio" name="facility_type" value="assisted_living" required /> Assisted living</label>
+      <label><input type="radio" name="facility_type" value="home_care" /> Home care</label>
+      <label><input type="radio" name="facility_type" value="memory_care" /> Memory care</label>
+      <label><input type="radio" name="facility_type" value="independent_living" /> Independent living</label>
+      <label><input type="radio" name="facility_type" value="multi_type" /> Multi-type</label>
+    </div>
+
+    <label for="service_zips" class="req">Service ZIP codes (max 5, comma-separated)</label>
+    <input id="service_zips" name="service_zips" type="text" required pattern="^\s*\d{5}(\s*,\s*\d{5}){0,4}\s*$" placeholder="e.g. 75201, 75204, 75206" />
+    <div class="help">Enter up to 5 ZIP codes you currently serve.</div>
+
+    <label class="req">Number of facilities operated</label>
+    <div class="radio-group cols2" role="radiogroup" aria-label="Number of facilities">
+      <label><input type="radio" name="facility_count" value="1" required /> 1</label>
+      <label><input type="radio" name="facility_count" value="2-5" /> 2–5</label>
+      <label><input type="radio" name="facility_count" value="6-10" /> 6–10</label>
+      <label><input type="radio" name="facility_count" value="11+" /> 11+</label>
+    </div>
+
+    <label class="req">Current monthly lead-gen spend</label>
+    <div class="radio-group" role="radiogroup" aria-label="Monthly lead-gen spend">
+      <label><input type="radio" name="leadgen_spend" value="under_1k" required /> Under $1,000</label>
+      <label><input type="radio" name="leadgen_spend" value="1k_3k" /> $1,000–$3,000</label>
+      <label><input type="radio" name="leadgen_spend" value="3k_7k" /> $3,000–$7,000</label>
+      <label><input type="radio" name="leadgen_spend" value="7k_plus" /> $7,000+</label>
+      <label><input type="radio" name="leadgen_spend" value="none" /> Nothing currently</label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Anything else</legend>
+    <label for="notes">Notes (optional)</label>
+    <textarea id="notes" name="notes" placeholder="Anything we should know about your priorities, capacity, or current marketing setup."></textarea>
+  </fieldset>
+
+  <button type="submit" id="submit-btn">Apply for founding-partner access</button>
+  <div class="status" id="status" role="status" aria-live="polite"></div>
+</form>
+
+<div class="footer">
+  <p>By submitting this form you consent to Carepriced contacting you about the founding-partner program. We do not sell or share your data with third parties. To opt out at any time, email <a href="mailto:clive@carepriced.com">clive@carepriced.com</a>.</p>
+  <p><a href="/privacy/">Privacy notice</a> · <a href="/">Carepriced home</a></p>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('intake-form');
+  var btn = document.getElementById('submit-btn');
+  var status = document.getElementById('status');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    status.className = 'status';
+    status.textContent = '';
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    var fd = new FormData(form);
+    var payload = {};
+    fd.forEach(function (v, k) { payload[k] = v; });
+    payload.submitted_at = new Date().toISOString();
+    payload.user_agent = navigator.userAgent;
+    payload.referrer = document.referrer || null;
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+
+    fetch(form.action, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function () {
+      status.className = 'status ok';
+      status.textContent = 'Thanks. We received your application and will be in touch within one business day at the email you provided.';
+      form.reset();
+      btn.textContent = 'Submitted';
+    }).catch(function () {
+      status.className = 'status err';
+      status.textContent = 'Something went wrong submitting the form. Please try again, or email clive@carepriced.com directly.';
+      btn.disabled = false;
+      btn.textContent = 'Apply for founding-partner access';
+    });
+  });
+})();
+</script>
+</body>
+</html>
