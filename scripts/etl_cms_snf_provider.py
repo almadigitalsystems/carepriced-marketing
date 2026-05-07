@@ -8,16 +8,27 @@ metadata) with Genworth/CareScout state-level rate anchors (per-state
 median monthly rate). Output records validate against
 data/operator-record.schema.json.
 
-v0 vs Phase 1-full:
-  - v0 (this script): facility metadata per record + state-level rate band
-    with metro tier multiplier. Each record is flagged
-    metadata.dataQuality = "v0-state-anchored".
-  - Phase 1-full (next): replaces rate band with per-facility numbers
-    derived from CMS Form 2540-24 cost report (Worksheet S-3 day-cost
-    extraction). Promotes records to dataQuality = "v1-cost-report".
+Quality tiers (per ALM-5482):
+  - v0-state-anchored (this script, per-record monthlyRate):
+      Facility metadata per record from CMS QRP, monthly rate is state-level
+      median + metro tier multiplier (A=1.15, B=1.05, C=1.00, D=0.92).
+      Each record is flagged metadata.dataQuality = "v0-state-anchored".
+  - v0.5-percentile-anchored (this script, state-level rateSummary):
+      The state index now carries empirically-derived percentile bands
+      (p10/p25/p50/p75/p90) computed from the distribution of per-record
+      monthlyRate.median values. Tagged rateSummary.percentileBandSource =
+      "v0-record-distribution" so the calculator knows the bands are derived
+      from v0 inputs, not from real cost-report data yet.
+  - v1-cost-report (Phase 1-full, separate ETL — etl_cms_costreport.py):
+      Replaces per-record monthly rate with per-facility numbers derived
+      from CMS Form 2540-24 cost-report (Worksheet S-3 day-cost extraction).
+      Promotes records to dataQuality = "v1-cost-report" and rebuilds the
+      state-level percentile bands from the real distribution. Same record
+      IDs — Kira's calculator templates wired against today's pilot keep
+      working with no migration.
 
 Usage:
-  python etl_cms_snf_provider.py --state NC --out data/pilots/nc-snf-pilot.json
+  python etl_cms_snf_provider.py --state NC --out data/pilots/nc-snf-pilot.json --index data/indexes/nc-snf-index.json
   python etl_cms_snf_provider.py --state ALL --out data/snapshots/snf-all-{YYYY-MM}.json
 """
 from __future__ import annotations
@@ -26,6 +37,7 @@ import argparse
 import csv
 import io
 import json
+import math
 import re
 import sys
 import urllib.request
@@ -227,23 +239,74 @@ def emit_record(facility: dict, now_iso: str, today: str) -> dict:
     return record
 
 
+def percentile(sorted_values: list[float], q: float) -> float:
+    """Linear-interpolation percentile (NIST / Excel PERCENTILE.INC compatible).
+    q in [0, 1]. Caller is responsible for sorting."""
+    if not sorted_values:
+        return 0.0
+    if len(sorted_values) == 1:
+        return float(sorted_values[0])
+    pos = q * (len(sorted_values) - 1)
+    lower = math.floor(pos)
+    upper = math.ceil(pos)
+    if lower == upper:
+        return float(sorted_values[int(pos)])
+    frac = pos - lower
+    return float(sorted_values[lower] * (1 - frac) + sorted_values[upper] * frac)
+
+
+def round_to_50(x: float) -> int:
+    return int(round(x / 50) * 50)
+
+
+def compute_percentile_bands(records: list[dict]) -> dict:
+    """Compute p10/p25/p50/p75/p90 from per-record monthlyRate.median values.
+    Returns rounded-to-50 USD integers tagged with v0-record-distribution provenance."""
+    medians = sorted(
+        r["monthlyRate"]["median"]
+        for r in records
+        if r.get("monthlyRate") and r["monthlyRate"].get("median") is not None
+    )
+    if not medians:
+        return {}
+    return {
+        "monthlyP10": round_to_50(percentile(medians, 0.10)),
+        "monthlyP25": round_to_50(percentile(medians, 0.25)),
+        "monthlyP50": round_to_50(percentile(medians, 0.50)),
+        "monthlyP75": round_to_50(percentile(medians, 0.75)),
+        "monthlyP90": round_to_50(percentile(medians, 0.90)),
+    }
+
+
 def build_index(state: str, records: list[dict], now_iso: str, today: str) -> dict:
     medians = STATE_SNF_MEDIANS.get(state, {})
+    bands = compute_percentile_bands(records)
+    rate_summary = {
+        "state": state,
+        "careType": "skilled-nursing",
+        "monthlyMedian": medians.get("median"),
+        "monthlyLow": medians.get("low"),
+        "monthlyHigh": medians.get("high"),
+        "currency": "USD",
+        "asOf": today,
+        "sourceType": "carescout-genworth",
+    }
+    if bands:
+        rate_summary.update(bands)
+        rate_summary["percentileBandSource"] = "v0-record-distribution"
+        rate_summary["percentileBandNotes"] = (
+            "p10/p25/p50/p75/p90 derived empirically from the distribution of "
+            f"{len(records)} per-record monthlyRate.median values within the "
+            f"{state} {records[0]['careType']} pilot. Bands reflect v0 state-anchored + metro-tier "
+            "inputs, not real CMS 2540-24 cost-report data. When Phase 1-full lands, this rateSummary "
+            "is rebuilt from the real per-facility distribution and percentileBandSource flips to cms-2540-24."
+        )
     return {
         "state": state,
         "careType": "skilled-nursing",
         "updatedAt": now_iso,
         "recordCount": len(records),
-        "rateSummary": {
-            "state": state,
-            "careType": "skilled-nursing",
-            "monthlyMedian": medians.get("median"),
-            "monthlyLow": medians.get("low"),
-            "monthlyHigh": medians.get("high"),
-            "currency": "USD",
-            "asOf": today,
-            "sourceType": "carescout-genworth",
-        },
+        "rateSummary": rate_summary,
         "operators": [
             {
                 "operatorId": r["operatorId"],
@@ -262,39 +325,51 @@ def main():
     p.add_argument("--state", default="NC", help="2-letter state code, or ALL")
     p.add_argument("--out", default="data/pilots/nc-snf-pilot.json", help="Output manifest path")
     p.add_argument("--index", help="Optional output index path")
+    p.add_argument(
+        "--from-manifest",
+        help="If provided, skip CMS download and re-emit the index from an existing manifest file. "
+        "Useful for shipping rateSummary upgrades without re-running the full ETL.",
+    )
     args = p.parse_args()
 
     state = args.state.upper()
     if state != "ALL" and state not in STATE_SNF_MEDIANS:
         sys.exit(f"State {state} not in v0 anchor table — extend STATE_SNF_MEDIANS first.")
 
-    print(f"Resolving CMS SNF QRP CSV URL...", file=sys.stderr)
-    csv_url = fetch_cms_qrp_csv_url()
-    print(f"  {csv_url}", file=sys.stderr)
-
-    print(f"Streaming unique facilities for state={state}...", file=sys.stderr)
-    facilities = stream_unique_facilities(csv_url, state if state != "ALL" else None)
-    print(f"  {len(facilities)} unique facilities", file=sys.stderr)
-
     now_iso = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
     today = datetime.now(timezone.utc).date().isoformat()
-    records = [r for r in (emit_record(f, now_iso, today) for f in facilities) if r]
 
-    out_path = Path(args.out)
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    manifest = {
-        "pilot": f"{state}-SNF-v0",
-        "generatedAt": now_iso,
-        "recordCount": len(records),
-        "methodology": (
-            "Facility metadata: CMS Skilled Nursing Facility QRP Provider Data (live download). "
-            "Rate band: Genworth/CareScout 2024 state median, with metro tier multipliers (A=1.15, B=1.05, C=1.00, rural=0.92). "
-            "Each record carries metadata.dataQuality=\"v0-state-anchored\" until CMS 2540-24 cost-report ETL replaces with per-facility numbers in Phase 1-full."
-        ),
-        "records": records,
-    }
-    out_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"Wrote {out_path} ({len(records)} records)", file=sys.stderr)
+    if args.from_manifest:
+        print(f"Loading existing manifest from {args.from_manifest}...", file=sys.stderr)
+        manifest = json.loads(Path(args.from_manifest).read_text(encoding="utf-8"))
+        records = manifest.get("records", [])
+        print(f"  {len(records)} records loaded", file=sys.stderr)
+    else:
+        print(f"Resolving CMS SNF QRP CSV URL...", file=sys.stderr)
+        csv_url = fetch_cms_qrp_csv_url()
+        print(f"  {csv_url}", file=sys.stderr)
+
+        print(f"Streaming unique facilities for state={state}...", file=sys.stderr)
+        facilities = stream_unique_facilities(csv_url, state if state != "ALL" else None)
+        print(f"  {len(facilities)} unique facilities", file=sys.stderr)
+
+        records = [r for r in (emit_record(f, now_iso, today) for f in facilities) if r]
+
+        out_path = Path(args.out)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        manifest = {
+            "pilot": f"{state}-SNF-v0",
+            "generatedAt": now_iso,
+            "recordCount": len(records),
+            "methodology": (
+                "Facility metadata: CMS Skilled Nursing Facility QRP Provider Data (live download). "
+                "Rate band: Genworth/CareScout 2024 state median, with metro tier multipliers (A=1.15, B=1.05, C=1.00, rural=0.92). "
+                "Each record carries metadata.dataQuality=\"v0-state-anchored\" until CMS 2540-24 cost-report ETL replaces with per-facility numbers in Phase 1-full."
+            ),
+            "records": records,
+        }
+        out_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
+        print(f"Wrote {out_path} ({len(records)} records)", file=sys.stderr)
 
     if args.index and state != "ALL":
         idx_path = Path(args.index)
