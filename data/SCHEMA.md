@@ -4,6 +4,7 @@
 **Owner:** Emily (CTO)
 **Consumers:** Kira (KB), Apollo (CVCO — page rendering)
 **Schema file:** `operator-record.schema.json` (JSON Schema 2020-12)
+**Phase 1-full ETL:** `scripts/etl_cms_costreport.py` (CMS HCRIS 2540 cost-report → per-facility per-diem); validated end-to-end against synthetic HCRIS data 2026-05-07, ready for first real CMS quarterly drop.
 
 ## Purpose
 
@@ -148,7 +149,7 @@ Three quality tiers are stamped explicitly in `rateSummary.percentileBandSource`
 | Tier | `percentileBandSource` | What the bands mean | Status |
 |---|---|---|---|
 | v0.5-percentile-anchored | `v0-record-distribution` | Empirical p10/p25/p50/p75/p90 derived from the distribution of per-record `monthlyRate.median` values. Reflects v0 state-anchored + metro-tier inputs — NOT real cost-report data. | **shipped 2026-05-07** for NC SNF pilot |
-| v1-cost-report | `cms-2540-24` | Empirical percentiles from the real per-facility distribution after CMS Form 2540-24 cost-report ingestion replaces the per-record monthly rate with worksheet-derived numbers. | Phase 1-full — separate ETL (`scripts/etl_cms_costreport.py`), in flight |
+| v1-cost-report | `cms-2540-24` | Empirical percentiles from the real per-facility distribution after CMS Form 2540-24 cost-report ingestion replaces the per-record monthly rate with worksheet-derived numbers. | Phase 1-full ETL **scaffold shipped 2026-05-07** (`scripts/etl_cms_costreport.py`); awaiting first CMS HCRIS quarterly download to run live |
 | v0-state-only (legacy) | absent | Index ships only `monthlyMedian / monthlyLow / monthlyHigh` — no bands. | superseded by v0.5 above for NC; still applies to states not yet piloted |
 
 Today's NC SNF index (`data/indexes/nc-snf-index.json`):
@@ -196,6 +197,74 @@ Phase 1-full target shape:
   "percentileBandSource": "cms-2540-24"
 }
 ```
+
+## Phase 1-full per-diem extraction (CMS HCRIS) — locked
+
+`scripts/etl_cms_costreport.py` upgrades v0 records in-place. Operator
+runs it once per CMS HCRIS quarterly drop. Inputs: existing v0 manifest +
+HCRIS `RPT.CSV` and `NMRC.CSV` (extracted from the quarterly ZIP). Output:
+same manifest path, with each record that had a CCN match in the cost
+report promoted to `metadata.dataQuality = "v1-cost-report"`.
+
+**Per-diem extraction order** (first valid value wins, both are documented
+on the record):
+
+1. `revenue-per-day` (default, consumer-relevant): Worksheet G-3 Line 3
+   Col 1 (total patient revenue) ÷ Worksheet S-3 Part I Line 1 Col 6
+   (total resident days). Reflects what the average resident pays.
+2. `cost-per-day` (fallback): Worksheet B Part I Line 100 Col 18 (total
+   general service costs) ÷ Worksheet S-3 Part I Line 1 Col 6 (days).
+   Internal-cost view; used when revenue line missing or zero.
+
+**Sanity bounds:** per-diem must be in `[150, 800]` USD/day. Outside that
+range the record is left at v0-state-anchored — almost always a worksheet
+mis-extraction, not a real outlier. Bounds are tunable via
+`--per-diem-min` / `--per-diem-max` if a future state needs different
+guardrails.
+
+**Monthly conversion:** `monthlyRate.median = perDiem × 30`. The low/high
+band is preserved at `median × {0.85, 1.18}` to match the v0 shape;
+calculator templates that read `low/median/high` keep working.
+
+**RPT preference:** when a CCN has multiple cost reports filed, prefer
+status `F` (final settled) > `A` (amended) > `I` (initial), then most
+recent FY end. Settled reports survive the longest review process and
+are the most defensible for consumer-facing pricing.
+
+**Records with no CCN match** in the HCRIS RPT (Medicare-non-certified
+SNFs, brand-new openings, non-2540 filers) are passed through unchanged
+at v0-state-anchored. Per-record `metadata.dataQuality` is the source of
+truth for what each record's pricing is grounded in — Kira's calculator
+must read it before quoting any record.
+
+**Per-record metadata stamped on every v1-cost-report upgrade:**
+
+| Field | Value |
+|---|---|
+| `metadata.dataQuality` | `"v1-cost-report"` |
+| `metadata.costReportFiscalYearEnd` | MM/DD/YYYY of the source filing's FY end |
+| `metadata.costReportStatusCode` | `F` / `A` / `I` |
+| `metadata.costReportRptRecNum` | HCRIS report record number |
+| `metadata.perDiemMethod` | `"revenue-per-day"` or `"cost-per-day"` |
+| `metadata.perDiemDollars` | extracted per-diem (USD/day, 2dp) |
+| `sources[0].type` | `"cms-2540-24"` |
+| `sources[0].url` | CMS landing page for the SNF cost-report PUF |
+| `sources[0].notes` | CCN, FY end, status code, per-diem method + value |
+
+**Manifest-level summary** (added by the upgrade ETL): a
+`v1CostReportUpgrade` block with run timestamp, count of records
+upgraded vs. left at v0, per-diem method breakdown, failure reasons,
+and the per-diem distribution (n, min, p25, median, p75, max, mean,
+stdev). Lets Kira eyeball whether the upgrade looks healthy without
+re-running validation.
+
+**Index rebuild:** after the upgrade, re-run
+`etl_cms_snf_provider.py --from-manifest <upgraded-manifest> --index <index-path>`.
+The percentile-band computation uses per-record `monthlyRate.median`
+which now includes both v1-cost-report and v0-state-anchored records;
+`rateSummary.percentileBandSource` stays at `v0-record-distribution` until
+**every** record in the manifest is at v1-cost-report (operator decision —
+typically when a state's CCN coverage is ≥ 95%).
 
 ## Home-care monthly projection (calculator-side formula — locked)
 
