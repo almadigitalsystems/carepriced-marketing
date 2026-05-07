@@ -1,7 +1,7 @@
 {
   "state": "NC",
   "careType": "skilled-nursing",
-  "updatedAt": "2026-05-07T18:08:16Z",
+  "updatedAt": "2026-05-07T21:23:49Z",
   "recordCount": 418,
   "rateSummary": {
     "state": "NC",
@@ -12,11 +12,11 @@
     "currency": "USD",
     "asOf": "2026-05-07",
     "sourceType": "carescout-genworth",
-    "monthlyP10": 7800,
-    "monthlyP25": 7800,
-    "monthlyP50": 7800,
-    "monthlyP75": 8500,
-    "monthlyP90": 8900,
+    "monthlyP10": 8900,
+    "monthlyP25": 10050,
+    "monthlyP50": 10850,
+    "monthlyP75": 11850,
+    "monthlyP90": 13150,
     "percentileBandSource": "v0-record-distribution",
     "percentileBandNotes": "p10/p25/p50/p75/p90 derived empirically from the distribution of 418 per-record monthlyRate.median values within the NC skilled-nursing pilot. Bands reflect v0 state-anchored + metro-tier inputs, not real CMS 2540-24 cost-report data. When Phase 1-full lands, this rateSummary is rebuilt from the real per-facility distribution and percentileBandSource flips to cms-2540-24."
   },
@@ -26,28 +26,28 @@
       "operatorName": "Autumn Care Of Biscoe",
       "city": "Biscoe",
       "zip": "27209",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11300
     },
     {
       "operatorId": "hillcrest-convalescent-center-345001",
       "operatorName": "Hillcrest Convalescent Center",
       "city": "Durham",
       "zip": "27705",
-      "monthlyMedian": 8900
+      "monthlyMedian": 21400
     },
     {
       "operatorId": "cypress-pointe-rehabilitation-center-345002",
       "operatorName": "Cypress Pointe Rehabilitation Center",
       "city": "Wilmington",
       "zip": "28401",
-      "monthlyMedian": 8900
+      "monthlyMedian": 12200
     },
     {
       "operatorId": "silas-creek-rehabilitation-center-345003",
       "operatorName": "Silas Creek Rehabilitation Center",
       "city": "Winston Salem",
       "zip": "27103",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10700
     },
     {
       "operatorId": "person-memorial-hospital-345004",
@@ -61,168 +61,168 @@
       "operatorName": "Blumenthal Health And Rehabilitation Center",
       "city": "Greensboro",
       "zip": "27455",
-      "monthlyMedian": 8900
+      "monthlyMedian": 11000
     },
     {
       "operatorId": "bear-mountain-health-and-rehabilitation-345010",
       "operatorName": "Bear Mountain Health And Rehabilitation",
       "city": "Asheville",
       "zip": "28804",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10750
     },
     {
       "operatorId": "pine-acres-center-for-nursing-and-rehabilitation-345011",
       "operatorName": "Pine Acres Center For Nursing And Rehabilitation",
       "city": "Lexington",
       "zip": "27292",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11250
     },
     {
       "operatorId": "peak-resources-charlotte-345013",
       "operatorName": "Peak Resources - Charlotte",
       "city": "Charlotte",
       "zip": "28205",
-      "monthlyMedian": 9800
+      "monthlyMedian": 10750
     },
     {
       "operatorId": "linden-place-center-for-nursing-and-rehabilitation-345014",
       "operatorName": "Linden Place Center For Nursing And Rehabilitation",
       "city": "Greensboro",
       "zip": "27401",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10600
     },
     {
       "operatorId": "clapp-s-convalescent-nursing-home-inc-345015",
       "operatorName": "Clapp's Convalescent Nursing Home Inc",
       "city": "Asheboro",
       "zip": "27203",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10900
     },
     {
       "operatorId": "clapps-nursing-center-inc-345024",
       "operatorName": "Clapps Nursing Center Inc",
       "city": "Pleasant Garden",
       "zip": "27313",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10700
     },
     {
       "operatorId": "royal-park-rehabilitation-health-center-345026",
       "operatorName": "Royal Park Rehabilitation & Health Center",
       "city": "Matthews",
       "zip": "28105",
-      "monthlyMedian": 9800
+      "monthlyMedian": 10900
     },
     {
       "operatorId": "elizabeth-city-health-and-rehabilitation-345036",
       "operatorName": "Elizabeth City Health And Rehabilitation",
       "city": "Elizabeth City",
       "zip": "27909",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13650
     },
     {
       "operatorId": "summerstone-health-and-rehabilitation-center-345039",
       "operatorName": "Summerstone Health And Rehabilitation Center",
       "city": "Kernersville",
       "zip": "27284",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11800
     },
     {
       "operatorId": "saint-joseph-of-the-pines-health-center-345044",
       "operatorName": "Saint Joseph Of The Pines Health Center",
       "city": "Pinehurst",
       "zip": "28374",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11950
     },
     {
       "operatorId": "the-foley-center-at-chestnut-ridge-345045",
       "operatorName": "The Foley Center At Chestnut Ridge",
       "city": "Blowing Rock",
       "zip": "28605",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12000
     },
     {
       "operatorId": "mountain-ridge-health-and-rehab-345048",
       "operatorName": "Mountain Ridge Health And Rehab",
       "city": "Black Mountain",
       "zip": "28711",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11850
     },
     {
       "operatorId": "raleigh-rehabilitation-center-345049",
       "operatorName": "Raleigh Rehabilitation Center",
       "city": "Raleigh",
       "zip": "27605",
-      "monthlyMedian": 9800
+      "monthlyMedian": 10850
     },
     {
       "operatorId": "jacob-s-creek-nursing-and-rehabilitation-center-345050",
       "operatorName": "Jacob's Creek Nursing And Rehabilitation Center",
       "city": "Madison",
       "zip": "27025",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10050
     },
     {
       "operatorId": "anson-health-and-rehabilitation-345051",
       "operatorName": "Anson Health And Rehabilitation",
       "city": "Wadesboro",
       "zip": "28170",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12150
     },
     {
       "operatorId": "pettigrew-rehabilitation-center-345053",
       "operatorName": "Pettigrew Rehabilitation Center",
       "city": "Durham",
       "zip": "27705",
-      "monthlyMedian": 8900
+      "monthlyMedian": 11300
     },
     {
       "operatorId": "woodhaven-nursing-center-345054",
       "operatorName": "Woodhaven Nursing Center",
       "city": "Lumberton",
       "zip": "28358",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10550
     },
     {
       "operatorId": "pruitthealth-durham-345061",
       "operatorName": "Pruitthealth-durham",
       "city": "Durham",
       "zip": "27705",
-      "monthlyMedian": 8900
+      "monthlyMedian": 11150
     },
     {
       "operatorId": "harmony-park-at-wilson-345063",
       "operatorName": "Harmony Park At Wilson",
       "city": "Wilson",
       "zip": "27893",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10750
     },
     {
       "operatorId": "davidson-health-rehab-center-345066",
       "operatorName": "Davidson Health & Rehab Center",
       "city": "Lexington",
       "zip": "27295",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11350
     },
     {
       "operatorId": "durham-nursing-rehabilitation-center-345070",
       "operatorName": "Durham Nursing & Rehabilitation Center",
       "city": "Durham",
       "zip": "27705",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10350
     },
     {
       "operatorId": "carolina-rivers-nursing-and-rehabilitation-center-345072",
       "operatorName": "Carolina Rivers Nursing And Rehabilitation Center",
       "city": "Jacksonville",
       "zip": "28540",
-      "monthlyMedian": 8500
+      "monthlyMedian": 9950
     },
     {
       "operatorId": "sunnybrook-rehabilitation-center-345077",
       "operatorName": "Sunnybrook Rehabilitation Center",
       "city": "Raleigh",
       "zip": "27610",
-      "monthlyMedian": 9800
+      "monthlyMedian": 12000
     },
     {
       "operatorId": "highland-farms-345078",
@@ -236,42 +236,42 @@
       "operatorName": "The Greens At Viewmont",
       "city": "Hickory",
       "zip": "28601",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11150
     },
     {
       "operatorId": "accordius-health-at-rose-manor-llc-345081",
       "operatorName": "Accordius Health At Rose Manor LLC",
       "city": "Durham",
       "zip": "27704",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10900
     },
     {
       "operatorId": "hilltop-health-and-rehabilitation-345083",
       "operatorName": "Hilltop Health And Rehabilitation",
       "city": "Rutherfordton",
       "zip": "28139",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10850
     },
     {
       "operatorId": "trinity-glen-345088",
       "operatorName": "Trinity Glen",
       "city": "Winston-salem",
       "zip": "27101",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10800
     },
     {
       "operatorId": "walnut-cove-health-and-rehabilitation-345089",
       "operatorName": "Walnut Cove Health And Rehabilitation",
       "city": "Walnut Cove",
       "zip": "27052",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10700
     },
     {
       "operatorId": "westchester-manor-at-providence-place-345090",
       "operatorName": "Westchester Manor At Providence Place",
       "city": "High Point",
       "zip": "27262",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11200
     },
     {
       "operatorId": "edgewood-place-at-the-village-at-brookwood-345091",
@@ -285,7 +285,7 @@
       "operatorName": "Willow Valley Center For Nursing And Rehabilitatio",
       "city": "Winston-salem",
       "zip": "27104",
-      "monthlyMedian": 8900
+      "monthlyMedian": 9550
     },
     {
       "operatorId": "maryfield-nursing-home-345093",
@@ -299,98 +299,98 @@
       "operatorName": "Chatham Nursing & Rehabilitation",
       "city": "Elkin",
       "zip": "28621",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12550
     },
     {
       "operatorId": "huntersville-oaks-345096",
       "operatorName": "Huntersville Oaks",
       "city": "Huntersville",
       "zip": "28078",
-      "monthlyMedian": 9800
+      "monthlyMedian": 9200
     },
     {
       "operatorId": "jesse-helms-nursing-center-345097",
       "operatorName": "Jesse Helms Nursing Center",
       "city": "Monroe",
       "zip": "28111",
-      "monthlyMedian": 8500
+      "monthlyMedian": 8400
     },
     {
       "operatorId": "maggie-valley-nursing-and-rehabilitation-345102",
       "operatorName": "Maggie Valley Nursing And Rehabilitation",
       "city": "Maggie Valley",
       "zip": "28751",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11350
     },
     {
       "operatorId": "matthews-health-rehab-center-345103",
       "operatorName": "Matthews Health & Rehab Center",
       "city": "Matthews",
       "zip": "28105",
-      "monthlyMedian": 9800
+      "monthlyMedian": 11800
     },
     {
       "operatorId": "zebulon-rehabilitation-center-345104",
       "operatorName": "Zebulon Rehabilitation Center",
       "city": "Zebulon",
       "zip": "27597",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12750
     },
     {
       "operatorId": "trinity-ridge-345106",
       "operatorName": "Trinity Ridge",
       "city": "Hickory",
       "zip": "28602",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11400
     },
     {
       "operatorId": "trinity-place-345109",
       "operatorName": "Trinity Place",
       "city": "Albemarle",
       "zip": "28001",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12100
     },
     {
       "operatorId": "autumn-care-of-waynesville-345110",
       "operatorName": "Autumn Care Of Waynesville",
       "city": "Waynesville",
       "zip": "28786",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12100
     },
     {
       "operatorId": "penick-village-345111",
       "operatorName": "Penick Village",
       "city": "Southern Pines",
       "zip": "28387",
-      "monthlyMedian": 7800
+      "monthlyMedian": 21000
     },
     {
       "operatorId": "willow-creek-nursing-and-rehabilitation-center-345113",
       "operatorName": "Willow Creek Nursing And Rehabilitation Center",
       "city": "Goldsboro",
       "zip": "27534",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10300
     },
     {
       "operatorId": "salisbury-rehabilitation-and-nursing-center-345115",
       "operatorName": "Salisbury Rehabilitation And Nursing Center",
       "city": "Salisbury",
       "zip": "28144",
-      "monthlyMedian": 8500
+      "monthlyMedian": 9550
     },
     {
       "operatorId": "piedmont-hills-center-for-nursing-and-rehab-345116",
       "operatorName": "Piedmont Hills Center For Nursing And Rehab",
       "city": "Greensboro",
       "zip": "27407",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10500
     },
     {
       "operatorId": "northchase-nursing-and-rehabilitation-center-345119",
       "operatorName": "Northchase Nursing And Rehabilitation Center",
       "city": "Wilmington",
       "zip": "28405",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10550
     },
     {
       "operatorId": "carolina-village-inc-345123",
@@ -404,14 +404,14 @@
       "operatorName": "Pruitthealth-elkin",
       "city": "Elkin",
       "zip": "28621",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12150
     },
     {
       "operatorId": "mount-olive-center-345126",
       "operatorName": "Mount Olive Center",
       "city": "Mount Olive",
       "zip": "28365",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10200
     },
     {
       "operatorId": "white-oak-manor-tryon-345127",
@@ -425,28 +425,28 @@
       "operatorName": "Davie Nursing And Rehabilitation Center",
       "city": "Mocksville",
       "zip": "27028",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12500
     },
     {
       "operatorId": "accordius-health-at-concord-345130",
       "operatorName": "Accordius Health At Concord",
       "city": "Concord",
       "zip": "28025",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10200
     },
     {
       "operatorId": "cedar-hills-center-for-nursing-and-rehabilitation-345131",
       "operatorName": "Cedar Hills Center For Nursing And Rehabilitation",
       "city": "Clemmons",
       "zip": "27012",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10850
     },
     {
       "operatorId": "greenhaven-health-and-rehabilitation-center-345132",
       "operatorName": "Greenhaven Health And Rehabilitation Center",
       "city": "Greensboro",
       "zip": "27406",
-      "monthlyMedian": 8900
+      "monthlyMedian": 9950
     },
     {
       "operatorId": "ridge-valley-center-for-nursing-and-rehabilitation-345133",
@@ -460,14 +460,14 @@
       "operatorName": "Pelican Health Randolph LLC",
       "city": "Charlotte",
       "zip": "28211",
-      "monthlyMedian": 9800
+      "monthlyMedian": 10750
     },
     {
       "operatorId": "the-lodge-at-rocky-mount-health-and-rehabilitation-345137",
       "operatorName": "The Lodge At Rocky Mount Health And Rehabilitation",
       "city": "Rocky Mount",
       "zip": "27804",
-      "monthlyMedian": 8500
+      "monthlyMedian": 15900
     },
     {
       "operatorId": "lenoir-health-and-rehabilitation-center-345138",
@@ -481,42 +481,42 @@
       "operatorName": "Piedmont Health & Rehab Center",
       "city": "Salisbury",
       "zip": "28145",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10350
     },
     {
       "operatorId": "university-place-nursing-and-rehabilitation-center-345142",
       "operatorName": "University Place Nursing And Rehabilitation Center",
       "city": "Charlotte",
       "zip": "28262",
-      "monthlyMedian": 9800
+      "monthlyMedian": 9500
     },
     {
       "operatorId": "siler-city-center-345143",
       "operatorName": "Siler City Center",
       "city": "Siler City",
       "zip": "27344",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9550
     },
     {
       "operatorId": "pine-ridge-health-and-rehabilitation-center-345144",
       "operatorName": "Pine Ridge Health And Rehabilitation Center",
       "city": "Thomasville",
       "zip": "27360",
-      "monthlyMedian": 8500
+      "monthlyMedian": 9900
     },
     {
       "operatorId": "the-carrolton-of-williamston-345145",
       "operatorName": "The Carrolton Of Williamston",
       "city": "Williamston",
       "zip": "27892",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9800
     },
     {
       "operatorId": "bethany-woods-nursing-and-rehabilitation-center-345146",
       "operatorName": "Bethany Woods Nursing And Rehabilitation Center",
       "city": "Albemarle",
       "zip": "28002",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9850
     },
     {
       "operatorId": "friends-homes-at-guilford-345148",
@@ -530,14 +530,14 @@
       "operatorName": "Mill Creek Center For Nursing And Rehabilitation",
       "city": "Winston-salem",
       "zip": "27106",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10700
     },
     {
       "operatorId": "kenansville-rehabilitation-and-healthcare-center-345150",
       "operatorName": "Kenansville Rehabilitation And Healthcare Center",
       "city": "Kenansville",
       "zip": "28349",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10900
     },
     {
       "operatorId": "white-oak-manor-kings-mountain-345151",
@@ -551,77 +551,77 @@
       "operatorName": "Trinity Village",
       "city": "Hickory",
       "zip": "28601",
-      "monthlyMedian": 8500
+      "monthlyMedian": 14950
     },
     {
       "operatorId": "trinity-oaks-345153",
       "operatorName": "Trinity Oaks",
       "city": "Salisbury",
       "zip": "28144",
-      "monthlyMedian": 8500
+      "monthlyMedian": 12000
     },
     {
       "operatorId": "alpine-health-and-rehabilitation-of-asheboro-345155",
       "operatorName": "Alpine Health And Rehabilitation Of Asheboro",
       "city": "Asheboro",
       "zip": "27203",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10250
     },
     {
       "operatorId": "harmony-hall-nursing-and-rehabilitation-center-345156",
       "operatorName": "Harmony Hall Nursing And Rehabilitation Center",
       "city": "Kinston",
       "zip": "28501",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9850
     },
     {
       "operatorId": "lincolnton-rehabilitation-center-345159",
       "operatorName": "Lincolnton Rehabilitation Center",
       "city": "Lincolnton",
       "zip": "28092",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11850
     },
     {
       "operatorId": "davis-health-care-center-345160",
       "operatorName": "Davis Health Care Center",
       "city": "Wilmington",
       "zip": "28411",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10800
     },
     {
       "operatorId": "abernathy-laurels-345161",
       "operatorName": "Abernathy Laurels",
       "city": "Newton",
       "zip": "28658",
-      "monthlyMedian": 7800
+      "monthlyMedian": 15750
     },
     {
       "operatorId": "accordius-health-at-gastonia-345162",
       "operatorName": "Accordius Health At Gastonia",
       "city": "Gastonia",
       "zip": "28052",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11750
     },
     {
       "operatorId": "glenbridge-health-and-rehabilitation-345163",
       "operatorName": "Glenbridge Health And Rehabilitation",
       "city": "Boone",
       "zip": "28607",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10800
     },
     {
       "operatorId": "chowan-river-nursing-and-rehabilitation-center-345164",
       "operatorName": "Chowan River Nursing And Rehabilitation Center",
       "city": "Edenton",
       "zip": "27932",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10150
     },
     {
       "operatorId": "autumn-care-of-marion-345165",
       "operatorName": "Autumn Care Of Marion",
       "city": "Marion",
       "zip": "28752",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11950
     },
     {
       "operatorId": "stokes-county-nursing-home-345166",
@@ -635,28 +635,28 @@
       "operatorName": "Yadkin Nursing And Care Center",
       "city": "Yadkinville",
       "zip": "27055",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10750
     },
     {
       "operatorId": "macgregor-downs-health-center-by-harborview-345168",
       "operatorName": "Macgregor Downs Health Center By Harborview",
       "city": "Greenville",
       "zip": "27834",
-      "monthlyMedian": 8500
+      "monthlyMedian": 12400
     },
     {
       "operatorId": "the-greens-at-gastonia-345169",
       "operatorName": "The Greens At Gastonia",
       "city": "Gastonia",
       "zip": "28054",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10850
     },
     {
       "operatorId": "crystal-bluffs-rehabilitation-and-health-care-cent-345170",
       "operatorName": "Crystal Bluffs Rehabilitation And Health Care Cent",
       "city": "Morehead City",
       "zip": "28557",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12150
     },
     {
       "operatorId": "white-oak-manor-shelby-345171",
@@ -670,14 +670,14 @@
       "operatorName": "Meridian Center",
       "city": "High Point",
       "zip": "27262",
-      "monthlyMedian": 8500
+      "monthlyMedian": 9800
     },
     {
       "operatorId": "emerald-health-rehab-center-345173",
       "operatorName": "Emerald Health & Rehab Center",
       "city": "Lillington",
       "zip": "27546",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11650
     },
     {
       "operatorId": "elevate-health-and-rehabilitation-345174",
@@ -691,28 +691,28 @@
       "operatorName": "Smithfield Manor Rehabilitation And Healthcare Cen",
       "city": "Smithfield",
       "zip": "27577",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10500
     },
     {
       "operatorId": "the-greens-at-pinehurst-rehabilitation-living-ce-345177",
       "operatorName": "The Greens At Pinehurst Rehabilitation & Living Ce",
       "city": "Pinehurst",
       "zip": "28374",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11950
     },
     {
       "operatorId": "accordius-health-at-mooresville-345179",
       "operatorName": "Accordius Health At Mooresville",
       "city": "Mooresville",
       "zip": "28115",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10450
     },
     {
       "operatorId": "wesley-pines-retirement-community-345180",
       "operatorName": "Wesley Pines Retirement Community",
       "city": "Lumberton",
       "zip": "28358",
-      "monthlyMedian": 7800
+      "monthlyMedian": 14900
     },
     {
       "operatorId": "greenville-health-and-rehabilitation-center-345181",
@@ -726,7 +726,7 @@
       "operatorName": "Pruitthealth-crystal Coast",
       "city": "Beaufort",
       "zip": "28516",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11550
     },
     {
       "operatorId": "cabarrus-health-and-rehabilitation-center-345183",
@@ -740,42 +740,42 @@
       "operatorName": "Laurel Park Rehabilitation And Healthcare Center",
       "city": "Elizabeth City",
       "zip": "27909",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10800
     },
     {
       "operatorId": "premier-living-and-rehab-center-345185",
       "operatorName": "Premier Living And Rehab Center",
       "city": "Lake Waccamaw",
       "zip": "28450",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13250
     },
     {
       "operatorId": "five-oaks-rehabilitation-and-care-center-345186",
       "operatorName": "Five Oaks Rehabilitation And Care Center",
       "city": "Concord",
       "zip": "28027",
-      "monthlyMedian": 8900
+      "monthlyMedian": 11850
     },
     {
       "operatorId": "grace-heights-health-rehabilitation-345187",
       "operatorName": "Grace Heights Health & Rehabilitation",
       "city": "Morganton",
       "zip": "28655",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12150
     },
     {
       "operatorId": "murphy-rehabilitation-nursing-345190",
       "operatorName": "Murphy Rehabilitation & Nursing",
       "city": "Murphy",
       "zip": "28906",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11900
     },
     {
       "operatorId": "surry-community-health-center-by-harborview-345191",
       "operatorName": "Surry Community Health Center By Harborview",
       "city": "Mount Airy",
       "zip": "27030",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10950
     },
     {
       "operatorId": "longleaf-neuro-medical-treatment-center-345192",
@@ -789,42 +789,42 @@
       "operatorName": "Mountain View Manor Nursing Center",
       "city": "Bryson City",
       "zip": "28713",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9750
     },
     {
       "operatorId": "glenflora-345194",
       "operatorName": "Glenflora",
       "city": "Lumberton",
       "zip": "28360",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11850
     },
     {
       "operatorId": "edgecombe-health-center-by-harborview-345195",
       "operatorName": "Edgecombe Health Center By Harborview",
       "city": "Tarboro",
       "zip": "27886",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10900
     },
     {
       "operatorId": "mountain-vista-health-park-345196",
       "operatorName": "Mountain Vista Health Park",
       "city": "Denton",
       "zip": "27239",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13900
     },
     {
       "operatorId": "willow-ridge-of-nc-345197",
       "operatorName": "Willow Ridge Of NC",
       "city": "Rutherfordton",
       "zip": "28139",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10750
     },
     {
       "operatorId": "aston-park-health-care-center-345198",
       "operatorName": "Aston Park Health Care Center",
       "city": "Asheville",
       "zip": "28806",
-      "monthlyMedian": 8900
+      "monthlyMedian": 12000
     },
     {
       "operatorId": "carol-woods-345199",
@@ -838,84 +838,84 @@
       "operatorName": "Pelican Health At Charlotte",
       "city": "Charlotte",
       "zip": "28204",
-      "monthlyMedian": 9800
+      "monthlyMedian": 10850
     },
     {
       "operatorId": "capital-nursing-and-rehabilitation-center-345202",
       "operatorName": "Capital Nursing And Rehabilitation Center",
       "city": "Raleigh",
       "zip": "27610",
-      "monthlyMedian": 9800
+      "monthlyMedian": 11250
     },
     {
       "operatorId": "life-care-center-of-banner-elk-345203",
       "operatorName": "Life Care Center Of Banner Elk",
       "city": "Banner Elk",
       "zip": "28604",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10100
     },
     {
       "operatorId": "stonecreek-health-and-rehabilitation-345204",
       "operatorName": "Stonecreek Health And Rehabilitation",
       "city": "Asheville",
       "zip": "28801",
-      "monthlyMedian": 8900
+      "monthlyMedian": 12100
     },
     {
       "operatorId": "westwood-hills-nursing-and-rehabilitation-center-345205",
       "operatorName": "Westwood Hills Nursing And Rehabilitation Center",
       "city": "Wilkesboro",
       "zip": "28697",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10600
     },
     {
       "operatorId": "madison-health-and-rehabilitation-345206",
       "operatorName": "Madison Health And Rehabilitation",
       "city": "Mars Hill",
       "zip": "28754",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12950
     },
     {
       "operatorId": "liberty-commons-nursing-and-rehabilitation-center-345207",
       "operatorName": "Liberty Commons Nursing And Rehabilitation Center",
       "city": "Whiteville",
       "zip": "28472",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11750
     },
     {
       "operatorId": "sapphire-ridge-health-and-rehabilitation-345208",
       "operatorName": "Sapphire Ridge Health And Rehabilitation",
       "city": "Brevard",
       "zip": "28712",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10300
     },
     {
       "operatorId": "brookridge-retirement-community-345209",
       "operatorName": "Brookridge Retirement Community",
       "city": "Winston-salem",
       "zip": "27106",
-      "monthlyMedian": 8900
+      "monthlyMedian": 22350
     },
     {
       "operatorId": "elizabethtown-healthcare-rehab-center-345210",
       "operatorName": "Elizabethtown Healthcare & Rehab Center",
       "city": "Elizabethtown",
       "zip": "28337",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10000
     },
     {
       "operatorId": "riverpoint-crest-nursing-and-rehabilitation-center-345211",
       "operatorName": "Riverpoint Crest Nursing And Rehabilitation Center",
       "city": "New Bern",
       "zip": "28563",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10350
     },
     {
       "operatorId": "bethesda-health-care-facility-345212",
       "operatorName": "Bethesda Health Care Facility",
       "city": "Eastover",
       "zip": "28301",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9400
     },
     {
       "operatorId": "lillington-health-and-rehabilitation-center-345213",
@@ -929,70 +929,70 @@
       "operatorName": "River Trace Nursing And Rehabilitation Center",
       "city": "Washington",
       "zip": "27889",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10650
     },
     {
       "operatorId": "westfield-rehabilitation-and-health-center-345216",
       "operatorName": "Westfield Rehabilitation And Health Center",
       "city": "Sanford",
       "zip": "27330",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11300
     },
     {
       "operatorId": "premier-nursing-and-rehabilitation-center-345217",
       "operatorName": "Premier Nursing And Rehabilitation Center",
       "city": "Jacksonville",
       "zip": "28546",
-      "monthlyMedian": 8500
+      "monthlyMedian": 9350
     },
     {
       "operatorId": "mary-gran-nursing-center-345218",
       "operatorName": "Mary Gran Nursing Center",
       "city": "Clinton",
       "zip": "28329",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10850
     },
     {
       "operatorId": "magnolia-lane-nursing-and-rehabilitation-center-345219",
       "operatorName": "Magnolia Lane Nursing And Rehabilitation Center",
       "city": "Morganton",
       "zip": "28655",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10200
     },
     {
       "operatorId": "the-greens-at-weaverville-345221",
       "operatorName": "The Greens At Weaverville",
       "city": "Weaverville",
       "zip": "28787",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13150
     },
     {
       "operatorId": "autumn-care-of-drexel-345222",
       "operatorName": "Autumn Care Of Drexel",
       "city": "Morganton",
       "zip": "28655",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12350
     },
     {
       "operatorId": "valley-hill-health-rehab-center-345223",
       "operatorName": "Valley Hill Health & Rehab Center",
       "city": "Hendersonville",
       "zip": "28739",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10150
     },
     {
       "operatorId": "signature-healthcare-of-chapel-hill-345225",
       "operatorName": "Signature Healthcare Of Chapel Hill",
       "city": "Chapel Hill",
       "zip": "27514",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10900
     },
     {
       "operatorId": "peak-resources-outer-banks-345226",
       "operatorName": "Peak Resources-outer Banks",
       "city": "Nags Head",
       "zip": "27959",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11650
     },
     {
       "operatorId": "cypress-valley-center-for-nursing-and-rehabilitati-345227",
@@ -1006,35 +1006,35 @@
       "operatorName": "Ridgewood Living & Rehabilitation Center",
       "city": "Washington",
       "zip": "27889",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10950
     },
     {
       "operatorId": "peak-resources-shelby-345229",
       "operatorName": "Peak Resources- Shelby",
       "city": "Grover",
       "zip": "28073",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10550
     },
     {
       "operatorId": "the-greens-at-hickory-345232",
       "operatorName": "The Greens At Hickory",
       "city": "Hickory",
       "zip": "28602",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11200
     },
     {
       "operatorId": "deer-park-health-and-rehabilitation-345233",
       "operatorName": "Deer Park Health And Rehabilitation",
       "city": "Nebo",
       "zip": "28761",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11100
     },
     {
       "operatorId": "harborview-lumberton-345234",
       "operatorName": "Harborview Lumberton",
       "city": "Lumberton",
       "zip": "28358",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10600
     },
     {
       "operatorId": "twin-lakes-community-345235",
@@ -1048,14 +1048,14 @@
       "operatorName": "August Healthcare At Wilmington",
       "city": "Wilmington",
       "zip": "28401",
-      "monthlyMedian": 8900
+      "monthlyMedian": 11300
     },
     {
       "operatorId": "barbour-court-nursing-and-rehabilitation-center-345237",
       "operatorName": "Barbour Court Nursing And Rehabilitation Center",
       "city": "Smithfield",
       "zip": "27577",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9650
     },
     {
       "operatorId": "white-oak-manor-charlotte-345238",
@@ -1069,35 +1069,35 @@
       "operatorName": "Warren Hills Nursing Center",
       "city": "Warrenton",
       "zip": "27589",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10050
     },
     {
       "operatorId": "eden-rehabilitation-and-healthcare-center-345241",
       "operatorName": "Eden Rehabilitation And Healthcare Center",
       "city": "Eden",
       "zip": "27288",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10950
     },
     {
       "operatorId": "accordius-health-at-charlotte-345243",
       "operatorName": "Accordius Health At Charlotte",
       "city": "Charlotte",
       "zip": "28212",
-      "monthlyMedian": 9800
+      "monthlyMedian": 11450
     },
     {
       "operatorId": "hickory-falls-health-and-rehabilitation-345246",
       "operatorName": "Hickory Falls Health And Rehabilitation",
       "city": "Granite Falls",
       "zip": "28630",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12200
     },
     {
       "operatorId": "valley-nursing-and-rehabilitation-center-345247",
       "operatorName": "Valley Nursing And Rehabilitation Center",
       "city": "Taylorsville",
       "zip": "28681",
-      "monthlyMedian": 7800
+      "monthlyMedian": 16200
     },
     {
       "operatorId": "unc-rockingham-rehab-nursing-care-center-345249",
@@ -1111,119 +1111,119 @@
       "operatorName": "The Greens At Lincolnton",
       "city": "Lincolnton",
       "zip": "28093",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12400
     },
     {
       "operatorId": "warsaw-rehabilitation-and-healthcare-center-345252",
       "operatorName": "Warsaw Rehabilitation And Healthcare Center",
       "city": "Warsaw",
       "zip": "28398",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10300
     },
     {
       "operatorId": "the-lodge-at-mills-river-345253",
       "operatorName": "The Lodge At Mills River",
       "city": "Mills River",
       "zip": "28759",
-      "monthlyMedian": 7800
+      "monthlyMedian": 17800
     },
     {
       "operatorId": "monroe-rehabilitation-center-345254",
       "operatorName": "Monroe Rehabilitation Center",
       "city": "Monroe",
       "zip": "28112",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10500
     },
     {
       "operatorId": "carolina-care-health-and-rehabilitation-345255",
       "operatorName": "Carolina Care Health And Rehabilitation",
       "city": "Cherryville",
       "zip": "28021",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13300
     },
     {
       "operatorId": "kannapolis-health-and-rehabilitation-345258",
       "operatorName": "Kannapolis Health And Rehabilitation",
       "city": "Kannapolis",
       "zip": "28083",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10500
     },
     {
       "operatorId": "rocky-mount-rehabilitation-center-345260",
       "operatorName": "Rocky Mount Rehabilitation Center",
       "city": "Rocky Mount",
       "zip": "27804",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11000
     },
     {
       "operatorId": "lotus-village-center-for-nursing-and-rehabilitatio-345261",
       "operatorName": "Lotus Village Center For Nursing And Rehabilitatio",
       "city": "Sparta",
       "zip": "28675",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9500
     },
     {
       "operatorId": "hertford-rehabilitation-and-healthcare-center-345262",
       "operatorName": "Hertford Rehabilitation And Healthcare Center",
       "city": "Hertford",
       "zip": "27944",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11100
     },
     {
       "operatorId": "macon-valley-nursing-and-rehabilitation-center-345263",
       "operatorName": "Macon Valley Nursing And Rehabilitation Center",
       "city": "Franklin",
       "zip": "28734",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10500
     },
     {
       "operatorId": "stanley-total-living-center-345264",
       "operatorName": "Stanley Total Living Center",
       "city": "Stanley",
       "zip": "28164",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13700
     },
     {
       "operatorId": "yanceyville-rehabilitation-and-healthcare-center-345265",
       "operatorName": "Yanceyville Rehabilitation And Healthcare Center",
       "city": "Yanceyville",
       "zip": "27379",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10050
     },
     {
       "operatorId": "the-carrolton-of-plymouth-345266",
       "operatorName": "The Carrolton Of Plymouth",
       "city": "Plymouth",
       "zip": "27962",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10650
     },
     {
       "operatorId": "bladen-east-health-and-rehab-345267",
       "operatorName": "Bladen East Health And Rehab",
       "city": "Elizabethtown",
       "zip": "28337",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10050
     },
     {
       "operatorId": "autumn-care-of-marshville-345268",
       "operatorName": "Autumn Care Of Marshville",
       "city": "Marshville",
       "zip": "28103",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11500
     },
     {
       "operatorId": "autumn-care-of-salisbury-345269",
       "operatorName": "Autumn Care Of Salisbury",
       "city": "Salisbury",
       "zip": "28146",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11350
     },
     {
       "operatorId": "the-greens-at-spruce-pines-345270",
       "operatorName": "The Greens At Spruce Pines",
       "city": "Spruce Pine",
       "zip": "28777",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11100
     },
     {
       "operatorId": "kindred-hospital-east-greensboro-345273",
@@ -1237,7 +1237,7 @@
       "operatorName": "Asheboro Rehabilitation And Healthcare Center",
       "city": "Asheboro",
       "zip": "27203",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10500
     },
     {
       "operatorId": "northern-regional-hospital-345278",
@@ -1251,63 +1251,63 @@
       "operatorName": "The Carrolton Of Nash",
       "city": "Rocky Mount",
       "zip": "27804",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10500
     },
     {
       "operatorId": "autumn-care-of-raeford-345280",
       "operatorName": "Autumn Care Of Raeford",
       "city": "Raeford",
       "zip": "28376",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10250
     },
     {
       "operatorId": "stanly-manor-345281",
       "operatorName": "Stanly Manor",
       "city": "Albemarle",
       "zip": "28001",
-      "monthlyMedian": 7800
+      "monthlyMedian": 8800
     },
     {
       "operatorId": "cleveland-pines-345282",
       "operatorName": "Cleveland Pines",
       "city": "Shelby",
       "zip": "28150",
-      "monthlyMedian": 7800
+      "monthlyMedian": 8900
     },
     {
       "operatorId": "the-citadel-mooresville-345283",
       "operatorName": "The Citadel Mooresville",
       "city": "Mooresville",
       "zip": "28115",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11550
     },
     {
       "operatorId": "the-oaks-345284",
       "operatorName": "The Oaks",
       "city": "Winston-salem",
       "zip": "27103",
-      "monthlyMedian": 8900
+      "monthlyMedian": 11050
     },
     {
       "operatorId": "orchard-valley-health-and-rehabilitation-345285",
       "operatorName": "Orchard Valley Health And Rehabilitation",
       "city": "Hendersonville",
       "zip": "28791",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10300
     },
     {
       "operatorId": "compass-healthcare-and-rehab-rowan-llc-345288",
       "operatorName": "Compass Healthcare And Rehab Rowan, LLC",
       "city": "Spencer",
       "zip": "28159",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13150
     },
     {
       "operatorId": "currituck-health-rehab-center-345289",
       "operatorName": "Currituck Health & Rehab Center",
       "city": "Barco",
       "zip": "27917",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11000
     },
     {
       "operatorId": "oxford-health-and-rehabilitation-center-345291",
@@ -1321,42 +1321,42 @@
       "operatorName": "Grantsbrook Nursing And Rehabilitation Center",
       "city": "Grantsboro",
       "zip": "28529",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10800
     },
     {
       "operatorId": "richmond-pines-healthcare-and-rehabilitation-cente-345293",
       "operatorName": "Richmond Pines Healthcare And Rehabilitation Cente",
       "city": "Hamlet",
       "zip": "28345",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10300
     },
     {
       "operatorId": "autumn-care-of-shallotte-345294",
       "operatorName": "Autumn Care Of Shallotte",
       "city": "Shallotte",
       "zip": "28459",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11650
     },
     {
       "operatorId": "margate-health-and-rehab-center-345296",
       "operatorName": "Margate Health And Rehab Center",
       "city": "Jefferson",
       "zip": "28640",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10550
     },
     {
       "operatorId": "scotia-village-snf-345297",
       "operatorName": "Scotia Village - SNF",
       "city": "Laurinburg",
       "zip": "28352",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13700
     },
     {
       "operatorId": "the-laurels-of-pender-345298",
       "operatorName": "The Laurels Of Pender",
       "city": "Burgaw",
       "zip": "28425",
-      "monthlyMedian": 7800
+      "monthlyMedian": 8000
     },
     {
       "operatorId": "white-oak-manor-burlington-345301",
@@ -1370,28 +1370,28 @@
       "operatorName": "Vero Health & Rehab Of Sylva",
       "city": "Sylva",
       "zip": "28779",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9800
     },
     {
       "operatorId": "the-laurels-of-greentree-ridge-345303",
       "operatorName": "The Laurels Of Greentree Ridge",
       "city": "Asheville",
       "zip": "28803",
-      "monthlyMedian": 8900
+      "monthlyMedian": 8450
     },
     {
       "operatorId": "accordius-health-at-midwood-llc-345304",
       "operatorName": "Accordius Health At Midwood, LLC",
       "city": "Charlotte",
       "zip": "28205",
-      "monthlyMedian": 9800
+      "monthlyMedian": 10700
     },
     {
       "operatorId": "smoky-ridge-health-and-rehabilitation-345305",
       "operatorName": "Smoky Ridge Health And Rehabilitation",
       "city": "Burnsville",
       "zip": "28714",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11050
     },
     {
       "operatorId": "iredell-memorial-hospital-inc-345306",
@@ -1405,112 +1405,112 @@
       "operatorName": "Juniper Gardens Center For Nursing And Rehabilitat",
       "city": "Gastonia",
       "zip": "28056",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11400
     },
     {
       "operatorId": "liberty-commons-nursing-and-rehabilitation-center-345309",
       "operatorName": "Liberty Commons Nursing And Rehabilitation Center",
       "city": "Weldon",
       "zip": "27890",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11100
     },
     {
       "operatorId": "piedmont-crossing-345310",
       "operatorName": "Piedmont Crossing",
       "city": "Thomasville",
       "zip": "27360",
-      "monthlyMedian": 8500
+      "monthlyMedian": 19050
     },
     {
       "operatorId": "roxboro-healthcare-rehab-center-345311",
       "operatorName": "Roxboro Healthcare & Rehab Center",
       "city": "Roxboro",
       "zip": "27573",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10150
     },
     {
       "operatorId": "the-greens-at-hendersonville-345312",
       "operatorName": "The Greens At Hendersonville",
       "city": "Hendersonville",
       "zip": "28791",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11700
     },
     {
       "operatorId": "northampton-nursing-and-rehabilitation-center-345313",
       "operatorName": "Northampton Nursing And Rehabilitation Center",
       "city": "Jackson",
       "zip": "27845",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9950
     },
     {
       "operatorId": "fair-haven-of-forest-city-llc-345314",
       "operatorName": "Fair Haven Of Forest City, LLC",
       "city": "Forest City",
       "zip": "28043",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11200
     },
     {
       "operatorId": "the-carrolton-of-lumberton-345315",
       "operatorName": "The Carrolton Of Lumberton",
       "city": "Lumberton",
       "zip": "28358",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10950
     },
     {
       "operatorId": "senior-citizens-home-345316",
       "operatorName": "Senior Citizens Home",
       "city": "Henderson",
       "zip": "27537",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10850
     },
     {
       "operatorId": "clayton-rehabilitation-and-healthcare-center-345317",
       "operatorName": "Clayton Rehabilitation And Healthcare Center",
       "city": "Clayton",
       "zip": "27520",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11850
     },
     {
       "operatorId": "brunswick-cove-nursing-center-345318",
       "operatorName": "Brunswick Cove Nursing Center",
       "city": "Winnabow",
       "zip": "28479",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9900
     },
     {
       "operatorId": "elderberry-health-care-345319",
       "operatorName": "Elderberry Health Care",
       "city": "Marshall",
       "zip": "28753",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11100
     },
     {
       "operatorId": "kerr-lake-nursing-and-rehabilitation-center-345321",
       "operatorName": "Kerr Lake Nursing And Rehabilitation Center",
       "city": "Henderson",
       "zip": "27536",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11550
     },
     {
       "operatorId": "the-laurels-of-hendersonville-345322",
       "operatorName": "The Laurels Of Hendersonville",
       "city": "Hendersonville",
       "zip": "28792",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10300
     },
     {
       "operatorId": "wallace-rehabilitation-and-healthcare-center-345323",
       "operatorName": "Wallace Rehabilitation And Healthcare Center",
       "city": "Wallace",
       "zip": "28466",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11800
     },
     {
       "operatorId": "the-carrolton-of-dunn-345325",
       "operatorName": "The Carrolton Of Dunn",
       "city": "Dunn",
       "zip": "28335",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13200
     },
     {
       "operatorId": "willowbrooke-court-sc-ctr-at-matthews-glen-345326",
@@ -1531,217 +1531,217 @@
       "operatorName": "Hibriten Mountain Nursing And Rehabilitation",
       "city": "Lenoir",
       "zip": "28645",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10050
     },
     {
       "operatorId": "the-graybrier-nursing-and-retirement-center-345330",
       "operatorName": "The Graybrier Nursing And Retirement Center",
       "city": "Trinity",
       "zip": "27370",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10450
     },
     {
       "operatorId": "sardis-oaks-345331",
       "operatorName": "Sardis Oaks",
       "city": "Charlotte",
       "zip": "28270",
-      "monthlyMedian": 9800
+      "monthlyMedian": 8700
     },
     {
       "operatorId": "wilson-healthcare-and-rehabilitation-center-345332",
       "operatorName": "Wilson Healthcare And Rehabilitation Center",
       "city": "Wilson",
       "zip": "27893",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10950
     },
     {
       "operatorId": "abbotts-creek-center-345333",
       "operatorName": "Abbotts Creek Center",
       "city": "Lexington",
       "zip": "27295",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11900
     },
     {
       "operatorId": "franklin-oaks-nursing-and-rehabilitation-center-345335",
       "operatorName": "Franklin Oaks Nursing And Rehabilitation Center",
       "city": "Louisburg",
       "zip": "27549",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10150
     },
     {
       "operatorId": "signature-healthcare-of-roanoke-rapids-345336",
       "operatorName": "Signature Healthcare Of Roanoke Rapids",
       "city": "Roanoke Rapids",
       "zip": "27870",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11100
     },
     {
       "operatorId": "peak-resources-alamance-inc-345337",
       "operatorName": "Peak Resources - Alamance, Inc",
       "city": "Graham",
       "zip": "27253",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11500
     },
     {
       "operatorId": "windsor-rehabilitation-and-healthcare-center-345339",
       "operatorName": "Windsor Rehabilitation And Healthcare Center",
       "city": "Windsor",
       "zip": "27983",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11000
     },
     {
       "operatorId": "the-greens-at-maple-leaf-345340",
       "operatorName": "The Greens At Maple Leaf",
       "city": "Statesville",
       "zip": "28625",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12950
     },
     {
       "operatorId": "silver-bluff-345341",
       "operatorName": "Silver Bluff",
       "city": "Canton",
       "zip": "28716",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11800
     },
     {
       "operatorId": "big-elm-retirement-and-nursing-centers-345342",
       "operatorName": "Big Elm Retirement And Nursing Centers",
       "city": "Kannapolis",
       "zip": "28081",
-      "monthlyMedian": 8500
+      "monthlyMedian": 14450
     },
     {
       "operatorId": "goldsboro-rehabilitation-and-healthcare-center-345343",
       "operatorName": "Goldsboro Rehabilitation And Healthcare Center",
       "city": "Goldsboro",
       "zip": "27534",
-      "monthlyMedian": 8500
+      "monthlyMedian": 12450
     },
     {
       "operatorId": "camellia-gardens-center-for-nursing-and-rehab-345344",
       "operatorName": "Camellia Gardens Center For Nursing And Rehab",
       "city": "Henderson",
       "zip": "27536",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11000
     },
     {
       "operatorId": "accordius-health-at-monroe-345345",
       "operatorName": "Accordius Health At Monroe",
       "city": "Monroe",
       "zip": "28112",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11200
     },
     {
       "operatorId": "whispering-pines-nursing-rehab-center-345348",
       "operatorName": "Whispering Pines Nursing & Rehab Center",
       "city": "Fayetteville",
       "zip": "28301",
-      "monthlyMedian": 8500
+      "monthlyMedian": 12250
     },
     {
       "operatorId": "woodbury-wellness-center-inc-345349",
       "operatorName": "Woodbury Wellness Center Inc",
       "city": "Hampstead",
       "zip": "28443",
-      "monthlyMedian": 7800
+      "monthlyMedian": 14350
     },
     {
       "operatorId": "courtland-terrace-345350",
       "operatorName": "Courtland Terrace",
       "city": "Gastonia",
       "zip": "28054",
-      "monthlyMedian": 8500
+      "monthlyMedian": 20900
     },
     {
       "operatorId": "autumn-care-of-saluda-345351",
       "operatorName": "Autumn Care Of Saluda",
       "city": "Saluda",
       "zip": "28773",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10800
     },
     {
       "operatorId": "highland-house-rehabilitation-and-healthcare-345353",
       "operatorName": "Highland House Rehabilitation And Healthcare",
       "city": "Fayetteville",
       "zip": "28301",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11550
     },
     {
       "operatorId": "piney-grove-nursing-and-rehabilitation-center-345354",
       "operatorName": "Piney Grove Nursing And Rehabilitation Center",
       "city": "Kernersville",
       "zip": "27284",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10600
     },
     {
       "operatorId": "graham-healthcare-and-rehabilitation-center-345355",
       "operatorName": "Graham Healthcare And Rehabilitation Center",
       "city": "Robbinsville",
       "zip": "28771",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10550
     },
     {
       "operatorId": "rich-square-nursing-rehabilitation-center-345356",
       "operatorName": "Rich Square Nursing & Rehabilitation Center",
       "city": "Rich Square",
       "zip": "27869",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10950
     },
     {
       "operatorId": "pruitthealth-neuse-345357",
       "operatorName": "Pruitthealth-neuse",
       "city": "New Bern",
       "zip": "28560",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10850
     },
     {
       "operatorId": "louisburg-healthcare-rehabilitation-center-345358",
       "operatorName": "Louisburg Healthcare & Rehabilitation Center",
       "city": "Louisburg",
       "zip": "27549",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12050
     },
     {
       "operatorId": "ahoskie-health-and-rehabilitation-center-345359",
       "operatorName": "Ahoskie Health And Rehabilitation Center",
       "city": "Ahoskie",
       "zip": "27910",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10400
     },
     {
       "operatorId": "the-greens-at-cabarrus-345362",
       "operatorName": "The Greens At Cabarrus",
       "city": "Concord",
       "zip": "28025",
-      "monthlyMedian": 8900
+      "monthlyMedian": 12500
     },
     {
       "operatorId": "compass-healthcare-and-rehab-hawfields-inc-345363",
       "operatorName": "Compass Healthcare And Rehab Hawfields, Inc.",
       "city": "Mebane",
       "zip": "27302",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10650
     },
     {
       "operatorId": "signature-healthcare-of-kinston-345365",
       "operatorName": "Signature Healthcare Of Kinston",
       "city": "Kinston",
       "zip": "28501",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10350
     },
     {
       "operatorId": "greendale-forest-nursing-and-rehabilitation-center-345366",
       "operatorName": "Greendale Forest Nursing And Rehabilitation Center",
       "city": "Snow Hill",
       "zip": "28580",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11000
     },
     {
       "operatorId": "liberty-healthcare-services-of-golden-years-nursin-345367",
       "operatorName": "Liberty Healthcare Services Of Golden Years Nursin",
       "city": "Falcon",
       "zip": "28342",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10000
     },
     {
       "operatorId": "rex-rehab-nursing-care-center-345369",
@@ -1755,91 +1755,91 @@
       "operatorName": "Pinehurst Healthcare & Rehabilitation Center",
       "city": "Pinehurst",
       "zip": "28374",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9650
     },
     {
       "operatorId": "pruitthealth-trent-345371",
       "operatorName": "Pruitthealth-trent",
       "city": "New Bern",
       "zip": "28560",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10400
     },
     {
       "operatorId": "wilson-pines-nursing-and-rehabilitation-center-345372",
       "operatorName": "Wilson Pines Nursing And Rehabilitation Center",
       "city": "Wilson",
       "zip": "27893",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10100
     },
     {
       "operatorId": "liberty-commons-nursing-rehab-center-of-southpor-345373",
       "operatorName": "Liberty Commons Nursing & Rehab Center Of Southpor",
       "city": "Southport",
       "zip": "28461",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9950
     },
     {
       "operatorId": "scotland-manor-health-and-rehabilitation-center-345375",
       "operatorName": "Scotland Manor Health And Rehabilitation Center",
       "city": "Scotland Neck",
       "zip": "27874",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10400
     },
     {
       "operatorId": "the-carrolton-of-fayetteville-345376",
       "operatorName": "The Carrolton Of Fayetteville",
       "city": "Fayetteville",
       "zip": "28306",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11250
     },
     {
       "operatorId": "east-carolina-health-and-rehabilitation-center-345377",
       "operatorName": "East Carolina Health And Rehabilitation Center",
       "city": "Greenville",
       "zip": "27834",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10350
     },
     {
       "operatorId": "pruitthealth-rockingham-345378",
       "operatorName": "Pruitthealth-rockingham",
       "city": "Rockingham",
       "zip": "28379",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10250
     },
     {
       "operatorId": "village-green-health-and-rehabilitation-345380",
       "operatorName": "Village Green Health And Rehabilitation",
       "city": "Fayetteville",
       "zip": "28304",
-      "monthlyMedian": 8500
+      "monthlyMedian": 14450
     },
     {
       "operatorId": "village-care-of-king-345381",
       "operatorName": "Village Care Of King",
       "city": "King",
       "zip": "27021",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12800
     },
     {
       "operatorId": "scottish-pines-rehabilitation-and-nursing-center-345383",
       "operatorName": "Scottish Pines Rehabilitation And Nursing Center",
       "city": "Laurinburg",
       "zip": "28352",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11700
     },
     {
       "operatorId": "pruitthealth-farmville-345384",
       "operatorName": "Pruitthealth-farmville",
       "city": "Farmville",
       "zip": "27828",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10400
     },
     {
       "operatorId": "cardinal-healthcare-and-rehabilitation-345385",
       "operatorName": "Cardinal Healthcare And Rehabilitation",
       "city": "Lincolnton",
       "zip": "28092",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11500
     },
     {
       "operatorId": "wilkes-regional-medical-ctr-sn-345386",
@@ -1853,140 +1853,140 @@
       "operatorName": "Crown Haven Health And Rehabilitation",
       "city": "Charlotte",
       "zip": "28213",
-      "monthlyMedian": 9800
+      "monthlyMedian": 10000
     },
     {
       "operatorId": "the-laurels-of-forest-glenn-345389",
       "operatorName": "The Laurels Of Forest Glenn",
       "city": "Garner",
       "zip": "27529",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9250
     },
     {
       "operatorId": "countryside-345390",
       "operatorName": "Countryside",
       "city": "Stokesdale",
       "zip": "27357",
-      "monthlyMedian": 7800
+      "monthlyMedian": 14600
     },
     {
       "operatorId": "heartland-living-rehab-at-the-moses-h-cone-memor-345391",
       "operatorName": "Heartland Living & Rehab At The Moses H Cone Memor",
       "city": "Greensboro",
       "zip": "27401",
-      "monthlyMedian": 8900
+      "monthlyMedian": 11100
     },
     {
       "operatorId": "wadesboro-health-rehab-center-345392",
       "operatorName": "Wadesboro Health & Rehab Center",
       "city": "Wadesboro",
       "zip": "28170",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10600
     },
     {
       "operatorId": "pisgah-manor-health-care-center-345393",
       "operatorName": "Pisgah Manor Health Care Center",
       "city": "Candler",
       "zip": "28715",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13150
     },
     {
       "operatorId": "brook-stone-living-center-345394",
       "operatorName": "Brook Stone Living Center",
       "city": "Pollocksville",
       "zip": "28573",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9300
     },
     {
       "operatorId": "peak-resources-cherryville-345395",
       "operatorName": "Peak Resources-cherryville",
       "city": "Cherryville",
       "zip": "28021",
-      "monthlyMedian": 7800
+      "monthlyMedian": 15250
     },
     {
       "operatorId": "smoky-mountain-health-and-rehabilitation-center-345396",
       "operatorName": "Smoky Mountain Health And Rehabilitation Center",
       "city": "Waynesville",
       "zip": "28785",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11600
     },
     {
       "operatorId": "shoreland-health-care-and-retirement-center-inc-345397",
       "operatorName": "Shoreland Health Care And Retirement Center Inc",
       "city": "Whiteville",
       "zip": "28472",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11150
     },
     {
       "operatorId": "skyland-care-center-345400",
       "operatorName": "Skyland Care Center",
       "city": "Sylva",
       "zip": "28779",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11400
     },
     {
       "operatorId": "wilkesboro-health-and-rehabilitation-345401",
       "operatorName": "Wilkesboro Health And Rehabilitation",
       "city": "North Wilkesboro",
       "zip": "28659",
-      "monthlyMedian": 7800
+      "monthlyMedian": 14900
     },
     {
       "operatorId": "highfield-nursing-and-rehabilitation-345403",
       "operatorName": "Highfield Nursing And Rehabilitation",
       "city": "Cary",
       "zip": "27518",
-      "monthlyMedian": 9800
+      "monthlyMedian": 11000
     },
     {
       "operatorId": "three-rivers-health-and-rehabilitation-center-345404",
       "operatorName": "Three Rivers Health And Rehabilitation Center",
       "city": "Windsor",
       "zip": "27983",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11800
     },
     {
       "operatorId": "charlotte-health-rehabilitation-center-345405",
       "operatorName": "Charlotte Health & Rehabilitation Center",
       "city": "Charlotte",
       "zip": "28214",
-      "monthlyMedian": 9800
+      "monthlyMedian": 12600
     },
     {
       "operatorId": "gates-health-and-rehabilitation-center-345406",
       "operatorName": "Gates Health And Rehabilitation Center",
       "city": "Gatesville",
       "zip": "27938",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11200
     },
     {
       "operatorId": "southpoint-rehabilitation-and-healthcare-center-345408",
       "operatorName": "Southpoint Rehabilitation And Healthcare Center",
       "city": "Durham",
       "zip": "27713",
-      "monthlyMedian": 8900
+      "monthlyMedian": 13450
     },
     {
       "operatorId": "pembroke-center-345409",
       "operatorName": "Pembroke Center",
       "city": "Pembroke",
       "zip": "28372",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10700
     },
     {
       "operatorId": "central-continuing-care-345410",
       "operatorName": "Central Continuing Care",
       "city": "Mount Airy",
       "zip": "27030",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10450
     },
     {
       "operatorId": "skyland-terrace-and-rehabilitation-345411",
       "operatorName": "Skyland Terrace And Rehabilitation",
       "city": "Waynesville",
       "zip": "28786",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11000
     },
     {
       "operatorId": "brantwood-nh-retirement-center-345412",
@@ -2000,21 +2000,21 @@
       "operatorName": "Fleshers Fairview Health Care",
       "city": "Fairview",
       "zip": "28730",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12500
     },
     {
       "operatorId": "haymount-rehabilitation-nursing-center-inc-345414",
       "operatorName": "Haymount Rehabilitation & Nursing Center, Inc.",
       "city": "Fayetteville",
       "zip": "28303",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11450
     },
     {
       "operatorId": "pineville-rehabilitation-and-living-center-345415",
       "operatorName": "Pineville Rehabilitation And Living Center",
       "city": "Pineville",
       "zip": "28134",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11900
     },
     {
       "operatorId": "bermuda-village-retirement-center-345416",
@@ -2028,175 +2028,175 @@
       "operatorName": "Hillside Nursing Center Of Wake Forest",
       "city": "Wake Forest",
       "zip": "27588",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12250
     },
     {
       "operatorId": "swannanoa-valley-health-and-rehabilitation-345418",
       "operatorName": "Swannanoa Valley Health And Rehabilitation",
       "city": "Swannanoa",
       "zip": "28778",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10650
     },
     {
       "operatorId": "lexington-health-care-center-345419",
       "operatorName": "Lexington Health Care Center",
       "city": "Lexington",
       "zip": "27292",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12800
     },
     {
       "operatorId": "alamance-health-care-center-345420",
       "operatorName": "Alamance Health Care Center",
       "city": "Burlington",
       "zip": "27217",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10300
     },
     {
       "operatorId": "the-laurels-of-chatham-345421",
       "operatorName": "The Laurels Of Chatham",
       "city": "Pittsboro",
       "zip": "27312",
-      "monthlyMedian": 7800
+      "monthlyMedian": 8050
     },
     {
       "operatorId": "wilson-rehabilitation-and-nursing-center-345423",
       "operatorName": "Wilson Rehabilitation And Nursing Center",
       "city": "Wilson",
       "zip": "27893",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11450
     },
     {
       "operatorId": "fair-haven-home-inc-345425",
       "operatorName": "Fair Haven Home Inc",
       "city": "Bostic",
       "zip": "28018",
-      "monthlyMedian": 7800
+      "monthlyMedian": 15550
     },
     {
       "operatorId": "valley-view-care-and-rehabilitation-345426",
       "operatorName": "Valley View Care And Rehabilitation",
       "city": "Andrews",
       "zip": "28901",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10150
     },
     {
       "operatorId": "the-laurels-of-salisbury-345428",
       "operatorName": "The Laurels Of Salisbury",
       "city": "Salisbury",
       "zip": "28147",
-      "monthlyMedian": 8500
+      "monthlyMedian": 9900
     },
     {
       "operatorId": "peak-resources-pinelake-345429",
       "operatorName": "Peak Resources - Pinelake",
       "city": "Carthage",
       "zip": "28327",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11400
     },
     {
       "operatorId": "bryan-health-and-rehab-345431",
       "operatorName": "Bryan Health And Rehab",
       "city": "Scotland Neck",
       "zip": "27874",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10100
     },
     {
       "operatorId": "river-bend-health-and-rehabilitation-345432",
       "operatorName": "River Bend Health And Rehabilitation",
       "city": "Asheville",
       "zip": "28806",
-      "monthlyMedian": 8900
+      "monthlyMedian": 13150
     },
     {
       "operatorId": "clay-county-health-and-rehabilitation-345433",
       "operatorName": "Clay County Health And Rehabilitation",
       "city": "Hayesville",
       "zip": "28904",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9600
     },
     {
       "operatorId": "carver-living-center-345434",
       "operatorName": "Carver Living Center",
       "city": "Durham",
       "zip": "27704",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10550
     },
     {
       "operatorId": "wellington-rehabilitation-and-healthcare-345436",
       "operatorName": "Wellington Rehabilitation And Healthcare",
       "city": "Knightdale",
       "zip": "27545",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11000
     },
     {
       "operatorId": "eckerd-living-center-345437",
       "operatorName": "Eckerd Living Center",
       "city": "Highlands",
       "zip": "28741",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10000
     },
     {
       "operatorId": "the-laurels-of-summit-ridge-345438",
       "operatorName": "The Laurels Of Summit Ridge",
       "city": "Asheville",
       "zip": "28805",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10900
     },
     {
       "operatorId": "peak-resources-brookshire-inc-345439",
       "operatorName": "Peak Resources - Brookshire, Inc",
       "city": "Hillsborough",
       "zip": "27278",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12650
     },
     {
       "operatorId": "gastonia-health-rehab-center-345441",
       "operatorName": "Gastonia Health & Rehab Center",
       "city": "Gastonia",
       "zip": "28054",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10900
     },
     {
       "operatorId": "forrest-oakes-healthcare-345442",
       "operatorName": "Forrest Oakes Healthcare",
       "city": "Albemarle",
       "zip": "28001",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10650
     },
     {
       "operatorId": "oak-forest-health-and-rehabilitation-345443",
       "operatorName": "Oak Forest Health And Rehabilitation",
       "city": "Winston Salem",
       "zip": "27105",
-      "monthlyMedian": 8900
+      "monthlyMedian": 12050
     },
     {
       "operatorId": "glenaire-345445",
       "operatorName": "Glenaire",
       "city": "Cary",
       "zip": "27511",
-      "monthlyMedian": 9800
+      "monthlyMedian": 17650
     },
     {
       "operatorId": "college-pines-health-and-rehabilitation-345446",
       "operatorName": "College Pines Health And Rehabilitation",
       "city": "Connelly Springs",
       "zip": "28612",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12850
     },
     {
       "operatorId": "emerald-ridge-health-and-rehabilitation-345447",
       "operatorName": "Emerald Ridge Health And Rehabilitation",
       "city": "Asheville",
       "zip": "28804",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10400
     },
     {
       "operatorId": "maple-grove-health-and-rehabilitation-center-345448",
       "operatorName": "Maple Grove Health And Rehabilitation Center",
       "city": "Greensboro",
       "zip": "27406",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10000
     },
     {
       "operatorId": "king-health-and-rehabilitation-center-345449",
@@ -2210,21 +2210,21 @@
       "operatorName": "Westwood Health And Rehabilitation",
       "city": "Archdale",
       "zip": "27263",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10550
     },
     {
       "operatorId": "belaire-health-care-center-345457",
       "operatorName": "Belaire Health Care Center",
       "city": "Gastonia",
       "zip": "28052",
-      "monthlyMedian": 8500
+      "monthlyMedian": 13950
     },
     {
       "operatorId": "treyburn-rehabilitation-center-345458",
       "operatorName": "Treyburn Rehabilitation Center",
       "city": "Durham",
       "zip": "27712",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10700
     },
     {
       "operatorId": "willowbrooke-court-sc-ctr-at-tryon-estates-345459",
@@ -2238,42 +2238,42 @@
       "operatorName": "Guilford Health Care Center",
       "city": "Greensboro",
       "zip": "27406",
-      "monthlyMedian": 8900
+      "monthlyMedian": 11700
     },
     {
       "operatorId": "the-oaks-brevard-345462",
       "operatorName": "The Oaks-brevard",
       "city": "Brevard",
       "zip": "28712",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10900
     },
     {
       "operatorId": "life-care-center-of-hendersonville-345463",
       "operatorName": "Life Care Center Of Hendersonville",
       "city": "Hendersonville",
       "zip": "28792",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12000
     },
     {
       "operatorId": "oak-grove-healthcare-345464",
       "operatorName": "Oak Grove Healthcare",
       "city": "Rutherfordton",
       "zip": "28139",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11150
     },
     {
       "operatorId": "bayview-nursing-rehabilitation-center-345465",
       "operatorName": "Bayview Nursing & Rehabilitation Center",
       "city": "New Bern",
       "zip": "28560",
-      "monthlyMedian": 8500
+      "monthlyMedian": 13500
     },
     {
       "operatorId": "willowbrook-rehabilitation-and-care-345466",
       "operatorName": "Willowbrook Rehabilitation And Care",
       "city": "Yadkinville",
       "zip": "27055",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10500
     },
     {
       "operatorId": "novant-health-presbyterian-medical-center-snu-345467",
@@ -2287,49 +2287,49 @@
       "operatorName": "Liberty Commons Rehabilitation Center",
       "city": "Wilmington",
       "zip": "28403",
-      "monthlyMedian": 8900
+      "monthlyMedian": 13450
     },
     {
       "operatorId": "mecklenburg-heath-and-rehabilitation-345471",
       "operatorName": "Mecklenburg Heath And Rehabilitation",
       "city": "Charlotte",
       "zip": "28273",
-      "monthlyMedian": 9800
+      "monthlyMedian": 11850
     },
     {
       "operatorId": "southwood-nursing-and-retirement-345472",
       "operatorName": "Southwood Nursing And Retirement",
       "city": "Clinton",
       "zip": "28328",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10900
     },
     {
       "operatorId": "wilora-lake-healthcare-345473",
       "operatorName": "Wilora Lake Healthcare",
       "city": "Charlotte",
       "zip": "28212",
-      "monthlyMedian": 9800
+      "monthlyMedian": 11000
     },
     {
       "operatorId": "tsali-care-center-345475",
       "operatorName": "Tsali Care Center",
       "city": "Cherokee",
       "zip": "28719",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10950
     },
     {
       "operatorId": "biltmore-haven-nursing-and-rehabilitation-345477",
       "operatorName": "Biltmore Haven Nursing And Rehabilitation",
       "city": "Arden",
       "zip": "28704",
-      "monthlyMedian": 7800
+      "monthlyMedian": 9900
     },
     {
       "operatorId": "harnett-woods-nursing-and-rehabilitation-center-345478",
       "operatorName": "Harnett Woods Nursing And Rehabilitation Center",
       "city": "Dunn",
       "zip": "28334",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10350
     },
     {
       "operatorId": "salemtowne-345479",
@@ -2343,7 +2343,7 @@
       "operatorName": "Woodlands Nursing & Rehabilitation Center",
       "city": "Fayetteville",
       "zip": "28301",
-      "monthlyMedian": 8500
+      "monthlyMedian": 12300
     },
     {
       "operatorId": "brookdale-carriage-club-providence-345482",
@@ -2357,7 +2357,7 @@
       "operatorName": "Shaire Nursing Center",
       "city": "Lenoir",
       "zip": "28645",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11500
     },
     {
       "operatorId": "transylvania-regional-hospital-345484",
@@ -2371,56 +2371,56 @@
       "operatorName": "Cherry Point Bay Nursing And Rehabilitation Center",
       "city": "Havelock",
       "zip": "28532",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10450
     },
     {
       "operatorId": "rockwell-park-rehabilitation-and-healthcare-center-345489",
       "operatorName": "Rockwell Park Rehabilitation And Healthcare Center",
       "city": "Charlotte",
       "zip": "28262",
-      "monthlyMedian": 9800
+      "monthlyMedian": 10400
     },
     {
       "operatorId": "ayden-court-nursing-and-rehabilitation-center-345490",
       "operatorName": "Ayden Court Nursing And Rehabilitation Center",
       "city": "Ayden",
       "zip": "28513",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10250
     },
     {
       "operatorId": "croatan-ridge-nursing-and-rehabilitation-center-345491",
       "operatorName": "Croatan Ridge Nursing And Rehabilitation Center",
       "city": "Newport",
       "zip": "28570",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10250
     },
     {
       "operatorId": "hendersonville-health-and-rehabilitation-345493",
       "operatorName": "Hendersonville Health And Rehabilitation",
       "city": "Flat Rock",
       "zip": "28731",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13950
     },
     {
       "operatorId": "peak-resources-gastonia-345494",
       "operatorName": "Peak Resources - Gastonia",
       "city": "Gastonia",
       "zip": "28054",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10800
     },
     {
       "operatorId": "the-stewart-health-center-345495",
       "operatorName": "The Stewart Health Center",
       "city": "Charlotte",
       "zip": "28210",
-      "monthlyMedian": 9800
+      "monthlyMedian": 11700
     },
     {
       "operatorId": "liberty-commons-nursing-rehabilitation-center-of-345496",
       "operatorName": "Liberty Commons Nursing & Rehabilitation Center Of",
       "city": "Burlington",
       "zip": "27215",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10500
     },
     {
       "operatorId": "litchford-falls-health-and-rehabilitation-center-345499",
@@ -2434,7 +2434,7 @@
       "operatorName": "Windsor Point Continuing Care",
       "city": "Fuquay-varina",
       "zip": "27526",
-      "monthlyMedian": 7800
+      "monthlyMedian": 17150
     },
     {
       "operatorId": "croasdaile-village-345501",
@@ -2448,63 +2448,63 @@
       "operatorName": "Lake Park Nursing And Rehabilitation Center",
       "city": "Indian Trail",
       "zip": "28079",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10650
     },
     {
       "operatorId": "liberty-commons-nsg-and-rehab-ctr-of-rowan-county-345503",
       "operatorName": "Liberty Commons Nsg And Rehab Ctr Of Rowan County",
       "city": "Salisbury",
       "zip": "28147",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11000
     },
     {
       "operatorId": "carolina-rehab-center-of-cumberland-345505",
       "operatorName": "Carolina Rehab Center Of Cumberland",
       "city": "Fayetteville",
       "zip": "28306",
-      "monthlyMedian": 8500
+      "monthlyMedian": 12650
     },
     {
       "operatorId": "whitestone-a-masonic-and-eastern-star-community-345506",
       "operatorName": "Whitestone A Masonic And Eastern Star Community",
       "city": "Greensboro",
       "zip": "27407",
-      "monthlyMedian": 8900
+      "monthlyMedian": 17200
     },
     {
       "operatorId": "autumn-care-of-myrtle-grove-345507",
       "operatorName": "Autumn Care Of Myrtle Grove",
       "city": "Wilmington",
       "zip": "28412",
-      "monthlyMedian": 8900
+      "monthlyMedian": 13550
     },
     {
       "operatorId": "unc-rex-rehab-nursing-care-center-of-apex-345508",
       "operatorName": "UNC Rex Rehab & Nursing Care Center Of Apex",
       "city": "Apex",
       "zip": "27502",
-      "monthlyMedian": 9800
+      "monthlyMedian": 12400
     },
     {
       "operatorId": "dahlia-gardens-center-for-nursing-and-rehabilitati-345509",
       "operatorName": "Dahlia Gardens Center For Nursing And Rehabilitati",
       "city": "Aberdeen",
       "zip": "28315",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10650
     },
     {
       "operatorId": "tarboro-health-and-rehabilitation-llc-345510",
       "operatorName": "Tarboro Health And Rehabilitation LLC",
       "city": "Tarboro",
       "zip": "27886",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10350
     },
     {
       "operatorId": "autumn-care-of-statesville-345511",
       "operatorName": "Autumn Care Of Statesville",
       "city": "Statesville",
       "zip": "28625",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12600
     },
     {
       "operatorId": "cypress-glen-retirement-community-345512",
@@ -2518,63 +2518,63 @@
       "operatorName": "Tower Nursing And Rehabilitation Center",
       "city": "Raleigh",
       "zip": "27604",
-      "monthlyMedian": 9800
+      "monthlyMedian": 10050
     },
     {
       "operatorId": "autumn-care-of-nash-345514",
       "operatorName": "Autumn Care Of Nash",
       "city": "Nashville",
       "zip": "27856",
-      "monthlyMedian": 7800
+      "monthlyMedian": 14000
     },
     {
       "operatorId": "pruitthealth-town-center-345515",
       "operatorName": "Pruitthealth-town Center",
       "city": "Harrisburg",
       "zip": "28075",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12750
     },
     {
       "operatorId": "conover-nursing-and-rehabilitation-center-345516",
       "operatorName": "Conover Nursing And Rehabilitation Center",
       "city": "Conover",
       "zip": "28613",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10950
     },
     {
       "operatorId": "inn-at-quail-haven-village-345518",
       "operatorName": "Inn At Quail Haven Village",
       "city": "Pinehurst",
       "zip": "28374",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13000
     },
     {
       "operatorId": "liberty-commons-nursing-rehabilitation-center-of-345519",
       "operatorName": "Liberty Commons Nursing & Rehabilitation Center Of",
       "city": "Benson",
       "zip": "27504",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12400
     },
     {
       "operatorId": "magnolia-gardens-center-for-nursing-and-rehabilita-345520",
       "operatorName": "Magnolia Gardens Center For Nursing And Rehabilita",
       "city": "Thomasville",
       "zip": "27360",
-      "monthlyMedian": 8500
+      "monthlyMedian": 10200
     },
     {
       "operatorId": "fletcher-rehabilitation-and-healthcare-center-345522",
       "operatorName": "Fletcher Rehabilitation And Healthcare Center",
       "city": "Fletcher",
       "zip": "28732",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11950
     },
     {
       "operatorId": "ramseur-rehabilitation-and-healthcare-center-345523",
       "operatorName": "Ramseur Rehabilitation And Healthcare Center",
       "city": "Ramseur",
       "zip": "27316",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10500
     },
     {
       "operatorId": "the-gardens-of-taylor-glen-retirement-community-345525",
@@ -2588,14 +2588,14 @@
       "operatorName": "Carolina Rehab Center Of Burke",
       "city": "Connelly Spring",
       "zip": "28612",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13950
     },
     {
       "operatorId": "river-landing-at-sandy-ridge-345528",
       "operatorName": "River Landing At Sandy Ridge",
       "city": "Colfax",
       "zip": "27235",
-      "monthlyMedian": 7800
+      "monthlyMedian": 19550
     },
     {
       "operatorId": "perry-creek-health-and-rehabilitation-center-345529",
@@ -2609,21 +2609,21 @@
       "operatorName": "Penn Nursing Center",
       "city": "Reidsville",
       "zip": "27320",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10500
     },
     {
       "operatorId": "nc-state-veterans-home-salisbury-345531",
       "operatorName": "NC State Veterans Home - Salisbury",
       "city": "Salisbury",
       "zip": "28145",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11250
     },
     {
       "operatorId": "liberty-commons-nursing-and-rehabilitation-center-345532",
       "operatorName": "Liberty Commons Nursing And Rehabilitation Center",
       "city": "Sanford",
       "zip": "27332",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10250
     },
     {
       "operatorId": "the-cedars-of-chapel-hill-345533",
@@ -2637,28 +2637,28 @@
       "operatorName": "Sanford Health & Rehabilitation Co",
       "city": "Sanford",
       "zip": "27330",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11250
     },
     {
       "operatorId": "adams-farm-living-rehabilitation-345535",
       "operatorName": "Adams Farm Living & Rehabilitation",
       "city": "Jamestown",
       "zip": "27282",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10950
     },
     {
       "operatorId": "peak-resources-wilmington-inc-345537",
       "operatorName": "Peak Resources-wilmington, Inc",
       "city": "Wilmington",
       "zip": "28401",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10450
     },
     {
       "operatorId": "pruitthealth-raleigh-345538",
       "operatorName": "Pruitthealth-raleigh",
       "city": "Raleigh",
       "zip": "27603",
-      "monthlyMedian": 9800
+      "monthlyMedian": 11500
     },
     {
       "operatorId": "the-arbor-345539",
@@ -2672,7 +2672,7 @@
       "operatorName": "Lakeside Health & Rehab Center",
       "city": "Huntersville",
       "zip": "28078",
-      "monthlyMedian": 9800
+      "monthlyMedian": 11750
     },
     {
       "operatorId": "the-forest-at-duke-inc-345542",
@@ -2686,7 +2686,7 @@
       "operatorName": "Bermuda Commons Nursing And Rehabilitation Center",
       "city": "Advance",
       "zip": "27006",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10450
     },
     {
       "operatorId": "asbury-health-and-rehabilitation-center-345544",
@@ -2707,21 +2707,21 @@
       "operatorName": "Camden Health And Rehabilitation",
       "city": "Greensboro",
       "zip": "27407",
-      "monthlyMedian": 8900
+      "monthlyMedian": 12200
     },
     {
       "operatorId": "ashton-health-and-rehabilitation-345548",
       "operatorName": "Ashton Health And Rehabilitation",
       "city": "Mcleansville",
       "zip": "27301",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11900
     },
     {
       "operatorId": "brunswick-rehabilitation-and-healthcare-center-345549",
       "operatorName": "Brunswick Rehabilitation And Healthcare Center",
       "city": "Bolivia",
       "zip": "28422",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11250
     },
     {
       "operatorId": "white-oak-of-waxhaw-345550",
@@ -2735,35 +2735,35 @@
       "operatorName": "Pruitthealth-carolina Point",
       "city": "Durham",
       "zip": "27705",
-      "monthlyMedian": 8900
+      "monthlyMedian": 10900
     },
     {
       "operatorId": "the-shannon-gray-rehabilitation-recovery-center-345552",
       "operatorName": "The Shannon Gray Rehabilitation & Recovery Center",
       "city": "Jamestown",
       "zip": "27282",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10700
     },
     {
       "operatorId": "autumn-care-of-fayetteville-345553",
       "operatorName": "Autumn Care Of Fayetteville",
       "city": "Fayetteville",
       "zip": "28314",
-      "monthlyMedian": 8500
+      "monthlyMedian": 11250
     },
     {
       "operatorId": "trinity-grove-345554",
       "operatorName": "Trinity Grove",
       "city": "Wilmington",
       "zip": "28412",
-      "monthlyMedian": 8900
+      "monthlyMedian": 11500
     },
     {
       "operatorId": "hillcrest-raleigh-at-crabtree-valley-345555",
       "operatorName": "Hillcrest Raleigh At Crabtree Valley",
       "city": "Raleigh",
       "zip": "27612",
-      "monthlyMedian": 9800
+      "monthlyMedian": 13450
     },
     {
       "operatorId": "deerfield-episcopal-retirement-345556",
@@ -2777,28 +2777,28 @@
       "operatorName": "Azalea Health & Rehab Center",
       "city": "Wilmington",
       "zip": "28412",
-      "monthlyMedian": 8900
+      "monthlyMedian": 11550
     },
     {
       "operatorId": "nc-state-veterans-home-black-mountain-345558",
       "operatorName": "NC State Veterans Home - Black Mountain",
       "city": "Black Mountain",
       "zip": "28711",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13050
     },
     {
       "operatorId": "homestead-hills-345559",
       "operatorName": "Homestead Hills",
       "city": "Winston-salem",
       "zip": "27103",
-      "monthlyMedian": 8900
+      "monthlyMedian": 14750
     },
     {
       "operatorId": "nc-state-veterans-home-kinston-345560",
       "operatorName": "NC State Veterans Home-kinston",
       "city": "Kinston",
       "zip": "28504",
-      "monthlyMedian": 7800
+      "monthlyMedian": 13100
     },
     {
       "operatorId": "fuquay-varina-health-and-rehabilitation-center-345561",
@@ -2812,14 +2812,14 @@
       "operatorName": "Clear Creek Nursing & Rehabilitation Center",
       "city": "Mint Hill",
       "zip": "28227",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11350
     },
     {
       "operatorId": "pavilion-health-center-at-brightmore-345563",
       "operatorName": "Pavilion Health Center At Brightmore",
       "city": "Charlotte",
       "zip": "28277",
-      "monthlyMedian": 9800
+      "monthlyMedian": 11950
     },
     {
       "operatorId": "sharon-towers-345564",
@@ -2833,42 +2833,42 @@
       "operatorName": "Trinity Elms",
       "city": "Clemmons",
       "zip": "27012",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11450
     },
     {
       "operatorId": "pruitthealth-union-pointe-345566",
       "operatorName": "Pruitthealth-union Pointe",
       "city": "Monroe",
       "zip": "28110",
-      "monthlyMedian": 8500
+      "monthlyMedian": 12200
     },
     {
       "operatorId": "autumn-care-of-cornelius-345567",
       "operatorName": "Autumn Care Of Cornelius",
       "city": "Cornelius",
       "zip": "28031",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11500
     },
     {
       "operatorId": "davis-health-and-wellness-center-at-cambridge-vill-345568",
       "operatorName": "Davis Health And Wellness Center At Cambridge Vill",
       "city": "Wilmington",
       "zip": "28405",
-      "monthlyMedian": 8900
+      "monthlyMedian": 13950
     },
     {
       "operatorId": "springbrook-nursing-and-rehabilitation-center-345569",
       "operatorName": "Springbrook Nursing And Rehabilitation Center",
       "city": "Clayton",
       "zip": "27520",
-      "monthlyMedian": 7800
+      "monthlyMedian": 11500
     },
     {
       "operatorId": "huntersville-health-rehabilitation-center-345570",
       "operatorName": "Huntersville Health & Rehabilitation Center",
       "city": "Huntersville",
       "zip": "28078",
-      "monthlyMedian": 9800
+      "monthlyMedian": 16250
     },
     {
       "operatorId": "bradley-creek-health-center-345571",
@@ -2896,21 +2896,21 @@
       "operatorName": "Bellarose Nursing And Rehab",
       "city": "Garner",
       "zip": "27529",
-      "monthlyMedian": 7800
+      "monthlyMedian": 12500
     },
     {
       "operatorId": "brunswick-health-rehab-center-345575",
       "operatorName": "Brunswick Health & Rehab Center",
       "city": "Ash",
       "zip": "28420",
-      "monthlyMedian": 7800
+      "monthlyMedian": 10750
     },
     {
       "operatorId": "parkview-health-and-rehabilitation-center-345576",
       "operatorName": "Parkview Health And Rehabilitation Center",
       "city": "Chapel Hill",
       "zip": "27517",
-      "monthlyMedian": 8900
+      "monthlyMedian": 12450
     },
     {
       "operatorId": "swift-creek-health-center-345577",
