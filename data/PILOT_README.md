@@ -1,6 +1,10 @@
-# NC SNF Pilot — v0 (state-anchored)
+# NC SNF Pilot — v0 records + v0.5 percentile bands (state-anchored)
 
 This pilot dataset gives Kira a working set of operator-level skilled nursing facility (SNF) records to build the Carepriced Priority 1 KB pages and cost calculator against. Records validate against [`data/operator-record.schema.json`](operator-record.schema.json).
+
+**Quality state as of 2026-05-07** (per [ALM-5482](/ALM/issues/ALM-5482)):
+- Per-record `monthlyRate` is **v0-state-anchored** (state median + metro tier).
+- State-level `rateSummary` in the index is **v0.5-percentile-anchored** — empirical `p10/p25/p50/p75/p90` bands derived from the 418-record distribution. `percentileBandSource = "v0-record-distribution"`. Calculator can use these for "top 10% of NC SNF costs" framing today; bands flip to real `cms-2540-24` distribution when Phase 1-full lands without breaking record IDs or the index shape.
 
 ## What's in this pilot
 
@@ -36,10 +40,13 @@ This pilot dataset gives Kira a working set of operator-level skilled nursing fa
 
 Every record is flagged `metadata.dataQuality = "v0-state-anchored"`. The rate band is **derived from a state-level anchor with a metro tier adjustment**, not from per-facility cost reports. This is intentional for v0 — it gives Kira real records with realistic geographic spread to wire the calculator against today, while the heavier ETL is being built.
 
+The state-level `rateSummary` percentile bands (p10/p25/p50/p75/p90) shipped 2026-05-07 are computed empirically from the v0 record distribution and tagged `percentileBandSource = "v0-record-distribution"`. Because Tier D (rural, multiplier 0.92×) covers 61% of NC SNFs and every Tier D facility shares the same anchored monthly rate, p10/p25/p50 cluster at 7800. This is honest math on v0 inputs — not a real per-facility distribution. When Phase 1-full lands, the bands spread out into the real distribution.
+
 **Phase 1-full** (in flight) replaces the rate band with per-facility numbers derived from CMS Form 2540-24 cost reports (Worksheet S-3 day-cost extraction). When Phase 1-full ships, every record gets:
 - `metadata.dataQuality` promoted to `"v1-cost-report"`
 - `monthlyRate` recomputed from facility-specific cost-per-day × 30
 - `sources[0].type` changed to `"cms-2540-24"` with the actual filing reference
+- State-level `rateSummary.percentileBandSource` flips to `"cms-2540-24"` with bands rebuilt from the real per-facility distribution
 
 Records that have a v0-anchored band today will be in-place upgraded — the schema, the operator IDs, and the operator/state index file shapes do not change. Kira can build the calculator against v0 and the data quality will improve transparently underneath.
 
@@ -58,6 +65,15 @@ Or for a different state already in the anchor table (HI, AK, NY, NJ, MA, FL, AZ
 python scripts/etl_cms_snf_provider.py --state HI --out data/pilots/hi-snf-pilot.json --index data/indexes/hi-snf-index.json
 ```
 
+To re-emit the index from an existing manifest (e.g. after a `rateSummary` shape change) without re-downloading from CMS:
+
+```bash
+python scripts/etl_cms_snf_provider.py \
+  --state NC \
+  --from-manifest data/pilots/nc-snf-pilot.json \
+  --index data/indexes/nc-snf-index.json
+```
+
 ## Data quality contract for Kira
 
 For every record Kira can rely on:
@@ -67,4 +83,11 @@ For every record Kira can rely on:
 - `levelOfCareModifier` — flat array (v1 rev 2 shape per [ALM-5482](/ALM/issues/ALM-5482)): `[{key:'medium', label:'Higher needs (mobility / ADL help)', multiplier:1.15}, {key:'high', label:'Memory care / extensive ADL', multiplier:1.40}]`. Calculator renders these as radio options in document order. Implicit baseline (multiplier 1.0) is added by the calculator UI as 'Standard care'. Pilot records all carry the same uniform default until per-facility level data is available.
 - `sources[]` — at least one source per record, citation-ready for inline rendering.
 
+For the state-level `rateSummary` in `data/indexes/<state>-<careType>-index.json`:
+- `monthlyMedian / monthlyLow / monthlyHigh` — state-level Genworth/CareScout 2024 anchor (unchanged across upgrades).
+- `monthlyP10 / monthlyP25 / monthlyP50 / monthlyP75 / monthlyP90` — empirical percentile bands. Use these for "top X% of state SNF costs" framing. Always check `percentileBandSource` before quoting them in user copy:
+  - `"v0-record-distribution"` (today): bands are computed from the v0 record distribution. The lower bands cluster (p10≈p25≈p50) for states where rural tier dominates. Honest math, narrow distribution.
+  - `"cms-2540-24"` (Phase 1-full): bands are computed from the real per-facility cost-report distribution. Spread out, defensible for any user-facing copy.
+
 If you need any of these contracts adjusted before Priority 1 page templates lock in, drop a comment on [ALM-5482](/ALM/issues/ALM-5482).
+
