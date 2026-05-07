@@ -1,24 +1,24 @@
 {
   "state": "NC",
   "careType": "skilled-nursing",
-  "updatedAt": "2026-05-07T21:23:49Z",
+  "updatedAt": "2026-05-07T22:10:17Z",
   "recordCount": 418,
   "rateSummary": {
     "state": "NC",
     "careType": "skilled-nursing",
-    "monthlyMedian": 8500,
-    "monthlyLow": 6800,
-    "monthlyHigh": 11200,
-    "currency": "USD",
-    "asOf": "2026-05-07",
-    "sourceType": "carescout-genworth",
+    "monthlyMedian": 10850,
+    "monthlyLow": 7800,
+    "monthlyHigh": 22350,
     "monthlyP10": 8900,
     "monthlyP25": 10050,
     "monthlyP50": 10850,
     "monthlyP75": 11850,
     "monthlyP90": 13150,
-    "percentileBandSource": "v0-record-distribution",
-    "percentileBandNotes": "p10/p25/p50/p75/p90 derived empirically from the distribution of 418 per-record monthlyRate.median values within the NC skilled-nursing pilot. Bands reflect v0 state-anchored + metro-tier inputs, not real CMS 2540-24 cost-report data. When Phase 1-full lands, this rateSummary is rebuilt from the real per-facility distribution and percentileBandSource flips to cms-2540-24."
+    "currency": "USD",
+    "asOf": "2026-05-07",
+    "sourceType": "v1-mixed",
+    "percentileBandSource": "v1-mixed-distribution",
+    "percentileBandNotes": "357/418 records sourced from CMS Form 2540-24 per-facility cost reports; 61/418 records remain v0-state-anchored. Percentile bands reflect the actual record distribution."
   },
   "operators": [
     {
