@@ -133,26 +133,52 @@ expand as additional states ship.
 | Question | Lock |
 |---|---|
 | `levelOfCareModifier` shape | **Flat array** of `{key, label, multiplier}` (above). |
-| `monthlyRate` granularity | `low / median / high` is sufficient on the operator record. Add `p10/p25/p50/p75/p90` to the **state-level `rateSummary` only** when Phase 1-full (CMS 2540-24) lands and we have the real distribution to publish. |
+| `monthlyRate` granularity | `low / median / high` is sufficient on the operator record. `p10/p25/p50/p75/p90` percentile bands ship on the **state-level `rateSummary`** — see below. |
 | Home-care monthly | **Hourly only on the record.** Calculator projects monthly = `hourlyRate.median × hoursPerWeek × 4.33`. `monthlyRate` stays `null` for home-care. |
 
-## rateSummary (state index) — percentile upgrade plan
+## rateSummary (state index) — percentile bands LIVE
 
-Today's `rateSummary` shape (in `data/indexes/<state>-<careType>-index.json`):
+Each `data/indexes/<state>-<careType>-index.json` now ships percentile bands
+in `rateSummary`. Calculator pages can render "you're in the top X% of
+state SNF costs" framing today — a real differentiator vs.
+SeniorLiving.org's static state-median copy.
+
+Three quality tiers are stamped explicitly in `rateSummary.percentileBandSource`:
+
+| Tier | `percentileBandSource` | What the bands mean | Status |
+|---|---|---|---|
+| v0.5-percentile-anchored | `v0-record-distribution` | Empirical p10/p25/p50/p75/p90 derived from the distribution of per-record `monthlyRate.median` values. Reflects v0 state-anchored + metro-tier inputs — NOT real cost-report data. | **shipped 2026-05-07** for NC SNF pilot |
+| v1-cost-report | `cms-2540-24` | Empirical percentiles from the real per-facility distribution after CMS Form 2540-24 cost-report ingestion replaces the per-record monthly rate with worksheet-derived numbers. | Phase 1-full — separate ETL (`scripts/etl_cms_costreport.py`), in flight |
+| v0-state-only (legacy) | absent | Index ships only `monthlyMedian / monthlyLow / monthlyHigh` — no bands. | superseded by v0.5 above for NC; still applies to states not yet piloted |
+
+Today's NC SNF index (`data/indexes/nc-snf-index.json`):
 
 ```json
 {
   "monthlyMedian": 8500,
   "monthlyLow": 6800,
   "monthlyHigh": 11200,
+  "monthlyP10": 7800,
+  "monthlyP25": 7800,
+  "monthlyP50": 7800,
+  "monthlyP75": 8500,
+  "monthlyP90": 8900,
   "currency": "USD",
-  "asOf": "2026-05-06",
-  "sourceType": "carescout-genworth"
+  "asOf": "2026-05-07",
+  "sourceType": "carescout-genworth",
+  "percentileBandSource": "v0-record-distribution",
+  "percentileBandNotes": "..."
 }
 ```
 
-Phase 1-full upgrade (deferred to CMS 2540-24 ETL — same record IDs, no
-breaking change):
+The narrow lower-band cluster (p10=p25=p50=7800) is a real artifact of the
+v0 input distribution — Tier D (rural) facilities are 61% of NC SNFs, all
+anchored to the same `state-median × 0.92` rate. When Phase 1-full lands,
+the bands spread into a real per-facility distribution and
+`percentileBandSource` flips to `cms-2540-24` with no record-ID churn or
+schema change for Kira's calculator.
+
+Phase 1-full target shape:
 
 ```json
 {
@@ -166,13 +192,10 @@ breaking change):
   "monthlyP90": 11000,
   "currency": "USD",
   "asOf": "2026-XX-XX",
-  "sourceType": "cms-2540-24"
+  "sourceType": "cms-2540-24",
+  "percentileBandSource": "cms-2540-24"
 }
 ```
-
-Calculator unlock when this lands: "You're in the top 10% of NC SNF costs"
-type framing — a real differentiator vs. SeniorLiving.org's static state
-median copy.
 
 ## Home-care monthly projection (calculator-side formula — locked)
 
@@ -185,3 +208,4 @@ monthlyEstimate = hourlyRate.median × hoursPerWeek × 4.33
 
 `4.33` = average weeks per month. Kira's KB templates and any other
 calculator embed must use the same constant so the math is consistent.
+
