@@ -128,14 +128,14 @@ WKSHT_S3_PART_I = "S300001"   # Worksheet S-3 Part I — Statistical Data
 WKSHT_G3 = "G300000"          # Worksheet G-3 — Statement of Patient Revenues
 WKSHT_B_PART_I = "B000001"    # Worksheet B Part I — General Service Costs
 
-LINE_TOTAL_RESIDENT_DAYS = "00100"  # S-3 Part I Line 1 Col 6 — total resident days
-COL_TOTAL_RESIDENT_DAYS = "00006"
+LINE_TOTAL_RESIDENT_DAYS = "00100"  # S-3 Part I Line 1 Col 7 — total resident days
+COL_TOTAL_RESIDENT_DAYS = "00700"   # HCRIS encodes col N as N*100 zero-padded; col 7 = 00700
 
 LINE_TOTAL_PATIENT_REVENUE = "00300"  # G-3 Line 3 Col 1 — total patient revenue
-COL_TOTAL_PATIENT_REVENUE = "00001"
+COL_TOTAL_PATIENT_REVENUE = "00100"   # col 1 = 00100
 
 LINE_TOTAL_GEN_SVC_COSTS = "10000"  # B Part I Line 100 Col 18 — total general service costs
-COL_TOTAL_GEN_SVC_COSTS = "00018"
+COL_TOTAL_GEN_SVC_COSTS = "01800"   # col 18 = 01800
 
 # Sanity bands. A SNF per-diem outside this range is rejected and the
 # record is left at v0-state-anchored. Calibrated to 2024 SNF reality:
