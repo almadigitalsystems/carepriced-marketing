@@ -1,7 +1,7 @@
 {
   "state": "NC",
   "careType": "skilled-nursing",
-  "updatedAt": "2026-05-06T12:22:54Z",
+  "updatedAt": "2026-05-07T18:08:16Z",
   "recordCount": 418,
   "rateSummary": {
     "state": "NC",
@@ -10,8 +10,15 @@
     "monthlyLow": 6800,
     "monthlyHigh": 11200,
     "currency": "USD",
-    "asOf": "2026-05-06",
-    "sourceType": "carescout-genworth"
+    "asOf": "2026-05-07",
+    "sourceType": "carescout-genworth",
+    "monthlyP10": 7800,
+    "monthlyP25": 7800,
+    "monthlyP50": 7800,
+    "monthlyP75": 8500,
+    "monthlyP90": 8900,
+    "percentileBandSource": "v0-record-distribution",
+    "percentileBandNotes": "p10/p25/p50/p75/p90 derived empirically from the distribution of 418 per-record monthlyRate.median values within the NC skilled-nursing pilot. Bands reflect v0 state-anchored + metro-tier inputs, not real CMS 2540-24 cost-report data. When Phase 1-full lands, this rateSummary is rebuilt from the real per-facility distribution and percentileBandSource flips to cms-2540-24."
   },
   "operators": [
     {
