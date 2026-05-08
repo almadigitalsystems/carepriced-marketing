@@ -32,7 +32,7 @@
   }
   input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 
-  .actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+  .actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; align-items: center; }
   button {
     background: var(--accent); color: #fff; border: 0; padding: 0.85rem 1.4rem;
     font: inherit; font-weight: 600; border-radius: 6px; cursor: pointer;
@@ -52,6 +52,23 @@
     border: 1px solid #f0c878; color: var(--ink); margin-top: 1rem;
   }
   .yellow-disclosure h3 { margin-top: 0; color: var(--warn); }
+
+  .disclosure-text { margin-bottom: 1.25rem; }
+  .disclosure-text p { color: var(--ink); }
+
+  .ack-label {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    font-weight: 400; cursor: pointer; margin-top: 0.25rem;
+  }
+  .ack-label input[type=checkbox] {
+    width: auto; flex-shrink: 0; margin-top: 0.2rem;
+    accent-color: var(--accent); width: 1.1rem; height: 1.1rem;
+  }
+
+  .disclosure-version {
+    font-size: 0.78rem; color: var(--muted); margin: 0;
+    width: 100%; flex-basis: 100%;
+  }
 
   .radio-option { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; padding: 0.6rem 0.75rem; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; font-weight: 400; }
   .radio-option:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
@@ -192,14 +209,38 @@
  * @property {string|null} state       — 2-letter state code derived from ZIP
  * @property {Tier|null} tier
  * @property {FlMedicaidAnswer} flMedicaid
- * @property {boolean} ackChecked      — state-specific consent for YELLOW tier
+ * @property {boolean} ackChecked      — YELLOW tier: user checked the acknowledgment checkbox
  * @property {string|null} ackTimestamp
+ * @property {string|null} acknowledgmentRecordId  — returned by Worker POST /api/intake/acknowledge
  * @property {Object} answers          — Step 2/3 form answers (filled later)
  */
 
 /** Per ALM-5571 + Kira ALM-5501. Source of truth: spec ALM-5576. */
 const RED_STATES = new Set(["CA", "WA", "NY"]);
 const YELLOW_STATES = new Set(["AZ", "CO", "GA", "MD", "MO", "FL", "TX"]);
+
+/**
+ * Worker base URL for BE-2 (GET /api/intake/disclosure) and BE-3 (POST /api/intake/acknowledge).
+ * Flip USE_WORKER_MOCK to false once the Worker is deployed.
+ */
+const WORKER_BASE = "https://intake-worker.carepriced.com";
+const USE_WORKER_MOCK = true;
+
+/**
+ * Placeholder disclosure HTML per YELLOW state.
+ * Final copy delivered by Clive (CA) via ALM-6187 / ALM-6188.
+ * One template per spec ALM-5576 §1 (strictest-combined AZ+CO+GA+FL standard).
+ */
+const MOCK_DISCLOSURE_HTML = {
+  default:
+    "<p>Carepriced is a referral service that connects seniors and their families with licensed assisted living " +
+    "facilities. <strong>Carepriced may receive compensation from a facility when a referred individual becomes " +
+    "a resident.</strong> This compensation does not affect the options presented to you or the pricing you receive.</p>" +
+    "<p>By continuing, you acknowledge that you have read this disclosure and understand the nature of " +
+    "Carepriced's relationship with participating facilities.</p>" +
+    "<p><em>State-specific disclosure language will replace this placeholder. Final copy pending Clive (CA) " +
+    "delivery per ALM-6187.</em></p>",
+};
 
 /**
  * Lightweight ZIP-to-state map. First-3 digits of US ZIP map to a state in
@@ -254,6 +295,7 @@ function emptyState() {
     flMedicaid: null,
     ackChecked: false,
     ackTimestamp: null,
+    acknowledgmentRecordId: null,
     answers: {},
   };
 }
@@ -403,42 +445,118 @@ function renderStep1() {
   showStep(2);
 }
 
-function renderYellowDisclosure() {
+/* ────────────────────────────────────────────────────────────
+   FE-4 — YELLOW disclosure + consent screen (Option B standalone)
+   Spec: ALM-5576 v1.1 §3 Step 2 + ALM-5629 §3
+   - Fetches state-specific disclosure from Worker GET /api/intake/disclosure
+   - Free checkbox (no scroll gate) — CPO-approved
+   - Checkbox label: "I understand and agree to the disclosure above"
+   - Disclosure version stamp displayed below CTA
+   - On advance: POST /api/intake/acknowledge → stores acknowledgment_record_id
+   ──────────────────────────────────────────────────────────── */
+async function renderYellowDisclosure() {
   const titleEl = document.getElementById("step-1-title");
   const bodyEl = document.getElementById("step-1-body");
   const actionsEl = document.getElementById("step-1-actions");
   const st = state.state;
 
-  titleEl.textContent = "Important disclosure for " + st + " residents";
+  titleEl.textContent = "Required disclosure for " + st + " residents";
+
+  /** Show loading skeleton while fetching */
+  bodyEl.innerHTML =
+    "<div class=\"skeleton line med\"></div>" +
+    "<div class=\"skeleton line\"></div>" +
+    "<div class=\"skeleton line short\"></div>";
+  actionsEl.innerHTML = "";
+
+  /** Fetch state-specific disclosure from Worker (or use mock during FE dev) */
+  let disclosureHtml = "";
+  let disclosureVersion = "v2026-05-20-v1";
+  try {
+    if (USE_WORKER_MOCK) {
+      disclosureHtml = MOCK_DISCLOSURE_HTML[st] || MOCK_DISCLOSURE_HTML["default"];
+    } else {
+      const resp = await fetch(WORKER_BASE + "/api/intake/disclosure?state=" + encodeURIComponent(st));
+      if (!resp.ok) throw new Error("HTTP " + resp.status);
+      const data = await resp.json();
+      disclosureHtml = data.html || "";
+      disclosureVersion = data.version || disclosureVersion;
+    }
+  } catch (err) {
+    console.warn("Disclosure fetch failed, using fallback:", err);
+    disclosureHtml = MOCK_DISCLOSURE_HTML["default"];
+  }
+
+  /** Render standalone consent screen (Option B — dedicated screen per CPO) */
   bodyEl.innerHTML =
     "<div class=\"yellow-disclosure\">" +
-    "<h3>Before continuing</h3>" +
-    "<p><em>Placeholder — final " + st + "-specific YELLOW disclosure copy from Clive lands in follow-up issue.</em></p>" +
-    "<p>Carepriced may receive compensation when a facility you select accepts you as a resident. " +
-    "This does not change your placement options or pricing. Full state-specific language will replace this paragraph.</p>" +
-    "<label><input type=\"checkbox\" id=\"ack\" /> I have read and understand this disclosure.</label>" +
+    "<h3>Before you continue</h3>" +
+    "<div class=\"disclosure-text\">" + disclosureHtml + "</div>" +
+    "<label class=\"ack-label\" for=\"ack\">" +
+    "<input type=\"checkbox\" id=\"ack\" />" +
+    " I understand and agree to the disclosure above." +
+    "</label>" +
     "<div class=\"error-msg\" id=\"ack-error\" aria-live=\"polite\"></div>" +
     "</div>";
 
+  /** Build CTA row: Back | Continue (free checkbox — no scroll gate per CPO) | version stamp */
   actionsEl.innerHTML = "";
+
   const back = document.createElement("button");
   back.className = "secondary"; back.type = "button"; back.textContent = "Back";
   back.addEventListener("click", () => showStep(0));
 
   const next = document.createElement("button");
-  next.type = "button"; next.textContent = "I understand — continue";
-  next.addEventListener("click", () => {
-    const ack = /** @type {HTMLInputElement} */ (document.getElementById("ack"));
-    const err = document.getElementById("ack-error");
-    if (!ack.checked) { err.textContent = "Please confirm you've read the disclosure to continue."; return; }
-    err.textContent = "";
-    state.ackChecked = true;
-    state.ackTimestamp = new Date().toISOString();
-    showStep(2);
+  next.type = "button"; next.textContent = "Continue";
+  next.addEventListener("click", async () => {
+    const ackEl = /** @type {HTMLInputElement} */ (document.getElementById("ack"));
+    const errEl = document.getElementById("ack-error");
+    if (!ackEl.checked) {
+      errEl.textContent = "Please confirm you've read the disclosure to continue.";
+      return;
+    }
+    errEl.textContent = "";
+    next.disabled = true;
+    next.textContent = "Please wait…";
+
+    let recordId = null;
+    try {
+      if (USE_WORKER_MOCK) {
+        recordId = "mock-ack-" + Date.now();
+      } else {
+        const resp = await fetch(WORKER_BASE + "/api/intake/acknowledge", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            state: st,
+            version: disclosureVersion,
+            timestamp: new Date().toISOString(),
+          }),
+        });
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+        const data = await resp.json();
+        recordId = data.acknowledgment_record_id;
+      }
+      state.ackChecked = true;
+      state.ackTimestamp = new Date().toISOString();
+      state.acknowledgmentRecordId = recordId;
+      showStep(2);
+    } catch (err) {
+      console.error("Acknowledge POST failed:", err);
+      errEl.textContent = "Something went wrong saving your acknowledgment. Please try again.";
+      next.disabled = false;
+      next.textContent = "Continue";
+    }
   });
+
+  /** Version stamp sits on its own line below Back | Continue, flex-wrap handles it */
+  const versionStamp = document.createElement("p");
+  versionStamp.className = "disclosure-version";
+  versionStamp.textContent = "Disclosure " + disclosureVersion;
 
   actionsEl.appendChild(back);
   actionsEl.appendChild(next);
+  actionsEl.appendChild(versionStamp);
 }
 
 /* ────────────────────────────────────────────────────────────
