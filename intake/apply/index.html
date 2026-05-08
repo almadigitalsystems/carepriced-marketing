@@ -53,6 +53,10 @@
   }
   .yellow-disclosure h3 { margin-top: 0; color: var(--warn); }
 
+  .radio-option { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; padding: 0.6rem 0.75rem; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; font-weight: 400; }
+  .radio-option:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .radio-option input[type=radio] { accent-color: var(--accent); width: 1rem; height: 1rem; flex-shrink: 0; }
+
   .footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--muted); }
   .footer a { color: var(--accent); }
 
@@ -180,7 +184,7 @@
  *   YELLOW= state-specific disclosure required before continuing (AZ, CO, GA, MD, MO, FL, TX).
  *   GREEN = standard funnel.
  *
- * @typedef {"YES" | "NO" | null} FlMedicaidAnswer
+ * @typedef {"YES" | "NO" | "UNSURE" | null} FlMedicaidAnswer
  *
  * @typedef {Object} StepState
  * @property {number} currentStep      — 0..4
@@ -335,12 +339,15 @@ function renderStep1() {
   }
 
   if (st === "FL") {
-    /** FL requires Medicaid screen-out before either YELLOW disclosure or proceed. */
+    /** FL requires Medicaid screen-out before YELLOW disclosure. CPO-approved 3-value enum. */
     titleEl.textContent = "A quick Florida-specific question";
     bodyEl.innerHTML =
-      "<p>Are you applying for or currently receiving Florida Medicaid benefits?</p>" +
-      "<label><input type=\"radio\" name=\"flMed\" value=\"YES\" /> Yes</label>" +
-      "<label><input type=\"radio\" name=\"flMed\" value=\"NO\" /> No</label>" +
+      "<fieldset role=\"radiogroup\" aria-required=\"true\" aria-labelledby=\"flmed-q\" style=\"border:0;padding:0;margin:0\">" +
+      "<p id=\"flmed-q\">Are you currently receiving Florida Medicaid, or have you applied for it?</p>" +
+      "<label class=\"radio-option\"><input type=\"radio\" name=\"flMed\" value=\"YES\" /> Yes</label>" +
+      "<label class=\"radio-option\"><input type=\"radio\" name=\"flMed\" value=\"NO\" /> No</label>" +
+      "<label class=\"radio-option\"><input type=\"radio\" name=\"flMed\" value=\"UNSURE\" /> I'm not sure</label>" +
+      "</fieldset>" +
       "<div class=\"error-msg\" id=\"flmed-error\" aria-live=\"polite\"></div>";
 
     const back = document.createElement("button");
@@ -355,12 +362,15 @@ function renderStep1() {
     next.addEventListener("click", () => {
       const sel = /** @type {HTMLInputElement|null} */ (document.querySelector('input[name="flMed"]:checked'));
       const errEl = document.getElementById("flmed-error");
-      if (!sel) { errEl.textContent = "Please choose Yes or No to continue."; return; }
+      if (!sel) { errEl.textContent = "Please select an option to continue."; return; }
       errEl.textContent = "";
       state.flMedicaid = /** @type {FlMedicaidAnswer} */ (sel.value);
 
-      if (state.flMedicaid === "YES") {
-        /** Non-monetized info response — not the paying funnel. */
+      if (state.flMedicaid === "YES" || state.flMedicaid === "UNSURE") {
+        /**
+         * Non-monetized terminal response. Both YES and UNSURE route here per CPO decision.
+         * state.flMedicaid preserves the distinct value ("YES" vs "UNSURE") for audit replay.
+         */
         titleEl.textContent = "Florida Medicaid resources";
         bodyEl.innerHTML =
           "<div class=\"fl-medicaid-exit\">" +
