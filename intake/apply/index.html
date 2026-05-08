@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Get Your Care Estimate — Carepriced</title>
+<meta name="description" content="Tell us where you're located and we'll get you a senior care price estimate." />
+<link rel="canonical" href="https://carepriced.com/intake/apply/" />
+<style>
+  :root { --ink:#1a1a1a; --muted:#555; --line:#d4d4d4; --bg:#fafafa; --accent:#0a66c2; --ok:#1f7a3a; --warn:#9a4a00; --err:#b00; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; max-width: 720px; margin: 4vh auto 8vh; padding: 0 1.25rem; color: var(--ink); line-height: 1.55; background: #fff; }
+  h1 { font-size: 1.7rem; margin-bottom: 0.25rem; }
+  h2 { font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; }
+  p { color: var(--muted); }
+  .lede { font-size: 1.05rem; margin-top: 0; }
+
+  .progress { display: flex; gap: 0.5rem; margin: 1.5rem 0 2rem; }
+  .progress .dot { flex: 1; height: 4px; background: var(--line); border-radius: 2px; transition: background 0.25s; }
+  .progress .dot.active { background: var(--accent); }
+  .progress .dot.done { background: var(--ok); }
+
+  .step { display: none; }
+  .step.active { display: block; }
+
+  label { display: block; margin: 0.75rem 0 0.25rem; font-weight: 500; font-size: 0.95rem; }
+  .req::after { content: " *"; color: var(--err); }
+  input[type=text], input[type=email], input[type=tel], input[type=number], select, textarea {
+    width: 100%; padding: 0.7rem 0.85rem; border: 1px solid var(--line); border-radius: 6px; font: inherit; background: var(--bg); color: var(--ink);
+  }
+  input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+  button {
+    background: var(--accent); color: #fff; border: 0; padding: 0.85rem 1.4rem;
+    font: inherit; font-weight: 600; border-radius: 6px; cursor: pointer;
+  }
+  button.secondary { background: transparent; color: var(--accent); border: 1px solid var(--line); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .error-msg { color: var(--err); font-size: 0.9rem; margin-top: 0.4rem; min-height: 1.2em; }
+  .help { color: var(--muted); font-size: 0.85rem; margin-top: 0.25rem; }
+
+  .red-exit, .fl-medicaid-exit {
+    padding: 1.25rem; border-radius: 8px; background: #fff8e6;
+    border: 1px solid #f0d678; color: var(--ink); margin-top: 1rem;
+  }
+  .yellow-disclosure {
+    padding: 1.25rem; border-radius: 8px; background: #fef5e7;
+    border: 1px solid #f0c878; color: var(--ink); margin-top: 1rem;
+  }
+  .yellow-disclosure h3 { margin-top: 0; color: var(--warn); }
+
+  .footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--muted); }
+  .footer a { color: var(--accent); }
+
+  /* Loading skeleton */
+  .skeleton { background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%); background-size: 200% 100%; animation: pulse 1.4s ease-in-out infinite; border-radius: 4px; }
+  .skeleton.line { height: 14px; margin: 0.5rem 0; }
+  .skeleton.line.short { width: 40%; }
+  .skeleton.line.med { width: 70%; }
+  @keyframes pulse { 0% { background-position: 0% 0; } 100% { background-position: -200% 0; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Get your senior care price estimate</h1>
+  <p class="lede">A few quick questions. Your information stays confidential.</p>
+</header>
+
+<div class="progress" id="progress" aria-label="Progress">
+  <div class="dot" data-step="0"></div>
+  <div class="dot" data-step="1"></div>
+  <div class="dot" data-step="2"></div>
+  <div class="dot" data-step="3"></div>
+  <div class="dot" data-step="4"></div>
+</div>
+
+<main id="form-root">
+
+  <!-- ────────────────────────────────────────────────────────────
+       STEP 0 — Residency capture (ZIP)
+       Per ALM-5576: must be the first qualifying field.
+       Outcome: maps ZIP → state → tier (RED / YELLOW / GREEN).
+       ──────────────────────────────────────────────────────────── -->
+  <section class="step" id="step-0" data-step="0">
+    <h2>Where are you looking for care?</h2>
+    <p>We start with location to make sure we surface the right facilities and disclosures for your state.</p>
+
+    <label class="req" for="zip">ZIP code</label>
+    <input id="zip" name="zip" type="text" inputmode="numeric" pattern="\d{5}" maxlength="5"
+           autocomplete="postal-code" placeholder="e.g. 30303" required />
+    <p class="help">5-digit US ZIP. Used only to determine your state.</p>
+    <div class="error-msg" id="zip-error" aria-live="polite"></div>
+
+    <div class="actions">
+      <button id="next-0" type="button">Continue</button>
+    </div>
+  </section>
+
+  <!-- ────────────────────────────────────────────────────────────
+       STEP 1 — Branch outcome
+       Renders one of: red-exit | fl-medicaid-screen | yellow-disclosure | proceed
+       Filled by state machine on Step 0 advance.
+       ──────────────────────────────────────────────────────────── -->
+  <section class="step" id="step-1" data-step="1">
+    <h2 id="step-1-title">Loading…</h2>
+    <div id="step-1-body">
+      <div class="skeleton line med"></div>
+      <div class="skeleton line"></div>
+      <div class="skeleton line short"></div>
+    </div>
+    <div class="actions" id="step-1-actions"></div>
+  </section>
+
+  <!-- ────────────────────────────────────────────────────────────
+       STEP 2 — Standard form fields (placeholder)
+       Built later: care-type, budget, contact info, urgency.
+       ──────────────────────────────────────────────────────────── -->
+  <section class="step" id="step-2" data-step="2">
+    <h2>About the person needing care</h2>
+    <p>Step 2 stub — full fields wired in follow-up issue.</p>
+    <div class="skeleton line med"></div>
+    <div class="skeleton line"></div>
+    <div class="skeleton line short"></div>
+    <div class="actions">
+      <button class="secondary" type="button" data-back="1">Back</button>
+      <button type="button" data-next="3">Continue</button>
+    </div>
+  </section>
+
+  <!-- ────────────────────────────────────────────────────────────
+       STEP 3 — Contact + acknowledgment capture (placeholder)
+       Builds in: name/email/phone, state-scoped consent checkbox,
+       captures timestamp + IP + user-agent server-side on submit.
+       ──────────────────────────────────────────────────────────── -->
+  <section class="step" id="step-3" data-step="3">
+    <h2>Your contact info</h2>
+    <p>Step 3 stub — final review + acknowledgment in follow-up issue.</p>
+    <div class="skeleton line med"></div>
+    <div class="skeleton line"></div>
+    <div class="skeleton line short"></div>
+    <div class="actions">
+      <button class="secondary" type="button" data-back="2">Back</button>
+      <button type="button" data-next="4">Submit</button>
+    </div>
+  </section>
+
+  <!-- ────────────────────────────────────────────────────────────
+       STEP 4 — Confirmation
+       ──────────────────────────────────────────────────────────── -->
+  <section class="step" id="step-4" data-step="4">
+    <h2>Thank you — you'll hear from us shortly</h2>
+    <p id="step-4-msg">Your inquiry has been received. A care advisor will be in touch within one business day.</p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>Carepriced · <a href="/privacy/">Privacy</a> · <a href="/">Home</a></p>
+  <p>Need help? Email <a href="mailto:hello@carepriced.com">hello@carepriced.com</a>.</p>
+</footer>
+
+<!-- ────────────────────────────────────────────────────────────
+     STATE MACHINE
+     TypeScript-style JSDoc types kept inline so we get IDE
+     completion without needing a build pipeline. Astro upgrade
+     is straightforward (lift the body into an .astro page,
+     keep this script as-is in <script type="module">).
+     ──────────────────────────────────────────────────────────── -->
+<script type="module">
+"use strict";
+
+/**
+ * @typedef {"RED" | "YELLOW" | "GREEN"} Tier
+ *   RED   = informational-only (CA, WA, NY) — no facility lead share, no funnel routing.
+ *   YELLOW= state-specific disclosure required before continuing (AZ, CO, GA, MD, MO, FL, TX).
+ *   GREEN = standard funnel.
+ *
+ * @typedef {"YES" | "NO" | null} FlMedicaidAnswer
+ *
+ * @typedef {Object} StepState
+ * @property {number} currentStep      — 0..4
+ * @property {string|null} zip
+ * @property {string|null} state       — 2-letter state code derived from ZIP
+ * @property {Tier|null} tier
+ * @property {FlMedicaidAnswer} flMedicaid
+ * @property {boolean} ackChecked      — state-specific consent for YELLOW tier
+ * @property {string|null} ackTimestamp
+ * @property {Object} answers          — Step 2/3 form answers (filled later)
+ */
+
+/** Per ALM-5571 + Kira ALM-5501. Source of truth: spec ALM-5576. */
+const RED_STATES = new Set(["CA", "WA", "NY"]);
+const YELLOW_STATES = new Set(["AZ", "CO", "GA", "MD", "MO", "FL", "TX"]);
+
+/**
+ * Lightweight ZIP-to-state map. First-3 digits of US ZIP map to a state in
+ * almost all cases. This is the bare table needed for tier branching.
+ * Source: USPS ZIP3 ranges. NOTE: a few ZIP3 codes span multiple states
+ * (e.g. 834 = ID/WY); we pick the dominant assignment. Replace with a full
+ * ZIP→state lookup (zipcodes-iq, geocodio, etc.) before launch.
+ */
+const ZIP3_TO_STATE = (() => {
+  /** @type {Record<string,string>} */
+  const m = {};
+  /** @param {number} from @param {number} to @param {string} st */
+  const fill = (from, to, st) => { for (let i = from; i <= to; i++) m[String(i).padStart(3, "0")] = st; };
+
+  fill(35, 36, "AL");  fill(995, 999, "AK"); fill(850, 865, "AZ"); fill(716, 729, "AR");
+  fill(900, 961, "CA"); fill(800, 816, "CO"); fill(60, 69, "CT");  fill(197, 199, "DE");
+  fill(200, 205, "DC"); fill(320, 349, "FL"); fill(300, 319, "GA"); fill(396, 399, "GA");
+  fill(967, 968, "HI"); fill(832, 838, "ID"); fill(600, 629, "IL"); fill(460, 479, "IN");
+  fill(500, 528, "IA"); fill(660, 679, "KS"); fill(400, 427, "KY"); fill(700, 715, "LA");
+  fill(39, 49, "ME");   fill(206, 219, "MD"); fill(10, 27, "MA");   fill(480, 499, "MI");
+  fill(550, 567, "MN"); fill(386, 397, "MS"); fill(630, 658, "MO"); fill(590, 599, "MT");
+  fill(680, 693, "NE"); fill(889, 898, "NV"); fill(30, 38, "NH");   fill(70, 89, "NJ");
+  fill(870, 884, "NM"); fill(100, 149, "NY"); fill(270, 289, "NC"); fill(580, 588, "ND");
+  fill(430, 459, "OH"); fill(730, 749, "OK"); fill(970, 979, "OR"); fill(150, 196, "PA");
+  fill(28, 29, "RI");   fill(290, 299, "SC"); fill(570, 577, "SD"); fill(370, 385, "TN");
+  fill(750, 799, "TX"); fill(840, 847, "UT"); fill(50, 59, "VT");   fill(220, 246, "VA");
+  fill(980, 994, "WA"); fill(247, 268, "WV"); fill(530, 549, "WI"); fill(820, 831, "WY");
+  return m;
+})();
+
+/** @param {string} zip @returns {string|null} */
+function zipToState(zip) {
+  if (!/^\d{5}$/.test(zip)) return null;
+  return ZIP3_TO_STATE[zip.slice(0, 3)] || null;
+}
+
+/** @param {string|null} state @returns {Tier} */
+function stateTier(state) {
+  if (!state) return "GREEN";
+  if (RED_STATES.has(state)) return "RED";
+  if (YELLOW_STATES.has(state)) return "YELLOW";
+  return "GREEN";
+}
+
+/** @returns {StepState} */
+function emptyState() {
+  return {
+    currentStep: 0,
+    zip: null,
+    state: null,
+    tier: null,
+    flMedicaid: null,
+    ackChecked: false,
+    ackTimestamp: null,
+    answers: {},
+  };
+}
+
+/** @type {StepState} */
+const state = emptyState();
+
+/** @param {number} step */
+function showStep(step) {
+  state.currentStep = step;
+  document.querySelectorAll(".step").forEach((el) => el.classList.toggle("active", Number(el.dataset.step) === step));
+  document.querySelectorAll(".progress .dot").forEach((el) => {
+    const s = Number(el.dataset.step);
+    el.classList.toggle("active", s === step);
+    el.classList.toggle("done", s < step);
+  });
+  // scroll into view for mobile
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* ────────────────────────────────────────────────────────────
+   STEP 0 — ZIP submit
+   ──────────────────────────────────────────────────────────── */
+function handleStep0Next() {
+  const zipEl = /** @type {HTMLInputElement} */ (document.getElementById("zip"));
+  const errEl = document.getElementById("zip-error");
+  const zip = zipEl.value.trim();
+
+  if (!/^\d{5}$/.test(zip)) {
+    errEl.textContent = "Please enter a valid 5-digit US ZIP code.";
+    return;
+  }
+  const st = zipToState(zip);
+  if (!st) {
+    errEl.textContent = "We couldn't match that ZIP to a US state. Please double-check it.";
+    return;
+  }
+  errEl.textContent = "";
+  state.zip = zip;
+  state.state = st;
+  state.tier = stateTier(st);
+
+  renderStep1();
+  showStep(1);
+}
+
+/* ────────────────────────────────────────────────────────────
+   STEP 1 — Branch render
+   ──────────────────────────────────────────────────────────── */
+function renderStep1() {
+  const titleEl = document.getElementById("step-1-title");
+  const bodyEl = document.getElementById("step-1-body");
+  const actionsEl = document.getElementById("step-1-actions");
+
+  const tier = state.tier;
+  const st = state.state;
+
+  /** Reset */
+  bodyEl.innerHTML = "";
+  actionsEl.innerHTML = "";
+
+  if (tier === "RED") {
+    titleEl.textContent = "Senior care resources for " + st;
+    const div = document.createElement("div");
+    div.className = "red-exit";
+    div.innerHTML =
+      "<p>Based on your location in " + st + ", we don't operate a paying facility-referral funnel here.</p>" +
+      "<p>For senior-care guidance in " + st + ", here are trusted public resources:</p>" +
+      "<ul>" +
+      "<li><a href=\"https://eldercare.acl.gov/\" rel=\"noopener\">Eldercare Locator (ACL.gov)</a> — federal directory of local services</li>" +
+      "<li><a href=\"https://www.aarp.org/caregiving/\" rel=\"noopener\">AARP Caregiving</a> — practical guides and decision tools</li>" +
+      "</ul>" +
+      "<p>If you have specific questions, email <a href=\"mailto:hello@carepriced.com\">hello@carepriced.com</a>.</p>";
+    bodyEl.appendChild(div);
+
+    const back = document.createElement("button");
+    back.className = "secondary";
+    back.type = "button";
+    back.textContent = "Back";
+    back.addEventListener("click", () => showStep(0));
+    actionsEl.appendChild(back);
+    return;
+  }
+
+  if (st === "FL") {
+    /** FL requires Medicaid screen-out before either YELLOW disclosure or proceed. */
+    titleEl.textContent = "A quick Florida-specific question";
+    bodyEl.innerHTML =
+      "<p>Are you applying for or currently receiving Florida Medicaid benefits?</p>" +
+      "<label><input type=\"radio\" name=\"flMed\" value=\"YES\" /> Yes</label>" +
+      "<label><input type=\"radio\" name=\"flMed\" value=\"NO\" /> No</label>" +
+      "<div class=\"error-msg\" id=\"flmed-error\" aria-live=\"polite\"></div>";
+
+    const back = document.createElement("button");
+    back.className = "secondary";
+    back.type = "button";
+    back.textContent = "Back";
+    back.addEventListener("click", () => showStep(0));
+
+    const next = document.createElement("button");
+    next.type = "button";
+    next.textContent = "Continue";
+    next.addEventListener("click", () => {
+      const sel = /** @type {HTMLInputElement|null} */ (document.querySelector('input[name="flMed"]:checked'));
+      const errEl = document.getElementById("flmed-error");
+      if (!sel) { errEl.textContent = "Please choose Yes or No to continue."; return; }
+      errEl.textContent = "";
+      state.flMedicaid = /** @type {FlMedicaidAnswer} */ (sel.value);
+
+      if (state.flMedicaid === "YES") {
+        /** Non-monetized info response — not the paying funnel. */
+        titleEl.textContent = "Florida Medicaid resources";
+        bodyEl.innerHTML =
+          "<div class=\"fl-medicaid-exit\">" +
+          "<p>Florida Medicaid recipients are best served by the state's Medicaid waiver programs.</p>" +
+          "<ul>" +
+          "<li><a href=\"https://www.myflfamilies.com/services/abuse/adult-protective-services/long-term-care-services\" rel=\"noopener\">Florida Long-Term Care Services</a></li>" +
+          "<li><a href=\"https://ahca.myflorida.com/medicaid/long-term-care\" rel=\"noopener\">Florida Agency for Health Care Administration — LTC</a></li>" +
+          "</ul>" +
+          "<p>Email <a href=\"mailto:hello@carepriced.com\">hello@carepriced.com</a> with questions.</p>" +
+          "</div>";
+        actionsEl.innerHTML = "";
+        const b2 = document.createElement("button");
+        b2.className = "secondary"; b2.type = "button"; b2.textContent = "Back";
+        b2.addEventListener("click", () => showStep(0));
+        actionsEl.appendChild(b2);
+        return;
+      }
+      /** FL Medicaid NO → fall into YELLOW disclosure path */
+      renderYellowDisclosure();
+    });
+
+    actionsEl.appendChild(back);
+    actionsEl.appendChild(next);
+    return;
+  }
+
+  if (tier === "YELLOW") { renderYellowDisclosure(); return; }
+
+  /** GREEN — proceed to standard form */
+  showStep(2);
+}
+
+function renderYellowDisclosure() {
+  const titleEl = document.getElementById("step-1-title");
+  const bodyEl = document.getElementById("step-1-body");
+  const actionsEl = document.getElementById("step-1-actions");
+  const st = state.state;
+
+  titleEl.textContent = "Important disclosure for " + st + " residents";
+  bodyEl.innerHTML =
+    "<div class=\"yellow-disclosure\">" +
+    "<h3>Before continuing</h3>" +
+    "<p><em>Placeholder — final " + st + "-specific YELLOW disclosure copy from Clive lands in follow-up issue.</em></p>" +
+    "<p>Carepriced may receive compensation when a facility you select accepts you as a resident. " +
+    "This does not change your placement options or pricing. Full state-specific language will replace this paragraph.</p>" +
+    "<label><input type=\"checkbox\" id=\"ack\" /> I have read and understand this disclosure.</label>" +
+    "<div class=\"error-msg\" id=\"ack-error\" aria-live=\"polite\"></div>" +
+    "</div>";
+
+  actionsEl.innerHTML = "";
+  const back = document.createElement("button");
+  back.className = "secondary"; back.type = "button"; back.textContent = "Back";
+  back.addEventListener("click", () => showStep(0));
+
+  const next = document.createElement("button");
+  next.type = "button"; next.textContent = "I understand — continue";
+  next.addEventListener("click", () => {
+    const ack = /** @type {HTMLInputElement} */ (document.getElementById("ack"));
+    const err = document.getElementById("ack-error");
+    if (!ack.checked) { err.textContent = "Please confirm you've read the disclosure to continue."; return; }
+    err.textContent = "";
+    state.ackChecked = true;
+    state.ackTimestamp = new Date().toISOString();
+    showStep(2);
+  });
+
+  actionsEl.appendChild(back);
+  actionsEl.appendChild(next);
+}
+
+/* ────────────────────────────────────────────────────────────
+   Wire global navigation (Back / Next stubs on step 2-3)
+   ──────────────────────────────────────────────────────────── */
+document.getElementById("next-0").addEventListener("click", handleStep0Next);
+document.getElementById("zip").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") { e.preventDefault(); handleStep0Next(); }
+});
+document.querySelectorAll("[data-back]").forEach((el) =>
+  el.addEventListener("click", () => showStep(Number(el.getAttribute("data-back"))))
+);
+document.querySelectorAll("[data-next]").forEach((el) =>
+  el.addEventListener("click", () => showStep(Number(el.getAttribute("data-next"))))
+);
+
+/* Initialize */
+showStep(0);
+
+/* Expose for testing */
+// @ts-ignore
+window.__intakeState = state;
+// @ts-ignore
+window.__zipToState = zipToState;
+// @ts-ignore
+window.__stateTier = stateTier;
+</script>
+
+</body>
+</html>
