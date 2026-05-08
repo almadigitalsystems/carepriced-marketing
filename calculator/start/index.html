@@ -68,18 +68,14 @@
 
 <script>
 (function () {
-  // Spec source: ALM-5576 plan v1.1 §3 (Step 0) and §4 (Field-by-field).
-  // localStorage key is non-PII per CPO ACK #25 (ALM-5629 / ALM-6179 task description).
   var STORAGE_KEY = 'cp.intake.residency_mode';
   var SESSION_KEY = 'cp.intake.step0';
   var RESOLVE_ENDPOINT = '/api/intake/resolve-state';
 
-  // Routes are overridable via window.CP_INTAKE_ROUTES so FE-1 (ALM-6178 routing shell)
-  // can re-wire when its state machine lands. RED route is pinned by spec §7.
   var DEFAULT_ROUTES = {
-    red:    function (state) { return '/info/' + state + '/'; },
-    yellow: function (state) { return '/calculator/start/disclosure/?state=' + encodeURIComponent(state); },
-    green:  function (state) { return '/calculator/start/intake/?state=' + encodeURIComponent(state); }
+    red:    function (state) { return '/intake/apply/?state=' + encodeURIComponent(state); },
+    yellow: function (state) { return '/intake/apply/?state=' + encodeURIComponent(state); },
+    green:  function (state) { return '/intake/apply/?state=' + encodeURIComponent(state); }
   };
 
   var STATES = [
@@ -96,9 +92,6 @@
     ['WA','Washington'],['WV','West Virginia'],['WI','Wisconsin'],['WY','Wyoming']
   ];
 
-  // MOCK FALLBACK — only used when the Worker endpoint is unreachable so FE-2 stays testable
-  // while BE-1 (ALM-6183) is in flight. Production tier resolution remains server-authoritative
-  // per spec §9 ("Server is the single source of truth for tier resolution").
   var MOCK_TIER_BY_STATE = (function () {
     var t = {};
     ['CA','WA','NY'].forEach(function (s) { t[s] = 'red'; });
@@ -156,7 +149,7 @@
       sessionStorage.setItem(SESSION_KEY, JSON.stringify({
         state_code: stateCode, tier: tier, ts: Date.now()
       }));
-    } catch (_) { /* private mode: ignore — server still has the canonical record */ }
+    } catch (_) { /* private mode: ignore */ }
   }
 
   function getRoutes () {
@@ -177,7 +170,6 @@
     } else if (tier === 'green') {
       url = routes.green(lower);
     } else {
-      // YELLOW or UNKNOWN — UNKNOWN treated as YELLOW per spec §5 (defense-in-depth).
       url = routes.yellow(lower);
     }
     window.location.href = url;
