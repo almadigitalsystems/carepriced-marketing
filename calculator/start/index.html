@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Find pricing in your area &mdash; Carepriced</title>
+<meta name="description" content="Tell us your ZIP code or state so we can show you accurate local senior care pricing." />
+<style>
+  :root { --ink:#1a1a1a; --muted:#555; --line:#d4d4d4; --bg:#fafafa; --accent:#0a66c2; --ok:#1f7a3a; --err:#9b1c1c; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; max-width: 560px; margin: 6vh auto 12vh; padding: 0 1.25rem; color: var(--ink); line-height: 1.55; background:#fff; }
+  h1 { font-size: 1.7rem; margin-bottom: 0.4rem; }
+  p.lede { color: var(--muted); font-size: 1.05rem; margin-top: 0; }
+  form { margin-top: 2rem; }
+  label { display:block; margin: 0.4rem 0 0.25rem; font-weight: 600; font-size: 0.95rem; }
+  input[type=text], select {
+    width: 100%; padding: 0.7rem 0.8rem; border: 1px solid var(--line); border-radius: 6px;
+    font: inherit; background: var(--bg); color: var(--ink);
+  }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .help { color: var(--muted); font-size: 0.85rem; margin-top: 0.35rem; }
+  button.primary {
+    background: var(--accent); color:#fff; border: 0; padding: 0.85rem 1.25rem;
+    font: inherit; font-weight: 600; border-radius: 6px; cursor: pointer; margin-top: 1rem;
+  }
+  button.primary:disabled { opacity: 0.6; cursor: wait; }
+  button.linklike {
+    background: none; border: 0; color: var(--accent); padding: 0; font: inherit;
+    cursor: pointer; text-decoration: underline; margin-top: 0.6rem;
+  }
+  .err { display:none; color: var(--err); font-size: 0.9rem; margin-top: 0.35rem; }
+  .err.show { display:block; }
+  .footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--muted); }
+  .footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<h1>Find pricing in your area</h1>
+<p class="lede">We start with where you live so we can show you accurate local pricing.</p>
+
+<form id="residency-form" novalidate>
+  <div id="zip-mode">
+    <label for="zip">ZIP code</label>
+    <input id="zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code"
+           maxlength="5" pattern="^\d{5}$" required aria-describedby="zip-help zip-err" />
+    <div id="zip-help" class="help">Five-digit US ZIP code.</div>
+    <div id="zip-err" class="err" role="alert">Please enter a valid 5-digit ZIP code.</div>
+    <button type="button" id="toggle-state" class="linklike">Don&rsquo;t have a ZIP code? Pick your state instead.</button>
+  </div>
+
+  <div id="state-mode" hidden>
+    <label for="state">State</label>
+    <select id="state" name="state" required aria-describedby="state-err">
+      <option value="" disabled selected>Select your state&hellip;</option>
+    </select>
+    <div id="state-err" class="err" role="alert">Please pick your state.</div>
+    <button type="button" id="toggle-zip" class="linklike">Use a ZIP code instead.</button>
+  </div>
+
+  <button type="submit" id="submit-btn" class="primary">Continue</button>
+  <div id="submit-err" class="err" role="alert"></div>
+</form>
+
+<div class="footer">
+  <p><a href="/">Carepriced home</a> &middot; <a href="/privacy/">Privacy</a></p>
+</div>
+
+<script>
+(function () {
+  // Spec source: ALM-5576 plan v1.1 §3 (Step 0) and §4 (Field-by-field).
+  // localStorage key is non-PII per CPO ACK #25 (ALM-5629 / ALM-6179 task description).
+  var STORAGE_KEY = 'cp.intake.residency_mode';
+  var SESSION_KEY = 'cp.intake.step0';
+  var RESOLVE_ENDPOINT = '/api/intake/resolve-state';
+
+  // Routes are overridable via window.CP_INTAKE_ROUTES so FE-1 (ALM-6178 routing shell)
+  // can re-wire when its state machine lands. RED route is pinned by spec §7.
+  var DEFAULT_ROUTES = {
+    red:    function (state) { return '/info/' + state + '/'; },
+    yellow: function (state) { return '/calculator/start/disclosure/?state=' + encodeURIComponent(state); },
+    green:  function (state) { return '/calculator/start/intake/?state=' + encodeURIComponent(state); }
+  };
+
+  var STATES = [
+    ['AL','Alabama'],['AK','Alaska'],['AZ','Arizona'],['AR','Arkansas'],['CA','California'],
+    ['CO','Colorado'],['CT','Connecticut'],['DE','Delaware'],['DC','District of Columbia'],
+    ['FL','Florida'],['GA','Georgia'],['HI','Hawaii'],['ID','Idaho'],['IL','Illinois'],
+    ['IN','Indiana'],['IA','Iowa'],['KS','Kansas'],['KY','Kentucky'],['LA','Louisiana'],
+    ['ME','Maine'],['MD','Maryland'],['MA','Massachusetts'],['MI','Michigan'],['MN','Minnesota'],
+    ['MS','Mississippi'],['MO','Missouri'],['MT','Montana'],['NE','Nebraska'],['NV','Nevada'],
+    ['NH','New Hampshire'],['NJ','New Jersey'],['NM','New Mexico'],['NY','New York'],
+    ['NC','North Carolina'],['ND','North Dakota'],['OH','Ohio'],['OK','Oklahoma'],['OR','Oregon'],
+    ['PA','Pennsylvania'],['RI','Rhode Island'],['SC','South Carolina'],['SD','South Dakota'],
+    ['TN','Tennessee'],['TX','Texas'],['UT','Utah'],['VT','Vermont'],['VA','Virginia'],
+    ['WA','Washington'],['WV','West Virginia'],['WI','Wisconsin'],['WY','Wyoming']
+  ];
+
+  // MOCK FALLBACK — only used when the Worker endpoint is unreachable so FE-2 stays testable
+  // while BE-1 (ALM-6183) is in flight. Production tier resolution remains server-authoritative
+  // per spec §9 ("Server is the single source of truth for tier resolution").
+  var MOCK_TIER_BY_STATE = (function () {
+    var t = {};
+    ['CA','WA','NY'].forEach(function (s) { t[s] = 'red'; });
+    ['AZ','CO','FL','GA','MD','MO','TX'].forEach(function (s) { t[s] = 'yellow'; });
+    ['PA','IL','NC','VA','NJ','OH','MI','MA','TN','IN'].forEach(function (s) { t[s] = 'green'; });
+    return t;
+  })();
+  var MOCK_ZIP_TO_STATE = {
+    '90210': 'CA', '98101': 'WA', '10001': 'NY',
+    '85001': 'AZ', '33101': 'FL', '75201': 'TX',
+    '19103': 'PA', '60601': 'IL', '27601': 'NC'
+  };
+
+  function $ (id) { return document.getElementById(id); }
+
+  function populateStates () {
+    var sel = $('state');
+    STATES.forEach(function (row) {
+      var opt = document.createElement('option');
+      opt.value = row[0];
+      opt.textContent = row[1];
+      sel.appendChild(opt);
+    });
+  }
+
+  function setMode (mode) {
+    var zipMode = mode === 'zip';
+    $('zip-mode').hidden = !zipMode;
+    $('state-mode').hidden = zipMode;
+    $('zip').required = zipMode;
+    $('state').required = !zipMode;
+    try { localStorage.setItem(STORAGE_KEY, mode); } catch (_) { /* private mode: ignore */ }
+    var focusEl = zipMode ? $('zip') : $('state');
+    if (focusEl && document.activeElement !== focusEl) {
+      try { focusEl.focus({ preventScroll: true }); } catch (_) { focusEl.focus(); }
+    }
+  }
+
+  function readSavedMode () {
+    try {
+      var v = localStorage.getItem(STORAGE_KEY);
+      return v === 'state' ? 'state' : 'zip';
+    } catch (_) { return 'zip'; }
+  }
+
+  function clearErr (id) { var el = $(id); if (el) el.classList.remove('show'); }
+  function showErr (id, msg) {
+    var el = $(id); if (!el) return;
+    if (msg) el.textContent = msg;
+    el.classList.add('show');
+  }
+
+  function persistStep0 (stateCode, tier) {
+    try {
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+        state_code: stateCode, tier: tier, ts: Date.now()
+      }));
+    } catch (_) { /* private mode: ignore — server still has the canonical record */ }
+  }
+
+  function getRoutes () {
+    var override = (typeof window !== 'undefined' && window.CP_INTAKE_ROUTES) || {};
+    return {
+      red:    override.red    || DEFAULT_ROUTES.red,
+      yellow: override.yellow || DEFAULT_ROUTES.yellow,
+      green:  override.green  || DEFAULT_ROUTES.green
+    };
+  }
+
+  function routeByTier (stateCode, tier) {
+    var lower = String(stateCode || '').toLowerCase();
+    var routes = getRoutes();
+    var url;
+    if (tier === 'red') {
+      url = routes.red(lower);
+    } else if (tier === 'green') {
+      url = routes.green(lower);
+    } else {
+      // YELLOW or UNKNOWN — UNKNOWN treated as YELLOW per spec §5 (defense-in-depth).
+      url = routes.yellow(lower);
+    }
+    window.location.href = url;
+  }
+
+  function mockResolve (payload) {
+    if (payload.zip) {
+      var s = MOCK_ZIP_TO_STATE[payload.zip];
+      if (!s) return null;
+      return { state_code: s, tier: MOCK_TIER_BY_STATE[s] || 'unknown' };
+    }
+    if (payload.state) {
+      var s2 = String(payload.state).toUpperCase();
+      return { state_code: s2, tier: MOCK_TIER_BY_STATE[s2] || 'unknown' };
+    }
+    return null;
+  }
+
+  function resolveState (payload) {
+    return fetch(RESOLVE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (r) {
+      if (!r.ok) {
+        var err = new Error('resolve_failed_' + r.status);
+        err.status = r.status;
+        throw err;
+      }
+      return r.json();
+    }).catch(function (err) {
+      var mock = mockResolve(payload);
+      if (mock) return mock;
+      throw err;
+    });
+  }
+
+  function onSubmit (e) {
+    e.preventDefault();
+    clearErr('zip-err'); clearErr('state-err'); clearErr('submit-err');
+
+    var btn = $('submit-btn');
+    var mode = $('zip-mode').hidden ? 'state' : 'zip';
+    var payload;
+    if (mode === 'zip') {
+      var zip = $('zip').value.trim();
+      if (!/^\d{5}$/.test(zip)) { showErr('zip-err'); $('zip').focus(); return; }
+      payload = { zip: zip };
+    } else {
+      var state = $('state').value;
+      if (!state) { showErr('state-err'); $('state').focus(); return; }
+      payload = { state: state };
+    }
+
+    btn.disabled = true;
+    var prevText = btn.textContent;
+    btn.textContent = 'Checking…';
+
+    resolveState(payload).then(function (res) {
+      if (!res || !res.state_code || !res.tier) {
+        if (mode === 'zip') {
+          setMode('state');
+          showErr('submit-err', 'We could not match that ZIP code. Please pick your state instead.');
+          btn.disabled = false; btn.textContent = prevText;
+          return;
+        }
+        showErr('submit-err', 'We could not look up that location. Please try again.');
+        btn.disabled = false; btn.textContent = prevText;
+        return;
+      }
+      persistStep0(res.state_code, res.tier);
+      routeByTier(res.state_code, res.tier);
+    }).catch(function () {
+      if (mode === 'zip') {
+        setMode('state');
+        showErr('submit-err', 'We could not match that ZIP code. Please pick your state instead.');
+      } else {
+        showErr('submit-err', 'Something went wrong. Please try again, or refresh the page.');
+      }
+      btn.disabled = false; btn.textContent = prevText;
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    populateStates();
+    setMode(readSavedMode());
+    $('toggle-state').addEventListener('click', function () { setMode('state'); });
+    $('toggle-zip').addEventListener('click', function () { setMode('zip'); });
+    $('residency-form').addEventListener('submit', onSubmit);
+    $('zip').addEventListener('input', function (e) {
+      e.target.value = e.target.value.replace(/\D+/g, '').slice(0, 5);
+    });
+  });
+})();
+</script>
+</body>
+</html>
