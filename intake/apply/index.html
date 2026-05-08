@@ -102,11 +102,7 @@
 
 <main id="form-root">
 
-  <!-- ────────────────────────────────────────────────────────────
-       STEP 0 — Residency capture (ZIP)
-       Per ALM-5576: must be the first qualifying field.
-       Outcome: maps ZIP → state → tier (RED / YELLOW / GREEN).
-       ──────────────────────────────────────────────────────────── -->
+  <!-- STEP 0 — Residency capture (ZIP) -->
   <section class="step" id="step-0" data-step="0">
     <h2>Where are you looking for care?</h2>
     <p>We start with location to make sure we surface the right facilities and disclosures for your state.</p>
@@ -122,11 +118,7 @@
     </div>
   </section>
 
-  <!-- ────────────────────────────────────────────────────────────
-       STEP 1 — Branch outcome
-       Renders one of: red-exit | fl-medicaid-screen | yellow-disclosure | proceed
-       Filled by state machine on Step 0 advance.
-       ──────────────────────────────────────────────────────────── -->
+  <!-- STEP 1 — Branch outcome -->
   <section class="step" id="step-1" data-step="1">
     <h2 id="step-1-title">Loading…</h2>
     <div id="step-1-body">
@@ -137,10 +129,7 @@
     <div class="actions" id="step-1-actions"></div>
   </section>
 
-  <!-- ────────────────────────────────────────────────────────────
-       STEP 2 — Standard form fields (placeholder)
-       Built later: care-type, budget, contact info, urgency.
-       ──────────────────────────────────────────────────────────── -->
+  <!-- STEP 2 — Standard form fields (placeholder) -->
   <section class="step" id="step-2" data-step="2">
     <h2>About the person needing care</h2>
     <p>Step 2 stub — full fields wired in follow-up issue.</p>
@@ -153,11 +142,7 @@
     </div>
   </section>
 
-  <!-- ────────────────────────────────────────────────────────────
-       STEP 3 — Contact + acknowledgment capture (placeholder)
-       Builds in: name/email/phone, state-scoped consent checkbox,
-       captures timestamp + IP + user-agent server-side on submit.
-       ──────────────────────────────────────────────────────────── -->
+  <!-- STEP 3 — Contact + acknowledgment capture (placeholder) -->
   <section class="step" id="step-3" data-step="3">
     <h2>Your contact info</h2>
     <p>Step 3 stub — final review + acknowledgment in follow-up issue.</p>
@@ -170,9 +155,7 @@
     </div>
   </section>
 
-  <!-- ────────────────────────────────────────────────────────────
-       STEP 4 — Confirmation
-       ──────────────────────────────────────────────────────────── -->
+  <!-- STEP 4 — Confirmation -->
   <section class="step" id="step-4" data-step="4">
     <h2>Thank you — you'll hear from us shortly</h2>
     <p id="step-4-msg">Your inquiry has been received. A care advisor will be in touch within one business day.</p>
@@ -185,52 +168,30 @@
   <p>Need help? Email <a href="mailto:hello@carepriced.com">hello@carepriced.com</a>.</p>
 </footer>
 
-<!-- ────────────────────────────────────────────────────────────
-     STATE MACHINE
-     TypeScript-style JSDoc types kept inline so we get IDE
-     completion without needing a build pipeline. Astro upgrade
-     is straightforward (lift the body into an .astro page,
-     keep this script as-is in <script type="module">).
-     ──────────────────────────────────────────────────────────── -->
 <script type="module">
 "use strict";
 
 /**
  * @typedef {"RED" | "YELLOW" | "GREEN"} Tier
- *   RED   = informational-only (CA, WA, NY) — no facility lead share, no funnel routing.
- *   YELLOW= state-specific disclosure required before continuing (AZ, CO, GA, MD, MO, FL, TX).
- *   GREEN = standard funnel.
- *
  * @typedef {"YES" | "NO" | "UNSURE" | null} FlMedicaidAnswer
- *
  * @typedef {Object} StepState
- * @property {number} currentStep      — 0..4
+ * @property {number} currentStep
  * @property {string|null} zip
- * @property {string|null} state       — 2-letter state code derived from ZIP
+ * @property {string|null} state
  * @property {Tier|null} tier
  * @property {FlMedicaidAnswer} flMedicaid
- * @property {boolean} ackChecked      — YELLOW tier: user checked the acknowledgment checkbox
+ * @property {boolean} ackChecked
  * @property {string|null} ackTimestamp
- * @property {string|null} acknowledgmentRecordId  — returned by Worker POST /api/intake/acknowledge
- * @property {Object} answers          — Step 2/3 form answers (filled later)
+ * @property {string|null} acknowledgmentRecordId
+ * @property {Object} answers
  */
 
-/** Per ALM-5571 + Kira ALM-5501. Source of truth: spec ALM-5576. */
 const RED_STATES = new Set(["CA", "WA", "NY"]);
 const YELLOW_STATES = new Set(["AZ", "CO", "GA", "MD", "MO", "FL", "TX"]);
 
-/**
- * Worker base URL for BE-2 (GET /api/intake/disclosure) and BE-3 (POST /api/intake/acknowledge).
- * Flip USE_WORKER_MOCK to false once the Worker is deployed.
- */
 const WORKER_BASE = "https://intake-worker.carepriced.com";
 const USE_WORKER_MOCK = true;
 
-/**
- * Placeholder disclosure HTML per YELLOW state.
- * Final copy delivered by Clive (CA) via ALM-6187 / ALM-6188.
- * One template per spec ALM-5576 §1 (strictest-combined AZ+CO+GA+FL standard).
- */
 const MOCK_DISCLOSURE_HTML = {
   default:
     "<p>Carepriced is a referral service that connects seniors and their families with licensed assisted living " +
@@ -242,17 +203,8 @@ const MOCK_DISCLOSURE_HTML = {
     "delivery per ALM-6187.</em></p>",
 };
 
-/**
- * Lightweight ZIP-to-state map. First-3 digits of US ZIP map to a state in
- * almost all cases. This is the bare table needed for tier branching.
- * Source: USPS ZIP3 ranges. NOTE: a few ZIP3 codes span multiple states
- * (e.g. 834 = ID/WY); we pick the dominant assignment. Replace with a full
- * ZIP→state lookup (zipcodes-iq, geocodio, etc.) before launch.
- */
 const ZIP3_TO_STATE = (() => {
-  /** @type {Record<string,string>} */
   const m = {};
-  /** @param {number} from @param {number} to @param {string} st */
   const fill = (from, to, st) => { for (let i = from; i <= to; i++) m[String(i).padStart(3, "0")] = st; };
 
   fill(35, 36, "AL");  fill(995, 999, "AK"); fill(850, 865, "AZ"); fill(716, 729, "AR");
@@ -271,13 +223,11 @@ const ZIP3_TO_STATE = (() => {
   return m;
 })();
 
-/** @param {string} zip @returns {string|null} */
 function zipToState(zip) {
   if (!/^\d{5}$/.test(zip)) return null;
   return ZIP3_TO_STATE[zip.slice(0, 3)] || null;
 }
 
-/** @param {string|null} state @returns {Tier} */
 function stateTier(state) {
   if (!state) return "GREEN";
   if (RED_STATES.has(state)) return "RED";
@@ -285,7 +235,6 @@ function stateTier(state) {
   return "GREEN";
 }
 
-/** @returns {StepState} */
 function emptyState() {
   return {
     currentStep: 0,
@@ -300,10 +249,8 @@ function emptyState() {
   };
 }
 
-/** @type {StepState} */
 const state = emptyState();
 
-/** @param {number} step */
 function showStep(step) {
   state.currentStep = step;
   document.querySelectorAll(".step").forEach((el) => el.classList.toggle("active", Number(el.dataset.step) === step));
@@ -312,15 +259,11 @@ function showStep(step) {
     el.classList.toggle("active", s === step);
     el.classList.toggle("done", s < step);
   });
-  // scroll into view for mobile
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-/* ────────────────────────────────────────────────────────────
-   STEP 0 — ZIP submit
-   ──────────────────────────────────────────────────────────── */
 function handleStep0Next() {
-  const zipEl = /** @type {HTMLInputElement} */ (document.getElementById("zip"));
+  const zipEl = document.getElementById("zip");
   const errEl = document.getElementById("zip-error");
   const zip = zipEl.value.trim();
 
@@ -338,13 +281,18 @@ function handleStep0Next() {
   state.state = st;
   state.tier = stateTier(st);
 
-  renderStep1();
-  showStep(1);
+  advanceFromStep0();
 }
 
-/* ────────────────────────────────────────────────────────────
-   STEP 1 — Branch render
-   ──────────────────────────────────────────────────────────── */
+function advanceFromStep0() {
+  if (state.tier === "GREEN") {
+    showStep(2);
+  } else {
+    renderStep1();
+    showStep(1);
+  }
+}
+
 function renderStep1() {
   const titleEl = document.getElementById("step-1-title");
   const bodyEl = document.getElementById("step-1-body");
@@ -353,7 +301,6 @@ function renderStep1() {
   const tier = state.tier;
   const st = state.state;
 
-  /** Reset */
   bodyEl.innerHTML = "";
   actionsEl.innerHTML = "";
 
@@ -381,7 +328,6 @@ function renderStep1() {
   }
 
   if (st === "FL") {
-    /** FL requires Medicaid screen-out before YELLOW disclosure. CPO-approved 3-value enum. */
     titleEl.textContent = "A quick Florida-specific question";
     bodyEl.innerHTML =
       "<fieldset role=\"radiogroup\" aria-required=\"true\" aria-labelledby=\"flmed-q\" style=\"border:0;padding:0;margin:0\">" +
@@ -402,17 +348,13 @@ function renderStep1() {
     next.type = "button";
     next.textContent = "Continue";
     next.addEventListener("click", () => {
-      const sel = /** @type {HTMLInputElement|null} */ (document.querySelector('input[name="flMed"]:checked'));
+      const sel = document.querySelector('input[name="flMed"]:checked');
       const errEl = document.getElementById("flmed-error");
       if (!sel) { errEl.textContent = "Please select an option to continue."; return; }
       errEl.textContent = "";
-      state.flMedicaid = /** @type {FlMedicaidAnswer} */ (sel.value);
+      state.flMedicaid = sel.value;
 
       if (state.flMedicaid === "YES" || state.flMedicaid === "UNSURE") {
-        /**
-         * Non-monetized terminal response. Both YES and UNSURE route here per CPO decision.
-         * state.flMedicaid preserves the distinct value ("YES" vs "UNSURE") for audit replay.
-         */
         titleEl.textContent = "Florida Medicaid resources";
         bodyEl.innerHTML =
           "<div class=\"fl-medicaid-exit\">" +
@@ -430,7 +372,6 @@ function renderStep1() {
         actionsEl.appendChild(b2);
         return;
       }
-      /** FL Medicaid NO → fall into YELLOW disclosure path */
       renderYellowDisclosure();
     });
 
@@ -441,19 +382,9 @@ function renderStep1() {
 
   if (tier === "YELLOW") { renderYellowDisclosure(); return; }
 
-  /** GREEN — proceed to standard form */
   showStep(2);
 }
 
-/* ────────────────────────────────────────────────────────────
-   FE-4 — YELLOW disclosure + consent screen (Option B standalone)
-   Spec: ALM-5576 v1.1 §3 Step 2 + ALM-5629 §3
-   - Fetches state-specific disclosure from Worker GET /api/intake/disclosure
-   - Free checkbox (no scroll gate) — CPO-approved
-   - Checkbox label: "I understand and agree to the disclosure above"
-   - Disclosure version stamp displayed below CTA
-   - On advance: POST /api/intake/acknowledge → stores acknowledgment_record_id
-   ──────────────────────────────────────────────────────────── */
 async function renderYellowDisclosure() {
   const titleEl = document.getElementById("step-1-title");
   const bodyEl = document.getElementById("step-1-body");
@@ -462,14 +393,12 @@ async function renderYellowDisclosure() {
 
   titleEl.textContent = "Required disclosure for " + st + " residents";
 
-  /** Show loading skeleton while fetching */
   bodyEl.innerHTML =
     "<div class=\"skeleton line med\"></div>" +
     "<div class=\"skeleton line\"></div>" +
     "<div class=\"skeleton line short\"></div>";
   actionsEl.innerHTML = "";
 
-  /** Fetch state-specific disclosure from Worker (or use mock during FE dev) */
   let disclosureHtml = "";
   let disclosureVersion = "v2026-05-20-v1";
   try {
@@ -487,7 +416,6 @@ async function renderYellowDisclosure() {
     disclosureHtml = MOCK_DISCLOSURE_HTML["default"];
   }
 
-  /** Render standalone consent screen (Option B — dedicated screen per CPO) */
   bodyEl.innerHTML =
     "<div class=\"yellow-disclosure\">" +
     "<h3>Before you continue</h3>" +
@@ -499,7 +427,6 @@ async function renderYellowDisclosure() {
     "<div class=\"error-msg\" id=\"ack-error\" aria-live=\"polite\"></div>" +
     "</div>";
 
-  /** Build CTA row: Back | Continue (free checkbox — no scroll gate per CPO) | version stamp */
   actionsEl.innerHTML = "";
 
   const back = document.createElement("button");
@@ -509,7 +436,7 @@ async function renderYellowDisclosure() {
   const next = document.createElement("button");
   next.type = "button"; next.textContent = "Continue";
   next.addEventListener("click", async () => {
-    const ackEl = /** @type {HTMLInputElement} */ (document.getElementById("ack"));
+    const ackEl = document.getElementById("ack");
     const errEl = document.getElementById("ack-error");
     if (!ackEl.checked) {
       errEl.textContent = "Please confirm you've read the disclosure to continue.";
@@ -549,7 +476,6 @@ async function renderYellowDisclosure() {
     }
   });
 
-  /** Version stamp sits on its own line below Back | Continue, flex-wrap handles it */
   const versionStamp = document.createElement("p");
   versionStamp.className = "disclosure-version";
   versionStamp.textContent = "Disclosure " + disclosureVersion;
@@ -559,9 +485,7 @@ async function renderYellowDisclosure() {
   actionsEl.appendChild(versionStamp);
 }
 
-/* ────────────────────────────────────────────────────────────
-   Wire global navigation (Back / Next stubs on step 2-3)
-   ──────────────────────────────────────────────────────────── */
+/* Wire global navigation */
 document.getElementById("next-0").addEventListener("click", handleStep0Next);
 document.getElementById("zip").addEventListener("keydown", (e) => {
   if (e.key === "Enter") { e.preventDefault(); handleStep0Next(); }
@@ -573,8 +497,17 @@ document.querySelectorAll("[data-next]").forEach((el) =>
   el.addEventListener("click", () => showStep(Number(el.getAttribute("data-next"))))
 );
 
-/* Initialize */
-showStep(0);
+/* Initialize — check for FE-2 handoff via ?state= query param */
+const urlParams = new URLSearchParams(window.location.search);
+const handoffState = (urlParams.get("state") || "").toUpperCase();
+
+if (handoffState && /^[A-Z]{2}$/.test(handoffState)) {
+  state.state = handoffState;
+  state.tier = stateTier(handoffState);
+  advanceFromStep0();
+} else {
+  showStep(0);
+}
 
 /* Expose for testing */
 // @ts-ignore
