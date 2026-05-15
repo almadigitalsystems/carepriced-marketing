@@ -74,6 +74,10 @@
   .radio-option:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
   .radio-option input[type=radio] { accent-color: var(--accent); width: 1rem; height: 1rem; flex-shrink: 0; }
 
+  .toggle-link { background: none; border: none; color: var(--accent); font: inherit; font-size: 0.9rem; cursor: pointer; padding: 0; text-decoration: underline; margin-top: 0.5rem; display: inline-block; }
+  .toggle-link:hover { color: var(--ink); }
+  .residency-group.hidden { display: none; }
+
   .footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--muted); }
   .footer a { color: var(--accent); }
 
@@ -102,15 +106,53 @@
 
 <main id="form-root">
 
-  <!-- STEP 0 — Residency capture (ZIP) -->
+  <!-- STEP 0 — Residency capture (ZIP or State) -->
   <section class="step" id="step-0" data-step="0">
     <h2>Where are you looking for care?</h2>
     <p>We start with location to make sure we surface the right facilities and disclosures for your state.</p>
 
-    <label class="req" for="zip">ZIP code</label>
-    <input id="zip" name="zip" type="text" inputmode="numeric" pattern="\d{5}" maxlength="5"
-           autocomplete="postal-code" placeholder="e.g. 30303" required />
-    <p class="help">5-digit US ZIP. Used only to determine your state.</p>
+    <div id="zip-group" class="residency-group">
+      <label class="req" for="zip">ZIP code</label>
+      <input id="zip" name="zip" type="text" inputmode="numeric" pattern="\d{5}" maxlength="5"
+             autocomplete="postal-code" placeholder="e.g. 30303" />
+      <p class="help">5-digit US ZIP. Used only to determine your state.</p>
+      <button type="button" id="toggle-to-state" class="toggle-link">Use state instead</button>
+    </div>
+
+    <div id="state-group" class="residency-group hidden">
+      <label class="req" for="state-select">State</label>
+      <select id="state-select" name="state">
+        <option value="">Select your state&hellip;</option>
+        <option value="AL">Alabama</option><option value="AK">Alaska</option>
+        <option value="AZ">Arizona</option><option value="AR">Arkansas</option>
+        <option value="CA">California</option><option value="CO">Colorado</option>
+        <option value="CT">Connecticut</option><option value="DE">Delaware</option>
+        <option value="DC">District of Columbia</option><option value="FL">Florida</option>
+        <option value="GA">Georgia</option><option value="HI">Hawaii</option>
+        <option value="ID">Idaho</option><option value="IL">Illinois</option>
+        <option value="IN">Indiana</option><option value="IA">Iowa</option>
+        <option value="KS">Kansas</option><option value="KY">Kentucky</option>
+        <option value="LA">Louisiana</option><option value="ME">Maine</option>
+        <option value="MD">Maryland</option><option value="MA">Massachusetts</option>
+        <option value="MI">Michigan</option><option value="MN">Minnesota</option>
+        <option value="MS">Mississippi</option><option value="MO">Missouri</option>
+        <option value="MT">Montana</option><option value="NE">Nebraska</option>
+        <option value="NV">Nevada</option><option value="NH">New Hampshire</option>
+        <option value="NJ">New Jersey</option><option value="NM">New Mexico</option>
+        <option value="NY">New York</option><option value="NC">North Carolina</option>
+        <option value="ND">North Dakota</option><option value="OH">Ohio</option>
+        <option value="OK">Oklahoma</option><option value="OR">Oregon</option>
+        <option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option>
+        <option value="SC">South Carolina</option><option value="SD">South Dakota</option>
+        <option value="TN">Tennessee</option><option value="TX">Texas</option>
+        <option value="UT">Utah</option><option value="VT">Vermont</option>
+        <option value="VA">Virginia</option><option value="WA">Washington</option>
+        <option value="WV">West Virginia</option><option value="WI">Wisconsin</option>
+        <option value="WY">Wyoming</option>
+      </select>
+      <button type="button" id="toggle-to-zip" class="toggle-link">Use ZIP code instead</button>
+    </div>
+
     <div class="error-msg" id="zip-error" aria-live="polite"></div>
 
     <div class="actions">
@@ -190,7 +232,7 @@ const RED_STATES = new Set(["CA", "WA", "NY"]);
 const YELLOW_STATES = new Set(["AZ", "CO", "GA", "MD", "MO", "FL", "TX"]);
 
 const WORKER_BASE = "https://intake-worker.carepriced.com";
-const USE_WORKER_MOCK = true;
+const USE_WORKER_MOCK = false;
 
 const MOCK_DISCLOSURE_HTML = {
   default:
@@ -237,11 +279,14 @@ function stateTier(state) {
 
 function emptyState() {
   return {
+    sessionId: crypto.randomUUID(),
     currentStep: 0,
     zip: null,
     state: null,
     tier: null,
     flMedicaid: null,
+    disclosureHash: null,
+    disclosureVersion: null,
     ackChecked: false,
     ackTimestamp: null,
     acknowledgmentRecordId: null,
@@ -263,23 +308,38 @@ function showStep(step) {
 }
 
 function handleStep0Next() {
-  const zipEl = document.getElementById("zip");
   const errEl = document.getElementById("zip-error");
-  const zip = zipEl.value.trim();
+  const stateGroupEl = document.getElementById("state-group");
+  const isStateMode = !stateGroupEl.classList.contains("hidden");
 
-  if (!/^\d{5}$/.test(zip)) {
-    errEl.textContent = "Please enter a valid 5-digit US ZIP code.";
-    return;
+  if (isStateMode) {
+    const sel = document.getElementById("state-select");
+    const st = sel.value;
+    if (!st) {
+      errEl.textContent = "Please select your state to continue.";
+      return;
+    }
+    errEl.textContent = "";
+    state.zip = null;
+    state.state = st;
+    state.tier = stateTier(st);
+  } else {
+    const zipEl = document.getElementById("zip");
+    const zip = zipEl.value.trim();
+    if (!/^\d{5}$/.test(zip)) {
+      errEl.textContent = "Please enter a valid 5-digit US ZIP code.";
+      return;
+    }
+    const st = zipToState(zip);
+    if (!st) {
+      errEl.textContent = "We couldn't match that ZIP to a US state. Please double-check it.";
+      return;
+    }
+    errEl.textContent = "";
+    state.zip = zip;
+    state.state = st;
+    state.tier = stateTier(st);
   }
-  const st = zipToState(zip);
-  if (!st) {
-    errEl.textContent = "We couldn't match that ZIP to a US state. Please double-check it.";
-    return;
-  }
-  errEl.textContent = "";
-  state.zip = zip;
-  state.state = st;
-  state.tier = stateTier(st);
 
   advanceFromStep0();
 }
@@ -400,21 +460,27 @@ async function renderYellowDisclosure() {
   actionsEl.innerHTML = "";
 
   let disclosureHtml = "";
-  let disclosureVersion = "v2026-05-20-v1";
+  let disclosureVersion = null;
+  let disclosureHash = null;
   try {
     if (USE_WORKER_MOCK) {
       disclosureHtml = MOCK_DISCLOSURE_HTML[st] || MOCK_DISCLOSURE_HTML["default"];
+      disclosureVersion = 1;
+      disclosureHash = "mock_hash";
     } else {
       const resp = await fetch(WORKER_BASE + "/api/intake/disclosure?state=" + encodeURIComponent(st));
       if (!resp.ok) throw new Error("HTTP " + resp.status);
       const data = await resp.json();
-      disclosureHtml = data.html || "";
-      disclosureVersion = data.version || disclosureVersion;
+      disclosureHtml = data.text || "";
+      disclosureVersion = data.version || null;
+      disclosureHash = data.hash || null;
     }
   } catch (err) {
     console.warn("Disclosure fetch failed, using fallback:", err);
     disclosureHtml = MOCK_DISCLOSURE_HTML["default"];
   }
+  state.disclosureVersion = disclosureVersion;
+  state.disclosureHash = disclosureHash;
 
   bodyEl.innerHTML =
     "<div class=\"yellow-disclosure\">" +
@@ -455,9 +521,10 @@ async function renderYellowDisclosure() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            state: st,
-            version: disclosureVersion,
-            timestamp: new Date().toISOString(),
+            session_id: state.sessionId,
+            user_state: st,
+            disclosure_version: state.disclosureVersion,
+            disclosure_hash: state.disclosureHash,
           }),
         });
         if (!resp.ok) throw new Error("HTTP " + resp.status);
@@ -485,6 +552,23 @@ async function renderYellowDisclosure() {
   actionsEl.appendChild(versionStamp);
 }
 
+/* Toggle between ZIP and state-dropdown modes */
+function showZipMode() {
+  document.getElementById("zip-group").classList.remove("hidden");
+  document.getElementById("state-group").classList.add("hidden");
+  document.getElementById("zip-error").textContent = "";
+  localStorage.removeItem("cp.intake.residency_mode");
+}
+function showStateMode() {
+  document.getElementById("zip-group").classList.add("hidden");
+  document.getElementById("state-group").classList.remove("hidden");
+  document.getElementById("zip-error").textContent = "";
+  localStorage.setItem("cp.intake.residency_mode", "state");
+}
+
+document.getElementById("toggle-to-state").addEventListener("click", showStateMode);
+document.getElementById("toggle-to-zip").addEventListener("click", showZipMode);
+
 /* Wire global navigation */
 document.getElementById("next-0").addEventListener("click", handleStep0Next);
 document.getElementById("zip").addEventListener("keydown", (e) => {
@@ -506,6 +590,9 @@ if (handoffState && /^[A-Z]{2}$/.test(handoffState)) {
   state.tier = stateTier(handoffState);
   advanceFromStep0();
 } else {
+  if (localStorage.getItem("cp.intake.residency_mode") === "state") {
+    showStateMode();
+  }
   showStep(0);
 }
 
