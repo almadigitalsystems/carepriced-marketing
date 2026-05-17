@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- TEMPLATE VARS: replace {STATE_NAME}, {STATE_ABBR}, {STATE_SLUG}, {AL_MEDIAN}, {MC_MEDIAN}, {HC_MEDIAN}, {SN_MEDIAN}, {IL_MEDIAN}, {DATA_DATE} -->
+<title>Senior Care Costs in {STATE_NAME} (2026) — Carepriced</title>
+<meta name="description" content="Source-cited 2026 median costs for assisted living, memory care, home care, and skilled nursing in {STATE_NAME}. Compare by metro area." />
+<link rel="canonical" href="https://carepriced.com/calculator/{STATE_SLUG}/" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "name": "Senior Care Costs in {STATE_NAME} 2026",
+  "about": {
+    "@type": "Place",
+    "name": "{STATE_NAME}",
+    "containedInPlace": {"@type": "Country", "name": "United States"}
+  },
+  "dateModified": "{DATA_DATE}",
+  "publisher": {"@type": "Organization", "name": "Carepriced", "url": "https://carepriced.com"}
+}
+</script>
+<style>
+/* ── Design Tokens ─────────────────────────────── */
+:root {
+  --bg-page: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-teal-soft: #E0F7FA;
+  --bg-navy: #0B2D4A;
+
+  --ink-1: #0B2D4A;
+  --ink-2: #1E3A52;
+  --ink-3: #4A6278;
+  --ink-4: #8BA2B4;
+
+  --border: #DDE6EE;
+  --border-strong: #C3D1DC;
+
+  --teal: #0891B2;
+  --teal-dark: #0E7490;
+  --teal-soft: #CCEEFF;
+  --green: #16A34A;
+  --green-soft: #DCFCE7;
+  --amber: #D97706;
+  --amber-soft: #FEF3C7;
+  --red: #DC2626;
+  --red-soft: #FEE2E2;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 3px rgba(11,45,74,.06);
+  --shadow-md: 0 4px 16px rgba(11,45,74,.08);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg-page);
+  color: var(--ink-1);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "tnum";
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { color: var(--teal-dark); text-decoration: underline; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+@media (max-width: 640px) { .wrap { padding: 0 16px; } }
+
+/* ── Header ── */
+.site-header { background: var(--bg-surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
+.header-inner { max-width: 1120px; margin: 0 auto; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.logo { font-family: 'Newsreader', Georgia, serif; font-weight: 600; font-size: 22px; letter-spacing: -.02em; color: var(--ink-1); display: flex; align-items: center; gap: 10px; }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, #0891B2 0%, #16A34A 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.logo-mark svg { width: 16px; height: 16px; fill: white; }
+.nav { display: flex; align-items: center; gap: 6px; }
+.nav a { font-size: 14px; font-weight: 500; color: var(--ink-3); padding: 6px 12px; border-radius: var(--radius-sm); transition: background .15s, color .15s; }
+.nav a:hover { background: var(--bg-teal-soft); color: var(--teal); text-decoration: none; }
+.nav .btn-cta { background: var(--teal); color: #fff; padding: 6px 16px; border-radius: var(--radius-sm); font-weight: 600; }
+.nav .btn-cta:hover { background: var(--teal-dark); color: #fff; }
+@media (max-width: 760px) { .nav .mobile-hide { display: none; } .header-inner { padding: 12px 16px; } }
+
+/* ── Breadcrumb ── */
+.breadcrumb { font-size: 13px; color: var(--ink-3); padding: 16px 0 0; font-weight: 500; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.breadcrumb a { color: var(--ink-3); }
+.breadcrumb a:hover { color: var(--teal); text-decoration: none; }
+.breadcrumb .sep { color: var(--ink-4); }
+
+/* ── Page Hero ── */
+.page-hero { background: var(--bg-surface); padding: 28px 0 36px; border-bottom: 1px solid var(--border); }
+.hero-inner { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+.dateline {
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-4); font-weight: 700; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.dateline-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); display: inline-block; }
+.page-title {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: clamp(1.7rem, 4vw, 2.8rem);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  color: var(--ink-1);
+  margin: 0 0 10px;
+  line-height: 1.2;
+}
+.page-desc { font-size: 1.05rem; color: var(--ink-3); max-width: 680px; line-height: 1.65; margin: 0 0 32px; }
+
+/* Summary cost boxes */
+.cost-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.cost-box {
+  background: var(--bg-page);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.cost-box-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4); }
+.cost-box-value { font-size: 1.8rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink-1); letter-spacing: -.02em; }
+.cost-box-sub { font-size: 12px; color: var(--ink-3); }
+.cost-box.c-al .cost-box-value { color: var(--teal); }
+.cost-box.c-mc .cost-box-value { color: var(--amber); }
+.cost-box.c-sn .cost-box-value { color: var(--red); }
+.cost-box.c-hc .cost-box-value { color: var(--green); }
+.cost-box.c-il .cost-box-value { color: var(--ink-2); }
+
+/* ── Two-column layout ── */
+.page-body { max-width: 1120px; margin: 0 auto; padding: 40px 28px; display: grid; grid-template-columns: 1fr 340px; gap: 40px; align-items: start; }
+@media (max-width: 900px) { .page-body { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .page-body { padding: 24px 16px; } }
+
+/* ── Main content ── */
+.main-content { display: flex; flex-direction: column; gap: 40px; }
+
+/* Section headers */
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+.section-title { font-family: 'Newsreader', Georgia, serif; font-size: 1.5rem; font-weight: 600; letter-spacing: -.02em; color: var(--ink-1); margin: 0 0 20px; }
+
+/* Data card */
+.data-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.data-card-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.data-card-title { font-weight: 700; font-size: 15px; color: var(--ink-1); }
+.data-card-meta { font-size: 12px; color: var(--ink-4); }
+
+/* Data table */
+.data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.data-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-page);
+}
+.data-table th.num { text-align: right; }
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink-1);
+  vertical-align: middle;
+}
+.data-table td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--bg-page); }
+
+/* Care type icon dots */
+.type-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; flex-shrink: 0; }
+.dot-al { background: var(--teal); }
+.dot-mc { background: var(--amber); }
+.dot-sn { background: var(--red); }
+.dot-hc { background: var(--green); }
+.dot-il { background: var(--ink-3); }
+
+/* Cost badges */
+.cost-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 4px; }
+.badge-affordable { background: var(--green-soft); color: var(--green); }
+.badge-moderate { background: var(--bg-teal-soft); color: var(--teal-dark); }
+.badge-expensive { background: var(--amber-soft); color: var(--amber); }
+.badge-high { background: var(--red-soft); color: var(--red); }
+
+/* Metro section */
+.metro-table-wrap { padding: 0; }
+
+/* Care compare */
+.care-compare { display: flex; flex-direction: column; gap: 0; }
+.care-row {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.care-row:last-child { border-bottom: none; }
+.care-label { font-weight: 600; font-size: 14px; color: var(--ink-1); display: flex; align-items: center; }
+.care-bar-wrap { position: relative; height: 8px; background: var(--border); border-radius: 100px; overflow: hidden; }
+.care-bar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 100px; }
+.care-value { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink-1); white-space: nowrap; min-width: 80px; text-align: right; }
+
+/* ── Sidebar ── */
+.sidebar { display: flex; flex-direction: column; gap: 20px; }
+.sidebar-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
+.sidebar-card-header { padding: 14px 18px; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 14px; color: var(--ink-1); background: var(--bg-page); }
+.sidebar-card-body { padding: 18px; }
+
+/* Calculator CTA in sidebar */
+.calc-cta { padding: 20px; background: var(--bg-navy); border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 12px; }
+.calc-cta-title { font-family: 'Newsreader', Georgia, serif; font-size: 1.2rem; font-weight: 600; color: #fff; line-height: 1.3; }
+.calc-cta-desc { font-size: 13px; color: rgba(255,255,255,.6); line-height: 1.55; }
+.calc-cta-btn { display: block; background: var(--teal); color: #fff; text-align: center; padding: 12px; border-radius: var(--radius-sm); font-weight: 700; font-size: 14px; transition: background .15s; }
+.calc-cta-btn:hover { background: var(--teal-dark); color: #fff; text-decoration: none; }
+
+/* Medicaid box */
+.medicaid-item { display: flex; flex-direction: column; gap: 4px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.medicaid-item:last-child { border-bottom: none; padding-bottom: 0; }
+.medicaid-label { font-size: 12px; font-weight: 700; color: var(--ink-4); text-transform: uppercase; letter-spacing: .06em; }
+.medicaid-value { font-size: 14px; font-weight: 600; color: var(--ink-1); }
+.medicaid-note { font-size: 12px; color: var(--ink-3); }
+
+/* Quick nav list */
+.quick-nav { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.quick-nav a { font-size: 13px; color: var(--teal); display: flex; align-items: center; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.quick-nav a:last-child { border-bottom: none; }
+.quick-nav a:hover { color: var(--teal-dark); text-decoration: underline; }
+.quick-nav a::before { content: '↓'; font-size: 11px; color: var(--ink-4); }
+
+/* ── Related states ── */
+.related-states { margin-top: 40px; }
+.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 16px; }
+.related-link { font-size: 13px; font-weight: 500; color: var(--ink-2); padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-surface); display: flex; align-items: center; justify-content: space-between; transition: border-color .15s, color .15s; text-decoration: none; }
+.related-link:hover { border-color: var(--teal); color: var(--teal); text-decoration: none; }
+.related-link .rl-cost { font-size: 11px; color: var(--ink-4); font-weight: 600; }
+
+/* ── Sources footer ── */
+.sources-footer {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  padding: 24px 28px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.sources-footer p { font-size: 12px; color: var(--ink-4); margin: 0; line-height: 1.6; }
+.sources-footer a { color: var(--ink-4); text-decoration: underline; }
+
+/* ── Site footer ── */
+.site-footer { background: var(--ink-1); padding: 40px 0 28px; margin-top: 0; }
+.footer-inner { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,.3); }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-links a { font-size: 12px; color: rgba(255,255,255,.4); text-decoration: none; }
+.footer-links a:hover { color: rgba(255,255,255,.7); }
+
+@media (max-width: 640px) {
+  .cost-summary { grid-template-columns: 1fr 1fr; }
+  .care-row { grid-template-columns: 100px 1fr auto; padding: 12px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 1C4.14 1 1 4.14 1 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm.75 10.5h-1.5v-5h1.5v5zm0-6.5h-1.5V3.5h1.5V5z"/></svg>
+      </span>
+      Carepriced
+    </a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="/calculator/" class="mobile-hide">All states</a>
+      <a href="/calculator/assisted-living/" class="mobile-hide">Assisted Living</a>
+      <a href="/calculator/" class="btn-cta">Calculator</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ── Page Hero ── -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Carepriced</a>
+      <span class="sep">›</span>
+      <a href="/calculator/">All states</a>
+      <span class="sep">›</span>
+      <span>{STATE_NAME}</span>
+    </nav>
+
+    <div class="dateline">
+      <span class="dateline-dot"></span>
+      Last updated {DATA_DATE} · Source: Genworth/CareScout 2025, NIC MAP, CMS
+    </div>
+
+    <h1 class="page-title">Senior Care Costs in {STATE_NAME} ({STATE_ABBR}) — 2026</h1>
+    <p class="page-desc">
+      Source-cited median monthly costs for assisted living, memory care, home care, skilled nursing, and independent living across {STATE_NAME}'s major metro markets. All figures reflect 2025–2026 survey data.
+    </p>
+
+    <!-- Summary cost boxes -->
+    <div class="cost-summary" role="list">
+      <div class="cost-box c-al" role="listitem">
+        <span class="cost-box-label">Assisted Living</span>
+        <span class="cost-box-value">{AL_MEDIAN}</span>
+        <span class="cost-box-sub">median / month</span>
+      </div>
+      <div class="cost-box c-mc" role="listitem">
+        <span class="cost-box-label">Memory Care</span>
+        <span class="cost-box-value">{MC_MEDIAN}</span>
+        <span class="cost-box-sub">median / month</span>
+      </div>
+      <div class="cost-box c-sn" role="listitem">
+        <span class="cost-box-label">Skilled Nursing</span>
+        <span class="cost-box-value">{SN_MEDIAN}</span>
+        <span class="cost-box-sub">median / month</span>
+      </div>
+      <div class="cost-box c-hc" role="listitem">
+        <span class="cost-box-label">Home Care</span>
+        <span class="cost-box-value">{HC_MEDIAN}</span>
+        <span class="cost-box-sub">median / hour</span>
+      </div>
+      <div class="cost-box c-il" role="listitem">
+        <span class="cost-box-label">Independent Living</span>
+        <span class="cost-box-value">{IL_MEDIAN}</span>
+        <span class="cost-box-sub">median / month</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Body ── -->
+<div class="page-body">
+
+  <!-- ── Main ── -->
+  <main class="main-content" id="main-content">
+
+    <!-- Care type comparison -->
+    <section id="care-types" aria-labelledby="care-types-heading">
+      <div class="section-label">Care type comparison</div>
+      <h2 class="section-title" id="care-types-heading">Monthly cost by care type</h2>
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">{STATE_NAME} state medians — 2026</span>
+          <span class="data-card-meta">Source: Genworth/CareScout 2025</span>
+        </div>
+        <div class="care-compare" role="list">
+          <div class="care-row" role="listitem">
+            <span class="care-label"><span class="type-dot dot-al"></span>Assisted Living</span>
+            <div class="care-bar-wrap" aria-hidden="true">
+              <div class="care-bar" style="width: 55%; background: var(--teal);"></div>
+            </div>
+            <span class="care-value">{AL_MEDIAN}/mo</span>
+          </div>
+          <div class="care-row" role="listitem">
+            <span class="care-label"><span class="type-dot dot-mc"></span>Memory Care</span>
+            <div class="care-bar-wrap" aria-hidden="true">
+              <div class="care-bar" style="width: 72%; background: var(--amber);"></div>
+            </div>
+            <span class="care-value">{MC_MEDIAN}/mo</span>
+          </div>
+          <div class="care-row" role="listitem">
+            <span class="care-label"><span class="type-dot dot-sn"></span>Skilled Nursing</span>
+            <div class="care-bar-wrap" aria-hidden="true">
+              <div class="care-bar" style="width: 100%; background: var(--red);"></div>
+            </div>
+            <span class="care-value">{SN_MEDIAN}/mo</span>
+          </div>
+          <div class="care-row" role="listitem">
+            <span class="care-label"><span class="type-dot dot-hc"></span>Home Care</span>
+            <div class="care-bar-wrap" aria-hidden="true">
+              <div class="care-bar" style="width: 38%; background: var(--green);"></div>
+            </div>
+            <span class="care-value">{HC_MEDIAN}/hr</span>
+          </div>
+          <div class="care-row" role="listitem">
+            <span class="care-label"><span class="type-dot dot-il"></span>Independent Living</span>
+            <div class="care-bar-wrap" aria-hidden="true">
+              <div class="care-bar" style="width: 32%; background: var(--ink-3);"></div>
+            </div>
+            <span class="care-value">{IL_MEDIAN}/mo</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Metro breakdown -->
+    <section id="metro-costs" aria-labelledby="metro-costs-heading">
+      <div class="section-label">Metro breakdown</div>
+      <h2 class="section-title" id="metro-costs-heading">Assisted living costs by metro area</h2>
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">{STATE_NAME} metro markets</span>
+          <span class="data-card-meta">Median monthly cost · 2026</span>
+        </div>
+        <div class="metro-table-wrap">
+          <table class="data-table" aria-label="Assisted living costs by metro area in {STATE_NAME}">
+            <thead>
+              <tr>
+                <th>Metro area</th>
+                <th class="num">25th pct</th>
+                <th class="num">Median</th>
+                <th class="num">75th pct</th>
+                <th>vs. state</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- TEMPLATE ROWS — replace with actual data -->
+              <tr>
+                <td><strong>{METRO_1}</strong></td>
+                <td class="num">$X,XXX</td>
+                <td class="num">$X,XXX</td>
+                <td class="num">$X,XXX</td>
+                <td><span class="cost-badge badge-expensive">+X%</span></td>
+              </tr>
+              <tr>
+                <td><strong>{METRO_2}</strong></td>
+                <td class="num">$X,XXX</td>
+                <td class="num">$X,XXX</td>
+                <td class="num">$X,XXX</td>
+                <td><span class="cost-badge badge-moderate">+X%</span></td>
+              </tr>
+              <tr>
+                <td><strong>{METRO_3}</strong></td>
+                <td class="num">$X,XXX</td>
+                <td class="num">$X,XXX</td>
+                <td class="num">$X,XXX</td>
+                <td><span class="cost-badge badge-affordable">−X%</span></td>
+              </tr>
+              <tr>
+                <td><strong>State median</strong></td>
+                <td class="num">&mdash;</td>
+                <td class="num">{AL_MEDIAN}</td>
+                <td class="num">&mdash;</td>
+                <td><span class="cost-badge" style="background:var(--bg-page);color:var(--ink-3);">baseline</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Memory care metro -->
+    <section id="memory-care" aria-labelledby="memory-care-heading">
+      <div class="section-label">Memory care</div>
+      <h2 class="section-title" id="memory-care-heading">Memory care costs in {STATE_NAME}</h2>
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Memory care — {STATE_NAME} metros</span>
+          <span class="data-card-meta">Median monthly cost · 2026</span>
+        </div>
+        <div class="metro-table-wrap">
+          <table class="data-table" aria-label="Memory care costs by metro area in {STATE_NAME}">
+            <thead>
+              <tr>
+                <th>Metro area</th>
+                <th class="num">25th pct</th>
+                <th class="num">Median</th>
+                <th class="num">75th pct</th>
+                <th>vs. state</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>{METRO_1}</strong></td>
+                <td class="num">$X,XXX</td>
+                <td class="num">$X,XXX</td>
+                <td class="num">$X,XXX</td>
+                <td><span class="cost-badge badge-expensive">+X%</span></td>
+              </tr>
+              <tr>
+                <td><strong>{METRO_2}</strong></td>
+                <td class="num">$X,XXX</td>
+                <td class="num">$X,XXX</td>
+                <td class="num">$X,XXX</td>
+                <td><span class="cost-badge badge-moderate">+X%</span></td>
+              </tr>
+              <tr>
+                <td><strong>State median</strong></td>
+                <td class="num">&mdash;</td>
+                <td class="num">{MC_MEDIAN}</td>
+                <td class="num">&mdash;</td>
+                <td><span class="cost-badge" style="background:var(--bg-page);color:var(--ink-3);">baseline</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skilled nursing + home care -->
+    <section id="other-care" aria-labelledby="other-care-heading">
+      <div class="section-label">Skilled nursing &amp; home care</div>
+      <h2 class="section-title" id="other-care-heading">Nursing home and home care costs</h2>
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Skilled nursing &amp; home care — {STATE_NAME}</span>
+          <span class="data-card-meta">2026 survey data</span>
+        </div>
+        <div class="metro-table-wrap">
+          <table class="data-table" aria-label="Skilled nursing and home care costs in {STATE_NAME}">
+            <thead>
+              <tr>
+                <th>Care type</th>
+                <th class="num">25th pct</th>
+                <th class="num">Median</th>
+                <th class="num">75th pct</th>
+                <th class="num">Annual estimate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="type-dot dot-sn"></span><strong>Skilled nursing (semi-private)</strong></td>
+                <td class="num">$X,XXX/mo</td>
+                <td class="num">{SN_MEDIAN}/mo</td>
+                <td class="num">$XX,XXX/mo</td>
+                <td class="num">$XXX,XXX/yr</td>
+              </tr>
+              <tr>
+                <td><span class="type-dot dot-hc"></span><strong>Home care (per hour)</strong></td>
+                <td class="num">$XX/hr</td>
+                <td class="num">{HC_MEDIAN}/hr</td>
+                <td class="num">$XX/hr</td>
+                <td class="num">~$XX,XXX/yr <small style="color:var(--ink-4);">(40 hrs/wk)</small></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Medicaid coverage -->
+    <section id="medicaid" aria-labelledby="medicaid-heading">
+      <div class="section-label">Medicaid coverage</div>
+      <h2 class="section-title" id="medicaid-heading">What Medicaid covers in {STATE_NAME}</h2>
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">{STATE_NAME} Medicaid — senior care coverage</span>
+          <span class="data-card-meta">Verify directly with {STATE_NAME} Medicaid office</span>
+        </div>
+        <div style="padding: 20px 24px;">
+          <table class="data-table" aria-label="Medicaid coverage by care type in {STATE_NAME}">
+            <thead>
+              <tr>
+                <th>Care type</th>
+                <th>Coverage</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Skilled nursing</strong></td>
+                <td><span class="cost-badge badge-affordable">Covered</span></td>
+                <td style="font-size:13px;color:var(--ink-3);">Medicaid pays for LTC in certified nursing facilities after assets spent down to state limit.</td>
+              </tr>
+              <tr>
+                <td><strong>Assisted living</strong></td>
+                <td><span class="cost-badge badge-moderate">Waiver</span></td>
+                <td style="font-size:13px;color:var(--ink-3);">{STATE_NAME} HCBS waiver may cover assisted living for eligible residents. Waitlists vary by county.</td>
+              </tr>
+              <tr>
+                <td><strong>Memory care</strong></td>
+                <td><span class="cost-badge badge-moderate">Waiver</span></td>
+                <td style="font-size:13px;color:var(--ink-3);">Covered under Medicaid HCBS waiver for qualifying dementia diagnoses in approved facilities.</td>
+              </tr>
+              <tr>
+                <td><strong>Home care</strong></td>
+                <td><span class="cost-badge badge-affordable">Covered</span></td>
+                <td style="font-size:13px;color:var(--ink-3);">{STATE_NAME} Medicaid covers personal care and home health through the HCBS program.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related states -->
+    <section class="related-states" aria-labelledby="related-heading">
+      <div class="section-label">Browse nearby</div>
+      <h2 class="section-title" id="related-heading">Compare neighboring states</h2>
+      <div class="related-grid">
+        <!-- Replace with contextually appropriate neighboring states -->
+        <a href="/calculator/{NEIGHBOR_1_SLUG}/" class="related-link">
+          {NEIGHBOR_1_NAME}
+          <span class="rl-cost">{NEIGHBOR_1_AL}/mo AL</span>
+        </a>
+        <a href="/calculator/{NEIGHBOR_2_SLUG}/" class="related-link">
+          {NEIGHBOR_2_NAME}
+          <span class="rl-cost">{NEIGHBOR_2_AL}/mo AL</span>
+        </a>
+        <a href="/calculator/{NEIGHBOR_3_SLUG}/" class="related-link">
+          {NEIGHBOR_3_NAME}
+          <span class="rl-cost">{NEIGHBOR_3_AL}/mo AL</span>
+        </a>
+        <a href="/calculator/{NEIGHBOR_4_SLUG}/" class="related-link">
+          {NEIGHBOR_4_NAME}
+          <span class="rl-cost">{NEIGHBOR_4_AL}/mo AL</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Sidebar ── -->
+  <aside>
+    <div class="sidebar">
+
+      <!-- Calculator CTA -->
+      <div class="calc-cta">
+        <p class="calc-cta-title">Get a personalized cost estimate for {STATE_NAME}</p>
+        <p class="calc-cta-desc">Enter your ZIP code to see costs for your specific area, care level, and facility type.</p>
+        <a href="/calculator/?state={STATE_SLUG}" class="calc-cta-btn">Open cost calculator →</a>
+      </div>
+
+      <!-- Quick nav -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-header">On this page</div>
+        <div class="sidebar-card-body" style="padding: 12px 18px;">
+          <ul class="quick-nav" aria-label="Page sections">
+            <li><a href="#care-types">Care type costs</a></li>
+            <li><a href="#metro-costs">Metro breakdown</a></li>
+            <li><a href="#memory-care">Memory care</a></li>
+            <li><a href="#other-care">Skilled nursing &amp; home care</a></li>
+            <li><a href="#medicaid">Medicaid coverage</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Medicaid quick facts -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-header">{STATE_NAME} Medicaid quick facts</div>
+        <div class="sidebar-card-body">
+          <div class="medicaid-item">
+            <span class="medicaid-label">Program name</span>
+            <span class="medicaid-value">{MEDICAID_PROGRAM_NAME}</span>
+          </div>
+          <div class="medicaid-item">
+            <span class="medicaid-label">Asset limit (individual)</span>
+            <span class="medicaid-value">{MEDICAID_ASSET_LIMIT}</span>
+            <span class="medicaid-note">Countable assets only; home may be exempt</span>
+          </div>
+          <div class="medicaid-item">
+            <span class="medicaid-label">Income limit</span>
+            <span class="medicaid-value">{MEDICAID_INCOME_LIMIT}/mo</span>
+          </div>
+          <div class="medicaid-item">
+            <span class="medicaid-label">HCBS waiver waitlist</span>
+            <span class="medicaid-value">{MEDICAID_WAITLIST}</span>
+            <span class="medicaid-note">Apply early — waitlists can be 12–36 months</span>
+          </div>
+          <div style="margin-top: 12px;">
+            <a href="https://www.medicaid.gov" target="_blank" rel="noopener noreferrer" style="font-size:13px;font-weight:600;">Official {STATE_NAME} Medicaid site →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- National compare -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-header">{STATE_ABBR} vs. national median</div>
+        <div class="sidebar-card-body">
+          <table class="data-table" aria-label="State vs national cost comparison" style="font-size:13px;">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th class="num">{STATE_ABBR}</th>
+                <th class="num">US</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Assisted Living</td>
+                <td class="num">{AL_MEDIAN}</td>
+                <td class="num" style="color:var(--ink-4);">$4,995</td>
+              </tr>
+              <tr>
+                <td>Memory Care</td>
+                <td class="num">{MC_MEDIAN}</td>
+                <td class="num" style="color:var(--ink-4);">$6,200</td>
+              </tr>
+              <tr>
+                <td>Skilled Nursing</td>
+                <td class="num">{SN_MEDIAN}</td>
+                <td class="num" style="color:var(--ink-4);">$9,100</td>
+              </tr>
+              <tr>
+                <td>Home Care</td>
+                <td class="num">{HC_MEDIAN}</td>
+                <td class="num" style="color:var(--ink-4);">$33/hr</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+</div><!-- /page-body -->
+
+<!-- ── Data sources footnote ── -->
+<div class="wrap">
+  <div class="sources-footer">
+    <p>
+      <strong>Data sources:</strong> Figures on this page are drawn from the Genworth/CareScout Cost of Care Survey 2025 (440 metro markets), NIC MAP Senior Housing Data Q1 2026, and CMS Form 2540-24 (nursing facility cost reports). Data reflects median pricing and is updated annually. Actual costs vary by facility, room type, care level, and local market conditions. This is not financial or legal advice. Verify costs directly with providers and consult a Certified Senior Advisor for guidance specific to your situation.
+      <br /><a href="/privacy/">Privacy policy</a> · <a href="mailto:clive@carepriced.com">Contact us</a>
+    </p>
+  </div>
+</div>
+
+<!-- ── Footer ── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Carepriced. Not a healthcare provider. Data sourced from publicly available surveys and CMS reporting.</span>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/calculator/">All states</a>
+        <a href="/intake/">For facilities</a>
+        <a href="/privacy/">Privacy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
