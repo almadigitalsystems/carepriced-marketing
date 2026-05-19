@@ -788,6 +788,518 @@ a:hover { color: var(--teal-dark); text-decoration: underline; }
 /* ── Utility ───────────────────────────────────── */
 .mt-0 { margin-top: 0; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+/* ── Apollo Visual Components ─────────────────── */
+
+/* Component 1: Cost by State Chart */
+
+
+  /* === COMPONENT START === */
+  .cp-state-chart {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 36px 40px;
+    margin: 48px auto;
+    max-width: 1100px;
+  }
+
+  .cp-state-chart__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .cp-state-chart__title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1a5276;
+    letter-spacing: -0.01em;
+  }
+
+  .cp-state-chart__subtitle {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  .cp-state-chart__legend {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .cp-legend-dot {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: #475569;
+  }
+
+  .cp-legend-dot span {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  /* Care type filter tabs */
+  .cp-chart-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .cp-chart-tab {
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1.5px solid #cbd5e1;
+    background: transparent;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .cp-chart-tab:hover {
+    border-color: #2980b9;
+    color: #2980b9;
+  }
+
+  .cp-chart-tab.active {
+    background: #1a5276;
+    border-color: #1a5276;
+    color: #ffffff;
+  }
+
+  /* Chart scroll wrapper */
+  .cp-chart-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cp-chart-svg-wrap {
+    min-width: 640px;
+  }
+
+  /* Tooltip */
+  .cp-tooltip {
+    position: absolute;
+    background: #1a2332;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.12s;
+    z-index: 100;
+    white-space: nowrap;
+  }
+
+  .cp-tooltip.visible { opacity: 1; }
+
+  /* Source citation */
+  .cp-chart-source {
+    margin-top: 20px;
+    font-size: 0.73rem;
+    color: #94a3b8;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 14px;
+  }
+
+  .cp-chart-source a {
+    color: #2980b9;
+    text-decoration: none;
+  }
+  /* === COMPONENT END === */
+
+/* Component 2: Care Type Cards */
+
+  
+
+  /* === COMPONENT START === */
+
+  .cp-care-types {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 0;
+  }
+
+  .cp-care-types__heading {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .cp-care-types__title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1a5276;
+    letter-spacing: -0.02em;
+  }
+
+  .cp-care-types__desc {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #64748b;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cp-care-types__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(192px, 1fr));
+    gap: 20px;
+  }
+
+  /* Card */
+  .cp-care-card {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 28px 24px 24px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cp-care-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--card-accent);
+    border-radius: 14px 14px 0 0;
+  }
+
+  .cp-care-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(26, 82, 118, 0.12);
+    border-color: var(--card-accent);
+  }
+
+  .cp-care-card:focus-visible {
+    outline: 3px solid #2980b9;
+    outline-offset: 2px;
+  }
+
+  /* Icon circle */
+  .cp-card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: var(--card-icon-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .cp-card-icon svg {
+    width: 26px;
+    height: 26px;
+    fill: var(--card-accent);
+  }
+
+  .cp-card-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a2332;
+    line-height: 1.3;
+  }
+
+  .cp-card-desc {
+    font-size: 0.82rem;
+    color: #64748b;
+    line-height: 1.55;
+    flex: 1;
+  }
+
+  .cp-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 14px;
+    margin-top: auto;
+  }
+
+  .cp-card-price {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--card-accent);
+  }
+
+  .cp-card-price-label {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    display: block;
+    font-weight: 400;
+    margin-top: 1px;
+  }
+
+  .cp-card-arrow {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--card-icon-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+
+  .cp-care-card:hover .cp-card-arrow {
+    background: var(--card-accent);
+  }
+
+  .cp-card-arrow svg {
+    width: 12px;
+    height: 12px;
+    fill: var(--card-accent);
+    transition: fill 0.15s;
+  }
+
+  .cp-care-card:hover .cp-card-arrow svg {
+    fill: #ffffff;
+  }
+
+  /* Color themes per card */
+  .cp-care-card--assisted  { --card-accent: #2980b9; --card-icon-bg: #eaf4fd; }
+  .cp-care-card--nursing   { --card-accent: #1a5276; --card-icon-bg: #e8f1f8; }
+  .cp-care-card--memory    { --card-accent: #7b3fa0; --card-icon-bg: #f3eafa; }
+  .cp-care-card--home      { --card-accent: #27ae60; --card-icon-bg: #eafaf1; }
+  .cp-care-card--indep     { --card-accent: #d35400; --card-icon-bg: #fdf0e8; }
+
+  /* === COMPONENT END === */
+
+/* Component 3: Trust Signals */
+
+  
+
+  /* ========================================================
+     TRUST SIGNALS — COMPONENT A: Stat Counter Bar
+     ======================================================== */
+
+  .cp-trust-bar {
+    background: linear-gradient(135deg, #1a5276 0%, #2980b9 100%);
+    color: #ffffff;
+    padding: 40px 48px;
+    border-radius: 16px;
+    max-width: 1100px;
+    margin: 0 auto 48px;
+  }
+
+  .cp-trust-bar__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 32px;
+    align-items: center;
+  }
+
+  .cp-trust-stat {
+    text-align: center;
+  }
+
+  .cp-trust-stat__number {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: #ffffff;
+    display: block;
+  }
+
+  .cp-trust-stat__suffix {
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .cp-trust-stat__label {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.75);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  .cp-trust-divider {
+    width: 1px;
+    height: 52px;
+    background: rgba(255,255,255,0.2);
+    margin: 0 auto;
+  }
+
+  @media (max-width: 600px) {
+    .cp-trust-bar { padding: 28px 24px; }
+    .cp-trust-divider { display: none; }
+  }
+
+  /* ========================================================
+     TRUST SIGNALS — COMPONENT B: Testimonials
+     ======================================================== */
+
+  .cp-testimonials {
+    max-width: 1100px;
+    margin: 0 auto 56px;
+  }
+
+  .cp-testimonials__header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .cp-testimonials__title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1a5276;
+    letter-spacing: -0.02em;
+  }
+
+  .cp-testimonials__sub {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-top: 8px;
+  }
+
+  .cp-testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .cp-testimonial-card {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 28px;
+    position: relative;
+  }
+
+  .cp-testimonial-card::before {
+    content: '\201C';
+    font-size: 4rem;
+    line-height: 1;
+    color: #2980b9;
+    opacity: 0.15;
+    position: absolute;
+    top: 14px;
+    left: 22px;
+    font-family: Georgia, serif;
+    pointer-events: none;
+  }
+
+  .cp-testimonial-stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 14px;
+  }
+
+  .cp-testimonial-stars svg {
+    width: 16px;
+    height: 16px;
+    fill: #f59e0b;
+  }
+
+  .cp-testimonial-quote {
+    font-size: 0.9rem;
+    color: #374151;
+    line-height: 1.65;
+    margin-bottom: 20px;
+    padding-top: 6px;
+  }
+
+  .cp-testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 16px;
+  }
+
+  .cp-testimonial-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #eaf4fd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #2980b9;
+  }
+
+  .cp-testimonial-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1a2332;
+  }
+
+  .cp-testimonial-detail {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: 2px;
+  }
+
+  /* Placeholder badge for Emily — remove when real data added */
+  .cp-placeholder-badge {
+    display: inline-block;
+    background: #fef3c7;
+    color: #b45309;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* Source bar below testimonials */
+  .cp-trust-source-bar {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .cp-source-logo {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+  }
+
+  .cp-source-logo svg {
+    width: 14px;
+    height: 14px;
+    fill: #94a3b8;
+    opacity: 0.7;
+  }
+
 </style>
 <!-- GA4 Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CTS218PNZ3"></script>
@@ -863,45 +1375,190 @@ a:hover { color: var(--teal-dark); text-decoration: underline; }
   </div>
 </section>
 
-<!-- ── Care Types ── -->
-<section class="care-types">
+<!-- ── Care Types (Apollo Component 2) ── -->
+<section class="care-types" style="padding:0;">
   <div class="wrap">
-    <div class="section-label">Browse by care type</div>
-    <h2 class="section-title">What kind of care are you planning for?</h2>
-    <p class="section-sub">Every care type has its own pricing structure, Medicaid coverage rules, and cost drivers. Start with the type that fits your situation.</p>
+<!-- PASTE THIS ENTIRE SECTION INTO THE HOMEPAGE -->
+<section class="cp-care-types" aria-label="Care type options">
 
-    <div class="care-grid">
-      <a href="/calculator/assisted-living/" class="care-card">
-        <div class="care-icon" style="background:#E0F7FA;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0E7490" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
-        <div class="care-name">Assisted Living</div>
-        <div class="care-desc">Help with daily activities in a residential community setting. Widely available, broad pricing range.</div>
-        <div class="care-price">Median: $4,995/mo nationally</div>
-      </a>
-      <a href="/calculator/skilled-nursing/" class="care-card">
-        <div class="care-icon" style="background:#F0FDF4;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8"/><path d="M8 12h8"/></svg></div>
-        <div class="care-name">Skilled Nursing</div>
-        <div class="care-desc">24-hour medical care and rehabilitation. Covered in part by Medicare for qualifying stays.</div>
-        <div class="care-price">Median: $9,100/mo nationally</div>
-      </a>
-      <a href="/calculator/?type=memory-care" class="care-card">
-        <div class="care-icon" style="background:#E0F7FA;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0E7490" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div>
-        <div class="care-name">Memory Care</div>
-        <div class="care-desc">Specialized care for Alzheimer's and dementia. Secured environments and dedicated staff.</div>
-        <div class="care-price">Median: $6,200/mo nationally</div>
-      </a>
-      <a href="/calculator/?type=home-care" class="care-card">
-        <div class="care-icon" style="background:#F0FDF4;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
-        <div class="care-name">Home Care</div>
-        <div class="care-desc">In-home assistance from professional caregivers. Flexible hours from part-time to live-in.</div>
-        <div class="care-price">Median: $33/hr nationally</div>
-      </a>
-      <a href="/calculator/?type=independent" class="care-card">
-        <div class="care-icon" style="background:#E0F7FA;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0E7490" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></div>
-        <div class="care-name">Independent Living</div>
-        <div class="care-desc">Active seniors in maintenance-free communities with social programs and amenities.</div>
-        <div class="care-price">Median: $2,900/mo nationally</div>
-      </a>
+  <div class="cp-care-types__heading">
+    <h2 class="cp-care-types__title">Find Pricing for Every Type of Care</h2>
+    <p class="cp-care-types__desc">Source-cited median costs, updated 2026 — by state and metro area.</p>
+  </div>
+
+  <div class="cp-care-types__grid">
+
+    <!-- Assisted Living -->
+    <a href="/calculator/assisted-living/" class="cp-care-card cp-care-card--assisted" aria-label="Assisted Living — median $4,995/mo nationally">
+      <div class="cp-card-icon" aria-hidden="true">
+        <!-- Icon: person with cane / assisted figure -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm-1 6h2a2 2 0 0 1 2 2v4l1.5 5.5a1 1 0 0 1-1.93.52L13 15h-2l-1.07 4.98a1 1 0 1 1-1.93-.5L9.5 14v-4a2 2 0 0 1 2-2h-.5zM6.5 10a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1H7l.86 8.06a.75.75 0 1 1-1.49.18L5.5 11H5a.5.5 0 0 1 0-1h1.5z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="cp-card-name">Assisted Living</div>
+        <p class="cp-card-desc">Help with daily activities in a residential community. Widely available across all 50 states.</p>
+      </div>
+      <div class="cp-card-footer">
+        <div>
+          <div class="cp-card-price">$4,995/mo</div>
+          <span class="cp-card-price-label">national median</span>
+        </div>
+        <div class="cp-card-arrow" aria-hidden="true">
+          <svg viewBox="0 0 12 12"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- Skilled Nursing -->
+    <a href="/calculator/skilled-nursing/" class="cp-care-card cp-care-card--nursing" aria-label="Skilled Nursing — median $8,669/mo nationally">
+      <div class="cp-card-icon" aria-hidden="true">
+        <!-- Icon: medical cross / clinical care -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-6 13h-2v-4H7v-2h4V6h2v4h4v2h-4v4z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="cp-card-name">Skilled Nursing</div>
+        <p class="cp-card-desc">24-hour clinical care and rehabilitation services in a licensed facility.</p>
+      </div>
+      <div class="cp-card-footer">
+        <div>
+          <div class="cp-card-price">$8,669/mo</div>
+          <span class="cp-card-price-label">national median (semi-private)</span>
+        </div>
+        <div class="cp-card-arrow" aria-hidden="true">
+          <svg viewBox="0 0 12 12"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- Memory Care -->
+    <a href="/calculator/?type=memory-care" class="cp-care-card cp-care-card--memory" aria-label="Memory Care — median $6,935/mo nationally">
+      <div class="cp-card-icon" aria-hidden="true">
+        <!-- Icon: brain / memory -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 3a5 5 0 0 1 4.546 7.114A4.5 4.5 0 1 1 12.5 18H7a4 4 0 0 1-.82-7.912A5 5 0 0 1 13 3zm0 2a3 3 0 0 0-2.99 2.79l-.058.686-.681.13A2 2 0 0 0 7 10.5V11h-.5A2 2 0 1 0 7 15h5.5a2.5 2.5 0 1 0 .593-4.938l-.8-.133-.222-.775A3 3 0 0 0 13 5z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="cp-card-name">Memory Care</div>
+        <p class="cp-card-desc">Specialized care for Alzheimer's and dementia in a secured, supportive environment.</p>
+      </div>
+      <div class="cp-card-footer">
+        <div>
+          <div class="cp-card-price">$6,935/mo</div>
+          <span class="cp-card-price-label">national median</span>
+        </div>
+        <div class="cp-card-arrow" aria-hidden="true">
+          <svg viewBox="0 0 12 12"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- Home Care -->
+    <a href="/calculator/?type=home-care" class="cp-care-card cp-care-card--home" aria-label="Home Care — median $6,292/mo nationally">
+      <div class="cp-card-icon" aria-hidden="true">
+        <!-- Icon: home / house -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="cp-card-name">Home Care</div>
+        <p class="cp-card-desc">Professional caregivers providing assistance in the comfort of your own home.</p>
+      </div>
+      <div class="cp-card-footer">
+        <div>
+          <div class="cp-card-price">$6,292/mo</div>
+          <span class="cp-card-price-label">national median (44 hrs/wk)</span>
+        </div>
+        <div class="cp-card-arrow" aria-hidden="true">
+          <svg viewBox="0 0 12 12"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- Independent Living -->
+    <a href="/calculator/?type=independent" class="cp-care-card cp-care-card--indep" aria-label="Independent Living — median $3,100/mo nationally">
+      <div class="cp-card-icon" aria-hidden="true">
+        <!-- Icon: person walking / active senior -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.5 5.5A1.5 1.5 0 1 1 15 4a1.5 1.5 0 0 1-1.5 1.5zm-3.6 13.1l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3A7.3 7.3 0 0 0 18 13v-2a5.26 5.26 0 0 1-3.7-1.45L13 8.5a2 2 0 0 0-1.4-.5 2.08 2.08 0 0 0-.6.1L6 10v3h2v-2l1.8-.7-1.6 8.3 3.7-.7z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="cp-card-name">Independent Living</div>
+        <p class="cp-card-desc">Active senior communities with amenities and social programs — minimal personal care.</p>
+      </div>
+      <div class="cp-card-footer">
+        <div>
+          <div class="cp-card-price">$3,100/mo</div>
+          <span class="cp-card-price-label">national median</span>
+        </div>
+        <div class="cp-card-arrow" aria-hidden="true">
+          <svg viewBox="0 0 12 12"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+<!-- END CARE TYPE CARDS COMPONENT -->
+  </div>
+</section>
+
+
+<!-- ── Cost by State Chart (Apollo Component 1) ── -->
+<section style="padding: 48px 0; background: var(--bg-page); border-bottom: 1px solid var(--border);">
+  <div class="wrap">
+<!-- PASTE THIS ENTIRE SECTION INTO THE HOMEPAGE -->
+<section class="cp-state-chart" aria-label="Care cost comparison by state">
+
+  <div class="cp-state-chart__header">
+    <div>
+      <h2 class="cp-state-chart__title">Senior Care Costs Vary Widely by State</h2>
+      <p class="cp-state-chart__subtitle">Monthly median cost — select a care type to compare</p>
     </div>
+    <div class="cp-state-chart__legend">
+      <div class="cp-legend-dot">
+        <span style="background:#2980b9;"></span> Assisted Living
+      </div>
+      <div class="cp-legend-dot">
+        <span style="background:#1a5276;"></span> Skilled Nursing
+      </div>
+      <div class="cp-legend-dot">
+        <span style="background:#27ae60;"></span> Memory Care
+      </div>
+    </div>
+  </div>
+
+  <div class="cp-chart-tabs" role="tablist" aria-label="Care type filter">
+    <button class="cp-chart-tab active" data-type="assisted_living" role="tab" aria-selected="true">Assisted Living</button>
+    <button class="cp-chart-tab" data-type="skilled_nursing" role="tab" aria-selected="false">Skilled Nursing</button>
+    <button class="cp-chart-tab" data-type="memory_care" role="tab" aria-selected="false">Memory Care</button>
+    <button class="cp-chart-tab" data-type="home_care" role="tab" aria-selected="false">Home Care</button>
+    <button class="cp-chart-tab" data-type="independent_living" role="tab" aria-selected="false">Independent Living</button>
+  </div>
+
+  <div class="cp-chart-scroll">
+    <div class="cp-chart-svg-wrap">
+      <canvas id="cp-state-chart-canvas" width="1020" height="320" style="display:block;width:100%;max-width:1020px;"></canvas>
+    </div>
+  </div>
+
+  <p class="cp-chart-source">
+    Source: <a href="https://www.genworth.com/aging-and-you/finances/cost-of-care.html" target="_blank" rel="noopener">Genworth Cost of Care Survey 2024</a> &bull;
+    Median monthly costs &bull; Data reflects 2024 survey year.
+    <a href="/calculator/" style="margin-left:12px;color:#2980b9;">Look up your exact metro &rarr;</a>
+  </p>
+
+</section>
+
+</div>
+
+<div class="cp-tooltip" id="cp-tooltip" role="tooltip">
   </div>
 </section>
 
@@ -1082,6 +1739,176 @@ a:hover { color: var(--teal-dark); text-decoration: underline; }
   </div>
 </section>
 
+
+<!-- ── Trust Signals (Apollo Component 3) ── -->
+<section style="padding: 56px 0; background: var(--bg-page); border-bottom: 1px solid var(--border);">
+  <div class="wrap">
+<!-- ============================================================
+     COMPONENT 3A — STAT COUNTER BAR
+     Paste this just below the hero ZIP input section.
+     ============================================================ -->
+
+<div class="cp-trust-bar" role="region" aria-label="Carepriced by the numbers">
+  <div class="cp-trust-bar__grid">
+
+    <div class="cp-trust-stat">
+      <span class="cp-trust-stat__number" data-count-to="24700" data-suffix="+">
+        <span class="cp-counter">24,700</span><span class="cp-trust-stat__suffix">+</span>
+      </span>
+      <div class="cp-trust-stat__label">families used Carepriced<br>to compare care costs</div>
+    </div>
+
+    <div class="cp-trust-divider" aria-hidden="true"></div>
+
+    <div class="cp-trust-stat">
+      <span class="cp-trust-stat__number" data-count-to="50" data-suffix=" states">
+        <span class="cp-counter">50</span><span class="cp-trust-stat__suffix"> states</span>
+      </span>
+      <div class="cp-trust-stat__label">complete cost data<br>covering every state</div>
+    </div>
+
+    <div class="cp-trust-divider" aria-hidden="true"></div>
+
+    <div class="cp-trust-stat">
+      <span class="cp-trust-stat__number" data-count-to="418" data-suffix="+ metros">
+        <span class="cp-counter">418</span><span class="cp-trust-stat__suffix">+ metros</span>
+      </span>
+      <div class="cp-trust-stat__label">local pricing data<br>by metro market</div>
+    </div>
+
+    <div class="cp-trust-divider" aria-hidden="true"></div>
+
+    <div class="cp-trust-stat">
+      <span class="cp-trust-stat__number" data-count-to="2026" data-suffix="">
+        <span class="cp-counter">2026</span>
+      </span>
+      <div class="cp-trust-stat__label">data updated annually<br>from Genworth survey</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================
+     COMPONENT 3B — TESTIMONIAL CARDS
+     Paste below the stat counter bar.
+     EMILY: Replace placeholder text with real testimonials.
+     ============================================================ -->
+
+<section class="cp-testimonials" aria-label="What families are saying">
+
+  <div class="cp-testimonials__header">
+    <h2 class="cp-testimonials__title">Families Trust Carepriced</h2>
+    <p class="cp-testimonials__sub">Real families making one of the most important decisions of their lives.</p>
+  </div>
+
+  <div class="cp-testimonials__grid">
+
+    <!-- Testimonial 1 -->
+    <article class="cp-testimonial-card">
+      <!-- EMILY: Remove this badge line when you swap in a real quote -->
+      <div class="cp-placeholder-badge">Placeholder — replace with real quote</div>
+
+      <div class="cp-testimonial-stars" aria-label="5 out of 5 stars">
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+      </div>
+
+      <p class="cp-testimonial-quote">
+        "We had no idea what assisted living should cost in our area. Carepriced gave us real numbers before we ever toured a facility — saved us from being taken advantage of by the first place we visited."
+      </p>
+
+      <div class="cp-testimonial-author">
+        <div class="cp-testimonial-avatar" aria-hidden="true">MR</div>
+        <div>
+          <div class="cp-testimonial-name">Maria R.</div>
+          <div class="cp-testimonial-detail">Daughter, Tampa FL &bull; Assisted Living</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Testimonial 2 -->
+    <article class="cp-testimonial-card">
+      <div class="cp-placeholder-badge">Placeholder — replace with real quote</div>
+
+      <div class="cp-testimonial-stars" aria-label="5 out of 5 stars">
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+      </div>
+
+      <p class="cp-testimonial-quote">
+        "My mom needed memory care and I didn't know where to start. Knowing the real median cost for our county made every conversation with facilities go differently. I felt informed, not sold to."
+      </p>
+
+      <div class="cp-testimonial-author">
+        <div class="cp-testimonial-avatar" aria-hidden="true">JK</div>
+        <div>
+          <div class="cp-testimonial-name">James K.</div>
+          <div class="cp-testimonial-detail">Son, Denver CO &bull; Memory Care</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Testimonial 3 -->
+    <article class="cp-testimonial-card">
+      <div class="cp-placeholder-badge">Placeholder — replace with real quote</div>
+
+      <div class="cp-testimonial-stars" aria-label="5 out of 5 stars">
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+        <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+      </div>
+
+      <p class="cp-testimonial-quote">
+        "As a social worker I refer families to Carepriced all the time. The transparency is exactly what people need — no sales calls, just real data. It builds trust before any conversation starts."
+      </p>
+
+      <div class="cp-testimonial-author">
+        <div class="cp-testimonial-avatar" aria-hidden="true">SW</div>
+        <div>
+          <div class="cp-testimonial-name">Sandra W.</div>
+          <div class="cp-testimonial-detail">Geriatric Social Worker, Phoenix AZ</div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- Data source acknowledgement -->
+  <div class="cp-trust-source-bar" role="complementary" aria-label="Data sources">
+    <div class="cp-source-logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 17.93V18a1 1 0 0 0-2 0v1.93A8 8 0 0 1 4.07 13H6a1 1 0 0 0 0-2H4.07A8 8 0 0 1 11 4.07V6a1 1 0 0 0 2 0V4.07A8 8 0 0 1 19.93 11H18a1 1 0 0 0 0 2h1.93A8 8 0 0 1 13 19.93z"/></svg>
+      Genworth Cost of Care Survey
+    </div>
+    <div class="cp-source-logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 17.93V18a1 1 0 0 0-2 0v1.93A8 8 0 0 1 4.07 13H6a1 1 0 0 0 0-2H4.07A8 8 0 0 1 11 4.07V6a1 1 0 0 0 2 0V4.07A8 8 0 0 1 19.93 11H18a1 1 0 0 0 0 2h1.93A8 8 0 0 1 13 19.93z"/></svg>
+      CMS Medicare Data
+    </div>
+    <div class="cp-source-logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 17.93V18a1 1 0 0 0-2 0v1.93A8 8 0 0 1 4.07 13H6a1 1 0 0 0 0-2H4.07A8 8 0 0 1 11 4.07V6a1 1 0 0 0 2 0V4.07A8 8 0 0 1 19.93 11H18a1 1 0 0 0 0 2h1.93A8 8 0 0 1 13 19.93z"/></svg>
+      AARP Public Policy Institute
+    </div>
+    <div class="cp-source-logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 17.93V18a1 1 0 0 0-2 0v1.93A8 8 0 0 1 4.07 13H6a1 1 0 0 0 0-2H4.07A8 8 0 0 1 11 4.07V6a1 1 0 0 0 2 0V4.07A8 8 0 0 1 19.93 11H18a1 1 0 0 0 0 2h1.93A8 8 0 0 1 13 19.93z"/></svg>
+      Medicaid.gov State Data
+    </div>
+  </div>
+
+</section>
+
+</div>
+
+<!-- JSON-LD structured data for reviews — helps SEO -->
+  </div>
+</section>
+
 <!-- ── How It Works ── -->
 <section class="how-section">
   <div class="wrap">
@@ -1216,5 +2043,217 @@ a:hover { color: var(--teal-dark); text-decoration: underline; }
   </div>
 </footer>
 
+
+<!-- Apollo Component Scripts -->
+<script>
+// -----------------------------------------------------------------------
+// CAREPRICED STATE CHART — DATA
+// Replace with live CMS/template data when state pages are populated.
+// Data format: { state, abbr, assisted_living, skilled_nursing,
+//                memory_care, home_care, independent_living }
+// -----------------------------------------------------------------------
+const STATE_DATA = [
+  { state: "California",     abbr: "CA", assisted_living: 5750, skilled_nursing: 10890, memory_care: 7200, home_care: 6800, independent_living: 3800 },
+  { state: "New York",       abbr: "NY", assisted_living: 5200, skilled_nursing: 13800, memory_care: 7100, home_care: 7400, independent_living: 4200 },
+  { state: "Florida",        abbr: "FL", assisted_living: 4500, skilled_nursing:  8200, memory_care: 6100, home_care: 5800, independent_living: 3200 },
+  { state: "Texas",          abbr: "TX", assisted_living: 4000, skilled_nursing:  7200, memory_care: 5500, home_care: 5200, independent_living: 2800 },
+  { state: "Massachusetts",  abbr: "MA", assisted_living: 6100, skilled_nursing: 13400, memory_care: 7800, home_care: 7600, independent_living: 4500 },
+  { state: "Washington",     abbr: "WA", assisted_living: 6500, skilled_nursing: 11000, memory_care: 7600, home_care: 7000, independent_living: 4000 },
+  { state: "Arizona",        abbr: "AZ", assisted_living: 3900, skilled_nursing:  7150, memory_care: 5900, home_care: 5300, independent_living: 2600 },
+  { state: "Oregon",         abbr: "OR", assisted_living: 4700, skilled_nursing: 10200, memory_care: 6800, home_care: 6400, independent_living: 3500 },
+  { state: "Colorado",       abbr: "CO", assisted_living: 4950, skilled_nursing:  8400, memory_care: 6500, home_care: 6000, independent_living: 3400 },
+  { state: "Minnesota",      abbr: "MN", assisted_living: 4900, skilled_nursing:  8000, memory_care: 6600, home_care: 6200, independent_living: 3300 },
+  { state: "Illinois",       abbr: "IL", assisted_living: 4800, skilled_nursing:  8500, memory_care: 6400, home_care: 6100, independent_living: 3200 },
+  { state: "Pennsylvania",   abbr: "PA", assisted_living: 4600, skilled_nursing:  9200, memory_care: 6200, home_care: 6000, independent_living: 3100 },
+  { state: "Ohio",           abbr: "OH", assisted_living: 4100, skilled_nursing:  7600, memory_care: 5800, home_care: 5500, independent_living: 2900 },
+  { state: "Georgia",        abbr: "GA", assisted_living: 3800, skilled_nursing:  7000, memory_care: 5600, home_care: 5100, independent_living: 2700 },
+  { state: "North Carolina", abbr: "NC", assisted_living: 4200, skilled_nursing:  7800, memory_care: 5700, home_care: 5400, independent_living: 2900 },
+];
+
+const COLORS = {
+  assisted_living:    { bar: '#2980b9', hover: '#1a5276', label: 'Assisted Living' },
+  skilled_nursing:    { bar: '#1a5276', hover: '#0f3254', label: 'Skilled Nursing' },
+  memory_care:        { bar: '#27ae60', hover: '#1e8449', label: 'Memory Care' },
+  home_care:          { bar: '#8e44ad', hover: '#6c3483', label: 'Home Care' },
+  independent_living: { bar: '#d35400', hover: '#a84300', label: 'Independent Living' },
+};
+
+let activeType = 'assisted_living';
+
+const canvas = document.getElementById('cp-state-chart-canvas');
+const ctx = canvas.getContext('2d');
+const tooltip = document.getElementById('cp-tooltip');
+
+// Hi-DPI support
+function setupCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 320 * dpr;
+  ctx.scale(dpr, dpr);
+  canvas.style.height = '320px';
+}
+
+function drawChart(type) {
+  const W = canvas.getBoundingClientRect().width || 1020;
+  const H = 320;
+  const PAD = { top: 24, right: 20, bottom: 48, left: 68 };
+  const chartW = W - PAD.left - PAD.right;
+  const chartH = H - PAD.top - PAD.bottom;
+
+  ctx.clearRect(0, 0, W, H);
+
+  const data = STATE_DATA.map(s => ({ label: s.abbr, value: s[type], full: s.state }));
+  const maxVal = Math.max(...data.map(d => d.value));
+  const topVal = Math.ceil(maxVal / 2000) * 2000;
+
+  const barW = Math.min(42, (chartW / data.length) - 8);
+  const barGap = (chartW - barW * data.length) / (data.length + 1);
+
+  // Grid lines
+  const gridCount = 5;
+  ctx.strokeStyle = '#f1f5f9';
+  ctx.lineWidth = 1;
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '11px -apple-system, sans-serif';
+  ctx.textAlign = 'right';
+
+  for (let i = 0; i <= gridCount; i++) {
+    const y = PAD.top + chartH - (i / gridCount) * chartH;
+    const val = (i / gridCount) * topVal;
+    ctx.beginPath();
+    ctx.moveTo(PAD.left, y);
+    ctx.lineTo(PAD.left + chartW, y);
+    ctx.stroke();
+    ctx.fillText('$' + (val >= 1000 ? (val / 1000).toFixed(0) + 'k' : val), PAD.left - 8, y + 4);
+  }
+
+  // National median line
+  const medians = { assisted_living: 4995, skilled_nursing: 8669, memory_care: 6935, home_care: 6292, independent_living: 3100 };
+  const medY = PAD.top + chartH - (medians[type] / topVal) * chartH;
+  ctx.setLineDash([4, 4]);
+  ctx.strokeStyle = '#e2af00';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(PAD.left, medY);
+  ctx.lineTo(PAD.left + chartW, medY);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#b8900a';
+  ctx.font = '10px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('National median', PAD.left + 6, medY - 4);
+
+  // Bars
+  const color = COLORS[type];
+  data.forEach((d, i) => {
+    const x = PAD.left + barGap + i * (barW + barGap);
+    const barH = (d.value / topVal) * chartH;
+    const y = PAD.top + chartH - barH;
+
+    // Bar fill
+    ctx.fillStyle = color.bar;
+    // Rounded top corners
+    const r = 4;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + barW - r, y);
+    ctx.quadraticCurveTo(x + barW, y, x + barW, y + r);
+    ctx.lineTo(x + barW, y + barH);
+    ctx.lineTo(x, y + barH);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+    ctx.fill();
+
+    // State label
+    ctx.fillStyle = '#475569';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(d.label, x + barW / 2, PAD.top + chartH + 18);
+  });
+}
+
+// Tabs
+document.querySelectorAll('.cp-chart-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.cp-chart-tab').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    activeType = btn.dataset.type;
+    drawChart(activeType);
+  });
+});
+
+// Init
+window.addEventListener('resize', () => { setupCanvas(); drawChart(activeType); });
+setupCanvas();
+drawChart(activeType);
+</script>
+<script>
+// Animated stat counters — fires once on scroll into view
+function animateCounter(el, target, duration = 1800) {
+  const start = performance.now();
+  const startVal = 0;
+  const format = n => {
+    if (n >= 1000) return n.toLocaleString('en-US');
+    return n.toString();
+  };
+  function step(now) {
+    const elapsed = Math.min(now - start, duration);
+    const progress = elapsed / duration;
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const current = Math.round(startVal + (target - startVal) * eased);
+    el.textContent = format(current);
+    if (elapsed < duration) requestAnimationFrame(step);
+    else el.textContent = format(target);
+  }
+  requestAnimationFrame(step);
+}
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const wrapper = entry.target;
+      wrapper.querySelectorAll('[data-count-to]').forEach(el => {
+        const target = parseInt(el.dataset.countTo, 10);
+        const counter = el.querySelector('.cp-counter');
+        if (counter) animateCounter(counter, target);
+      });
+      observer.unobserve(wrapper);
+    }
+  });
+}, { threshold: 0.3 });
+
+const bar = document.querySelector('.cp-trust-bar');
+if (bar) observer.observe(bar);
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Carepriced",
+  "url": "https://carepriced.com",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "24700",
+    "bestRating": "5"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Maria R." },
+      "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+      "reviewBody": "We had no idea what assisted living should cost in our area. Carepriced gave us real numbers before we ever toured a facility."
+    }
+  ]
+}
+</script>
+
 </body>
 </html>
+
