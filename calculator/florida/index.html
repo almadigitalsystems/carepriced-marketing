@@ -76,7 +76,336 @@
 <p>Carepriced tracks 2026 monthly cost data for assisted living in Florida from primary sources including the Genworth/CareScout Cost of Care Survey 2025 and CMS reporting.</p>
 
 <h2>State median monthly cost</h2>
-<div class="placeholder"><strong>Coming soon.</strong> State median pricing for Florida is being verified against CareScout 2025 data and will populate this page within 48 hours of launch. Operator-level pricing rows from facility-direct ingestion are scheduled to layer on top once data validation lands.</div>
+
+<!-- ── State Cost Breakdown (Apollo Component 4) ── -->
+<style>
+.cp-state-breakdown {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 36px 40px;
+    max-width: 900px;
+    margin: 0 auto 40px;
+  }
+
+  .cp-state-breakdown__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .cp-state-breakdown__title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #1a5276;
+    letter-spacing: -0.02em;
+  }
+
+  .cp-state-breakdown__sub {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin-top: 5px;
+  }
+
+  /* Legend */
+  .cp-breakdown-legend {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .cp-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: #475569;
+    font-weight: 500;
+  }
+
+  .cp-legend-swatch {
+    width: 24px;
+    height: 8px;
+    border-radius: 2px;
+  }
+
+  /* Bars list */
+  .cp-bar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .cp-bar-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .cp-bar-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #334155;
+    line-height: 1.3;
+    text-align: right;
+    padding-right: 8px;
+  }
+
+  .cp-bar-label small {
+    display: block;
+    font-weight: 400;
+    color: #94a3b8;
+    font-size: 0.72rem;
+    margin-top: 2px;
+  }
+
+  .cp-bars-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .cp-bar-track {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cp-bar-fill {
+    height: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #ffffff;
+    min-width: 48px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+
+  .cp-bar-fill--low    { background: #7fb3d3; }
+  .cp-bar-fill--median { background: #2980b9; }
+  .cp-bar-fill--high   { background: #1a5276; }
+
+  .cp-bar-fill-label {
+    position: absolute;
+    right: -56px;
+    font-size: 0.72rem;
+    color: #475569;
+    white-space: nowrap;
+  }
+
+  .cp-bar-track-label {
+    width: 40px;
+    font-size: 0.7rem;
+    color: #94a3b8;
+    flex-shrink: 0;
+  }
+
+  /* National comparison note */
+  .cp-national-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .cp-national-badge--above {
+    background: #fef2f2;
+    color: #b91c1c;
+  }
+
+  .cp-national-badge--below {
+    background: #f0fdf4;
+    color: #15803d;
+  }
+
+  .cp-national-badge--avg {
+    background: #f8fafc;
+    color: #64748b;
+  }
+
+  /* Summary table (accessible / printable) */
+  .cp-cost-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 32px;
+    font-size: 0.83rem;
+  }
+
+  .cp-cost-table th {
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 2px solid #e2e8f0;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .cp-cost-table th:not(:first-child) { text-align: right; }
+
+  .cp-cost-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+  }
+
+  .cp-cost-table td:not(:first-child) { text-align: right; }
+
+  .cp-cost-table tr:last-child td { border-bottom: none; }
+
+  .cp-cost-table .cp-median-cell {
+    font-weight: 700;
+    color: #1a5276;
+  }
+
+  .cp-cost-table .cp-care-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cp-cost-table .cp-care-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Source */
+  .cp-breakdown-source {
+    margin-top: 20px;
+    font-size: 0.72rem;
+    color: #94a3b8;
+    padding-top: 14px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .cp-breakdown-source a { color: #2980b9; text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .cp-state-breakdown { padding: 22px 16px; }
+    .cp-bar-row { grid-template-columns: 110px 1fr; }
+    .cp-bar-label { font-size: 0.75rem; }
+  }
+</style>
+
+<section class="cp-state-breakdown" aria-label="Senior care cost breakdown for Florida">
+  <div class="cp-state-breakdown__header">
+    <div>
+      <h2 class="cp-state-breakdown__title">Care Costs in Florida</h2>
+      <p class="cp-state-breakdown__sub">
+        Monthly cost ranges by care type &mdash; 2024 survey data.
+        <a href="#cp-cost-table" style="color:#2980b9;font-size:0.75rem;margin-left:6px;">View as table &darr;</a>
+      </p>
+    </div>
+    <div class="cp-breakdown-legend" aria-label="Chart legend">
+      <div class="cp-legend-item">
+        <div class="cp-legend-swatch" style="background:#7fb3d3;" aria-hidden="true"></div>
+        Low (25th percentile)
+      </div>
+      <div class="cp-legend-item">
+        <div class="cp-legend-swatch" style="background:#2980b9;" aria-hidden="true"></div>
+        Median
+      </div>
+      <div class="cp-legend-item">
+        <div class="cp-legend-swatch" style="background:#1a5276;" aria-hidden="true"></div>
+        High (75th percentile)
+      </div>
+    </div>
+  </div>
+
+  <div class="cp-bar-list" id="cp-bar-chart" role="img" aria-label="Care cost bar chart for Florida" style="padding-right: 60px;">
+  </div>
+
+  <table class="cp-cost-table" id="cp-cost-table" aria-label="Senior care cost summary for Florida">
+    <thead>
+      <tr>
+        <th scope="col">Care Type</th>
+        <th scope="col">Low / 25th</th>
+        <th scope="col">Median</th>
+        <th scope="col">High / 75th</th>
+        <th scope="col">vs National</th>
+      </tr>
+    </thead>
+    <tbody id="cp-cost-table-body"></tbody>
+  </table>
+
+  <p class="cp-breakdown-source">
+    Source: <a href="https://www.genworth.com/aging-and-you/finances/cost-of-care.html" target="_blank" rel="noopener">Genworth Cost of Care Survey 2024</a>.
+    Costs reflect monthly median unless noted. Metro markets vary &mdash; <a href="/calculator/">use the calculator</a> for your specific area.
+  </p>
+</section>
+
+<script>
+const NATIONAL_MEDIANS = {"assisted_living": 4995, "nursing_semi": 8669, "memory_care": 6935, "home_health": 6292, "nursing_private": 8517};
+const STATE_COSTS = {"state": "Florida", "care_types": [{"key": "assisted_living", "label": "Assisted Living", "color": "#2980b9", "low": 3000, "median": 4000, "high": 5200}, {"key": "nursing_semi", "label": "Skilled Nursing", "color": "#1a5276", "low": 7800, "median": 9673, "high": 11315}, {"key": "memory_care", "label": "Memory Care", "color": "#7b3fa0", "low": 3800, "median": 5000, "high": 6500}, {"key": "home_health", "label": "Home Care", "color": "#27ae60", "low": 4100, "median": 5148, "high": 6435, "note": "44 hrs/wk"}, {"key": "nursing_private", "label": "Nursing (Private)", "color": "#d35400", "low": 8760, "median": 10585, "high": 12775}]};
+
+const MAX_VALUE = Math.max(...STATE_COSTS.care_types.map(c => c.high));
+const MAX_WIDTH = 100;
+function pct(val) { return ((val / MAX_VALUE) * MAX_WIDTH).toFixed(1) + '%'; }
+function formatMoney(val) { return '$' + val.toLocaleString('en-US'); }
+function comparisonBadge(stateMedian, careKey) {
+  const nat = NATIONAL_MEDIANS[careKey];
+  if (!nat) return '';
+  const diff = ((stateMedian - nat) / nat) * 100;
+  if (diff > 8) return '<span class="cp-national-badge cp-national-badge--above">\u25b2 ' + Math.round(diff) + '% above avg</span>';
+  if (diff < -8) return '<span class="cp-national-badge cp-national-badge--below">\u25bc ' + Math.abs(Math.round(diff)) + '% below avg</span>';
+  return '<span class="cp-national-badge cp-national-badge--avg">\u2248 avg</span>';
+}
+
+const barList = document.getElementById('cp-bar-chart');
+STATE_COSTS.care_types.forEach(care => {
+  const row = document.createElement('div');
+  row.className = 'cp-bar-row';
+  row.innerHTML =
+    '<div class="cp-bar-label">' + care.label + (care.note ? '<small>' + care.note + '</small>' : '') + '</div>' +
+    '<div class="cp-bars-group">' +
+      '<div class="cp-bar-track"><div class="cp-bar-track-label">Low</div><div class="cp-bar-fill cp-bar-fill--low" style="width:' + pct(care.low) + '"><span class="cp-bar-fill-label">' + formatMoney(care.low) + '</span></div></div>' +
+      '<div class="cp-bar-track"><div class="cp-bar-track-label">Median</div><div class="cp-bar-fill cp-bar-fill--median" style="width:' + pct(care.median) + '"><span class="cp-bar-fill-label" style="font-weight:800;color:#1a5276;">' + formatMoney(care.median) + '</span></div></div>' +
+      '<div class="cp-bar-track"><div class="cp-bar-track-label">High</div><div class="cp-bar-fill cp-bar-fill--high" style="width:' + pct(care.high) + '"><span class="cp-bar-fill-label">' + formatMoney(care.high) + '</span></div></div>' +
+    '</div>';
+  barList.appendChild(row);
+});
+
+const tbody = document.getElementById('cp-cost-table-body');
+STATE_COSTS.care_types.forEach(care => {
+  const tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td><span class="cp-care-icon"><span class="cp-care-dot" style="background:' + care.color + ';" aria-hidden="true"></span>' + care.label + '</span></td>' +
+    '<td>' + formatMoney(care.low) + '</td>' +
+    '<td class="cp-median-cell">' + formatMoney(care.median) + '</td>' +
+    '<td>' + formatMoney(care.high) + '</td>' +
+    '<td>' + comparisonBadge(care.median, care.key) + '</td>';
+  tbody.appendChild(tr);
+});
+
+document.querySelectorAll('.cp-bar-fill').forEach((el, i) => {
+  const target = el.style.width;
+  el.style.width = '0';
+  setTimeout(() => { el.style.width = target; }, 100 + i * 30);
+});
+</script>
+
 
 <h2>What you'll find on this page</h2>
 <ul>
