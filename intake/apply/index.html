@@ -88,9 +88,6 @@
   .skeleton.line.med { width: 70%; }
   @keyframes pulse { 0% { background-position: 0% 0; } 100% { background-position: -200% 0; } }
 </style>
-<!-- GA4 Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CTS218PNZ3"></script>
-<script src="/scripts/analytics.js"></script>
 </head>
 <body>
 
@@ -174,30 +171,80 @@
     <div class="actions" id="step-1-actions"></div>
   </section>
 
-  <!-- STEP 2 — Standard form fields (placeholder) -->
+  <!-- STEP 2 — Care details -->
   <section class="step" id="step-2" data-step="2">
     <h2>About the person needing care</h2>
-    <p>Step 2 stub — full fields wired in follow-up issue.</p>
-    <div class="skeleton line med"></div>
-    <div class="skeleton line"></div>
-    <div class="skeleton line short"></div>
+    <p>Help us understand their needs so we can find the right match.</p>
+
+    <label class="req" for="careType">Type of care needed</label>
+    <select id="careType" name="careType" required>
+      <option value="" disabled selected>Select type of care…</option>
+      <option value="assisted-living">Assisted Living</option>
+      <option value="memory-care">Memory Care</option>
+      <option value="home-care">Home Care</option>
+      <option value="skilled-nursing">Skilled Nursing</option>
+    </select>
+    <div class="error-msg" id="careType-error" aria-live="polite"></div>
+
+    <label class="req">How soon is care needed?</label>
+    <div role="radiogroup" aria-label="Care timeline">
+      <label class="radio-option"><input type="radio" name="timeline" value="immediately" required /> Immediately</label>
+      <label class="radio-option"><input type="radio" name="timeline" value="1-3-months" /> 1–3 Months</label>
+      <label class="radio-option"><input type="radio" name="timeline" value="3-6-months" /> 3–6 Months</label>
+      <label class="radio-option"><input type="radio" name="timeline" value="exploring" /> Just Exploring</label>
+    </div>
+    <div class="error-msg" id="timeline-error" aria-live="polite"></div>
+
+    <label class="req" for="budget">Monthly budget range</label>
+    <select id="budget" name="budget" required>
+      <option value="" disabled selected>Select budget range…</option>
+      <option value="under-3000">Under $3,000</option>
+      <option value="3000-5000">$3,000 – $5,000</option>
+      <option value="5000-8000">$5,000 – $8,000</option>
+      <option value="8000-12000">$8,000 – $12,000</option>
+      <option value="over-12000">Over $12,000</option>
+    </select>
+    <div class="error-msg" id="budget-error" aria-live="polite"></div>
+
     <div class="actions">
-      <button class="secondary" type="button" data-back="1">Back</button>
-      <button type="button" data-next="3">Continue</button>
+      <button class="secondary" type="button" id="back-2">Back</button>
+      <button type="button" id="next-2">Continue</button>
     </div>
   </section>
 
-  <!-- STEP 3 — Contact + acknowledgment capture (placeholder) -->
+  <!-- STEP 3 — Contact + consent + submit -->
   <section class="step" id="step-3" data-step="3">
-    <h2>Your contact info</h2>
-    <p>Step 3 stub — final review + acknowledgment in follow-up issue.</p>
-    <div class="skeleton line med"></div>
-    <div class="skeleton line"></div>
-    <div class="skeleton line short"></div>
-    <div class="actions">
-      <button class="secondary" type="button" data-back="2">Back</button>
-      <button type="button" data-next="4">Submit</button>
+    <h2>Your contact information</h2>
+    <p>A care advisor will reach out within 24 hours with personalized options.</p>
+
+    <label class="req" for="fullName">Full name</label>
+    <input id="fullName" name="fullName" type="text" autocomplete="name" required placeholder="e.g. Jane Smith" />
+    <div class="error-msg" id="fullName-error" aria-live="polite"></div>
+
+    <label class="req" for="email">Email address</label>
+    <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+    <div class="error-msg" id="email-error" aria-live="polite"></div>
+
+    <label for="phone">Phone number <span style="font-weight:400;color:var(--muted);font-size:0.85rem">(optional)</span></label>
+    <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(555) 123-4567" />
+    <p class="help">So our advisor can reach you quickly if needed.</p>
+    <div class="error-msg" id="phone-error" aria-live="polite"></div>
+
+    <div id="consumer-opt-in-section" style="margin-top:1.25rem;padding:1rem 1.15rem;background:var(--bg);border-radius:8px;border:1px solid var(--line)">
+      <p id="optInIntro" style="font-size:0.9rem;color:var(--ink);margin-bottom:0.5rem;font-weight:500">How We Use Your Information</p>
+      <p id="optInDescription" style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem">By submitting this form, you agree that Carepriced may share your contact information and care preferences with senior living communities in your area. These providers may contact you directly about their services.</p>
+      <label class="ack-label" for="consumerOptIn" style="margin-top:0">
+        <input type="checkbox" id="consumerOptIn" />
+        <span id="consumerOptInText" style="font-size:0.85rem">I agree to receive information from senior living communities matching my needs, and I understand Carepriced may be compensated by those providers. I may opt out at any time by emailing privacy@carepriced.com.</span>
+      </label>
+      <div class="error-msg" id="consent-error" aria-live="polite"></div>
     </div>
+
+    <div class="actions">
+      <button class="secondary" type="button" id="back-3">Back</button>
+      <button type="button" id="submit-3">Get My Free Care Pricing</button>
+    </div>
+    <div class="error-msg" id="submit-error" aria-live="polite" style="margin-top:0.5rem"></div>
   </section>
 
   <!-- STEP 4 — Confirmation -->
@@ -308,6 +355,7 @@ function showStep(step) {
     el.classList.toggle("done", s < step);
   });
   window.scrollTo({ top: 0, behavior: "smooth" });
+  if (step === 3) fetchConsumerDisclosure();
 }
 
 function handleStep0Next() {
@@ -349,7 +397,7 @@ function handleStep0Next() {
 
 function advanceFromStep0() {
   if (state.tier === "GREEN") {
-    showStep(2);
+    acknowledgeGreen();
   } else {
     renderStep1();
     showStep(1);
@@ -418,6 +466,7 @@ function renderStep1() {
       state.flMedicaid = sel.value;
 
       if (state.flMedicaid === "YES" || state.flMedicaid === "UNSURE") {
+        postScreenout();
         titleEl.textContent = "Florida Medicaid resources";
         bodyEl.innerHTML =
           "<div class=\"fl-medicaid-exit\">" +
@@ -555,6 +604,215 @@ async function renderYellowDisclosure() {
   actionsEl.appendChild(versionStamp);
 }
 
+/* ── GREEN state auto-acknowledge ── */
+async function acknowledgeGreen() {
+  try {
+    const resp = await fetch(WORKER_BASE + "/api/intake/acknowledge", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        session_id: state.sessionId,
+        user_state: state.state,
+        disclosure_version: 0,
+        disclosure_hash: "green_no_disclosure",
+      }),
+    });
+    if (resp.ok) {
+      const data = await resp.json();
+      state.acknowledgmentRecordId = data.acknowledgment_record_id;
+    }
+  } catch (err) {
+    console.warn("Green acknowledge failed:", err);
+  }
+  showStep(2);
+}
+
+/* ── FL Medicaid screenout (fire-and-forget) ── */
+async function postScreenout() {
+  try {
+    await fetch(WORKER_BASE + "/api/intake/screenout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        session_id: state.sessionId,
+        fl_medicaid_answer: state.flMedicaid ? state.flMedicaid.toLowerCase() : "yes",
+      }),
+    });
+  } catch (err) {
+    console.warn("Screenout POST failed:", err);
+  }
+}
+
+/* ── STEP 2 — Care details validation ── */
+function handleStep2Next() {
+  let valid = true;
+  const careType = document.getElementById("careType");
+  const careTypeErr = document.getElementById("careType-error");
+  const timeline = document.querySelector('input[name="timeline"]:checked');
+  const timelineErr = document.getElementById("timeline-error");
+  const budget = document.getElementById("budget");
+  const budgetErr = document.getElementById("budget-error");
+
+  if (!careType.value) {
+    careTypeErr.textContent = "Please select a type of care.";
+    valid = false;
+  } else { careTypeErr.textContent = ""; }
+
+  if (!timeline) {
+    timelineErr.textContent = "Please select a timeline.";
+    valid = false;
+  } else { timelineErr.textContent = ""; }
+
+  if (!budget.value) {
+    budgetErr.textContent = "Please select a budget range.";
+    valid = false;
+  } else { budgetErr.textContent = ""; }
+
+  if (!valid) return;
+
+  state.answers.careType = careType.value;
+  state.answers.timeline = timeline.value;
+  state.answers.budget = budget.value;
+  showStep(3);
+}
+
+function handleStep2Back() {
+  if (state.tier === "GREEN") showStep(0);
+  else showStep(1);
+}
+
+/* ── STEP 3 — Contact + consent + submit ── */
+async function fetchConsumerDisclosure() {
+  try {
+    const resp = await fetch(WORKER_BASE + "/api/intake/consumer-disclosure");
+    if (!resp.ok) return;
+    const data = await resp.json();
+    const introEl = document.getElementById("optInIntro");
+    const descEl = document.getElementById("optInDescription");
+    const textEl = document.getElementById("consumerOptInText");
+    if (data.section_label && introEl) introEl.textContent = data.section_label;
+    if (data.intro_text && descEl) descEl.textContent = data.intro_text;
+    if (data.checkbox_text && textEl) textEl.textContent = data.checkbox_text;
+  } catch (err) {
+    console.warn("Consumer disclosure fetch failed:", err);
+  }
+}
+
+function formatPhone(el) {
+  const digits = el.value.replace(/\D/g, "");
+  if (digits.length <= 3) el.value = digits;
+  else if (digits.length <= 6) el.value = "(" + digits.slice(0, 3) + ") " + digits.slice(3);
+  else el.value = "(" + digits.slice(0, 3) + ") " + digits.slice(3, 6) + "-" + digits.slice(6, 10);
+}
+
+function escapeHtml(str) {
+  const d = document.createElement("div");
+  d.appendChild(document.createTextNode(str));
+  return d.innerHTML;
+}
+
+async function handleStep3Submit() {
+  let valid = true;
+  const fullName = document.getElementById("fullName");
+  const fullNameErr = document.getElementById("fullName-error");
+  const email = document.getElementById("email");
+  const emailErr = document.getElementById("email-error");
+  const phone = document.getElementById("phone");
+  const phoneErr = document.getElementById("phone-error");
+  const consent = document.getElementById("consumerOptIn");
+  const consentErr = document.getElementById("consent-error");
+  const submitErr = document.getElementById("submit-error");
+  const submitBtn = document.getElementById("submit-3");
+
+  submitErr.textContent = "";
+
+  if (!fullName.value.trim() || fullName.value.trim().length < 2) {
+    fullNameErr.textContent = "Please enter your full name.";
+    valid = false;
+  } else { fullNameErr.textContent = ""; }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+    emailErr.textContent = "Please enter a valid email address.";
+    valid = false;
+  } else { emailErr.textContent = ""; }
+
+  if (phone.value.trim() && !/^[\d\s().\-+]{7,20}$/.test(phone.value.trim())) {
+    phoneErr.textContent = "Please enter a valid phone number.";
+    valid = false;
+  } else { phoneErr.textContent = ""; }
+
+  if (!consent.checked) {
+    consentErr.textContent = "You must agree to continue.";
+    valid = false;
+  } else { consentErr.textContent = ""; }
+
+  if (!valid) return;
+
+  state.answers.fullName = fullName.value.trim();
+  state.answers.email = email.value.trim();
+  state.answers.phone = phone.value.trim() || null;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting…";
+
+  if (!state.acknowledgmentRecordId) {
+    try {
+      const ackResp = await fetch(WORKER_BASE + "/api/intake/acknowledge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          session_id: state.sessionId,
+          user_state: state.state,
+          disclosure_version: state.disclosureVersion || 0,
+          disclosure_hash: state.disclosureHash || "green_no_disclosure",
+        }),
+      });
+      if (ackResp.ok) {
+        const ackData = await ackResp.json();
+        state.acknowledgmentRecordId = ackData.acknowledgment_record_id;
+      }
+    } catch (err) {
+      console.warn("Fallback acknowledge failed:", err);
+    }
+  }
+
+  try {
+    const resp = await fetch(WORKER_BASE + "/api/intake/submit-lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        session_id: state.sessionId,
+        acknowledgment_record_id: state.acknowledgmentRecordId,
+        fl_medicaid_answer: state.flMedicaid ? state.flMedicaid.toLowerCase() : null,
+        consumer_email: state.answers.email,
+        consumer_opt_in: true,
+      }),
+    });
+
+    if (!resp.ok) {
+      const data = await resp.json().catch(() => ({}));
+      if (data.redirect) {
+        window.location.href = data.redirect;
+        return;
+      }
+      throw new Error(data.message || data.error || "Submission failed");
+    }
+
+    const result = await resp.json();
+    state.answers.leadId = result.lead_id;
+
+    document.getElementById("step-4-msg").innerHTML =
+      "Your inquiry has been received. A care advisor will be in touch within one business day at <strong>" +
+      escapeHtml(state.answers.email) + "</strong>.";
+    showStep(4);
+  } catch (err) {
+    console.error("Submit-lead failed:", err);
+    submitErr.textContent = err.message || "Something went wrong. Please try again.";
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Get My Free Care Pricing";
+  }
+}
+
 /* Toggle between ZIP and state-dropdown modes */
 function showZipMode() {
   document.getElementById("zip-group").classList.remove("hidden");
@@ -577,12 +835,11 @@ document.getElementById("next-0").addEventListener("click", handleStep0Next);
 document.getElementById("zip").addEventListener("keydown", (e) => {
   if (e.key === "Enter") { e.preventDefault(); handleStep0Next(); }
 });
-document.querySelectorAll("[data-back]").forEach((el) =>
-  el.addEventListener("click", () => showStep(Number(el.getAttribute("data-back"))))
-);
-document.querySelectorAll("[data-next]").forEach((el) =>
-  el.addEventListener("click", () => showStep(Number(el.getAttribute("data-next"))))
-);
+document.getElementById("back-2").addEventListener("click", handleStep2Back);
+document.getElementById("next-2").addEventListener("click", handleStep2Next);
+document.getElementById("back-3").addEventListener("click", () => showStep(2));
+document.getElementById("submit-3").addEventListener("click", handleStep3Submit);
+document.getElementById("phone").addEventListener("input", function () { formatPhone(this); });
 
 /* Initialize — check for FE-2 handoff via ?state= query param */
 const urlParams = new URLSearchParams(window.location.search);
